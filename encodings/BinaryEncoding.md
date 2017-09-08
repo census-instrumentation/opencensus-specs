@@ -61,7 +61,8 @@ and use the default values.
 * `len` = 16
 
 Is the ID of the whole trace forest. It is represented as a 16-bytes array,
-e.g. (in hex), `4bf92f3577b34da6a3ce929d0e0e4736`. All bytes 0 is considered invalid.
+e.g. (in hex), `4bf92f3577b34da6a3ce929d000e4736`. All bytes 0 is considered invalid.  If converted
+to a 128 bit integer, these bytes are interpreted in big-endian order.
 
 #### Span-id
 
@@ -69,7 +70,8 @@ e.g. (in hex), `4bf92f3577b34da6a3ce929d0e0e4736`. All bytes 0 is considered inv
 * `len` = 8
 
 Is the ID of the caller span (parent). It is represented as a 8-bytes array,
-e.g. (in hex), `00f067aa0ba902b7`. All bytes 0 is considered invalid.
+e.g. (in hex), `34f067aa0ba902b7`. All bytes 0 is considered invalid.  If converted to a 64 bit
+integer, these bytes are interpreted in big-endian order.
 
 #### Trace-options
 
@@ -90,12 +92,19 @@ caller rather than strict rules to follow for 3 reasons:
 The behavior of other bits is currently undefined.
 
 #### Valid example
-{0, 0, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 1, 97, 98, 99, 100, 101, 
-102, 103, 104, 2, 1}
+{0, 0, 75, 249, 47, 53, 119, 179, 77, 166, 163, 206, 146, 157, 0, 14, 71, 54, 1, 52, 240, 103, 170, 11, 169, 2, 183, 2, 1}
 
 This corresponds to:
-* `traceId` = {64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79}
-* `spanId` = {97, 98, 99, 100, 101, 102, 103, 104}
+* `traceId` = {75, 249, 47, 53, 119, 179, 77, 166, 163, 206, 146, 157, 0, 14, 71, 54}
+
+   aka `0x4bf92f3577b34da6a3ce929d000e4736` (128 bit integer, hex format)
+   
+   aka `100985939111033328018442752961022936886` (128 bit integer, decimal format)
+* `spanId` = {52, 240, 103, 170, 11, 169, 2, 183}
+
+   aka `0x34f067aa0ba902b7` (64 bit integer, hex format)
+   
+   aka `3814662864420537015` (64 bit integer, decimal format)
 * `traceOptions` = 1
 
 ## Related Work
