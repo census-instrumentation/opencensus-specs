@@ -2,7 +2,7 @@
 
 ## Introduction
 This document describes the key package names (namespaces, etc.). This document uses terminology
-(MUST, SHOULD, etc) from RFC 2119.
+(MUST, SHOULD, etc) from [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
 
 ## Structure
 The top level package name MUST be **opencensus**. If an URL model is needed use **io.opencensus**.
