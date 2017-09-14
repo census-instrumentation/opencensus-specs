@@ -5,7 +5,7 @@ This document describes the key package names (namespaces, etc.). This document 
 (MUST, SHOULD, etc) from [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
 
 ## Structure
-The top level package name MUST be **opencensus**. If an URL model is needed use **io.opencensus**.
+The top level package name MUST be **opencensus** (for URL model MUST use **io.opencensus**).
 
 The second level package names MUST be:
 * **stats**: for all measurement related functionality
