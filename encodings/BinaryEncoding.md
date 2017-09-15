@@ -44,7 +44,7 @@ were received) or until the first unknown field_id.
 
 ### How can we add new fields?
 If we follow the rules that we always append the new ids at the end of the buffer we can add up 
-to 127. 
+to 127.
 
 TODO(bdrutu): Decide what to do after 127: a) use varint encoding or b) just reserve 255 as a 
 continuation byte.
@@ -60,16 +60,16 @@ and use the default values.
 * `field_id` = 0
 * `len` = 16
 
-Is the ID of the whole trace forest. It is represented as a 16-bytes array,
-e.g. (in hex), `4bf92f3577b34da6a3ce929d0e0e4736`. All bytes 0 is considered invalid.
+Is the ID of the whole trace forest. It is represented as an opaque 16-bytes array,
+e.g. (in hex), `4bf92f3577b34da6a3ce929d000e4736`. All bytes 0 is considered invalid.
 
 #### Span-id
 
 * `field_id` = 1
 * `len` = 8
 
-Is the ID of the caller span (parent). It is represented as a 8-bytes array,
-e.g. (in hex), `00f067aa0ba902b7`. All bytes 0 is considered invalid.
+Is the ID of the caller span (parent). It is represented as an opaque 8-bytes array,
+e.g. (in hex), `34f067aa0ba902b7`. All bytes 0 is considered invalid.
 
 #### Trace-options
 
@@ -90,12 +90,14 @@ caller rather than strict rules to follow for 3 reasons:
 The behavior of other bits is currently undefined.
 
 #### Valid example
-{0, 0, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 1, 97, 98, 99, 100, 101, 
-102, 103, 104, 2, 1}
+{0,
+0, 75, 249, 47, 53, 119, 179, 77, 166, 163, 206, 146, 157, 0, 14, 71, 54,
+1, 52, 240, 103, 170, 11, 169, 2, 183,
+2, 1}
 
 This corresponds to:
-* `traceId` = {64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79}
-* `spanId` = {97, 98, 99, 100, 101, 102, 103, 104}
+* `traceId` = {75, 249, 47, 53, 119, 179, 77, 166, 163, 206, 146, 157, 0, 14, 71, 54}
+* `spanId` = {52, 240, 103, 170, 11, 169, 2, 183}
 * `traceOptions` = 1
 
 ## Related Work
