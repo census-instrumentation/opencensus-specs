@@ -61,7 +61,7 @@ and use the default values.
 * `len` = 16
 
 Is the ID of the whole trace forest. It is represented as an opaque 16-bytes array,
-.g. (in hex), `4bf92f3577b34da6a3ce929d000e4736`. All bytes 0 is considered invalid.
+e.g. (in hex), `4bf92f3577b34da6a3ce929d000e4736`. All bytes 0 is considered invalid.
 
 #### Span-id
 
