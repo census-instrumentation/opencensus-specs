@@ -1,3 +1,9 @@
+# Annotations
+Annotations are key-value pairs that are attached to spans. While developers are free to attach their own annotations to data captured in Census, it's valuable for common / popular metadata to share the same key names.
+
+## General
+These annotations should be present on all applicable spans
+
 Annotation Name      |Description
 ---------------------|---
 /rpc/request/size    |
@@ -16,6 +22,12 @@ Annotation Name      |Description
 /sql/query_string    |
 /agent_name          |
 /agent_version       |
+
+## Kubernetes
+These annotations should be present on spans captured from Kubernetes applications
+
+Annotation Name      |Description
+---------------------|---
 kube/cluster_name    |
 kube/namespace_id    |
 kube/pod_id          |
