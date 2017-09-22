@@ -4,6 +4,8 @@
 * For details about the library structured see [Namespace and Package](https://github.com/census-instrumentation/opencensus-specs/blob/master/NamespaceAndPackage.md)
 
 ## Trace Design
+* Trace API is described [here](https://github.com/census-instrumentation/opencensus-specs/blob/master/trace/README.md)
+
 * Data model is defined [here](https://github.com/census-instrumentation/opencensus-proto/blob/master/trace/trace.proto)
 
 ## Tags Design
