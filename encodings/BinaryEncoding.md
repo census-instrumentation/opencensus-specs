@@ -100,6 +100,46 @@ This corresponds to:
 * `spanId` = {52, 240, 103, 170, 11, 169, 2, 183}
 * `traceOptions` = 1
 
+### Tag Context
+The Tag Context format uses Varint encoding, which is described in
+https://developers.google.com/protocol-buffers/docs/encoding#varints. Note that
+each type of tag can appear multiple times.
+
+#### String tag
+
+* `field_id` = 0
+* `field_format` = `<tag_key_len><tag_key><tag_val_len><tag_val>` where
+
+  * `tag_key_len` is a varint encoded integer.
+  * `tag_key` is `tag_key_len` bytes comprising the tag key name.
+  * `tag_val_len` is a varint encoded integer.
+  * `tag_val` is `tag_val_len` bytes comprising the tag value.
+
+#### Integer tag
+
+* `field_id` = 1
+* `field_format` = `<tag_key_len><tag_key><tag_val>` where
+
+  * `tag_key_len` is a varint encoded integer.
+  * `tag_key` is `tag_key_len` bytes comprising the tag key name.
+  * `tag_val` is 8 bytes, a little-endian int64, representing the tag value.
+
+#### True boolean tag
+
+* `field_id` = 2
+* `field_format` = `<tag_key_len><tag_key>` where
+
+  * `tag_key_len` is a varint encoded integer.
+  * `tag_key` is `tag_key_len` bytes comprising the tag key name.
+
+#### False boolean tag
+
+* `field_id` = 3
+* `field_format` = `<tag_key_len><tag_key>` where
+
+  * `tag_key_len` is a varint encoded integer.
+  * `tag_key` is `tag_key_len` bytes comprising the tag key name.
+
 ## Related Work
 * [TraceContext Project](https://github.com/TraceContext/tracecontext-spec)
 * [Stackdriver TraceContext Header](https://cloud.google.com/trace/docs/support)
