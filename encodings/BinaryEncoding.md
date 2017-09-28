@@ -124,17 +124,9 @@ each type of tag can appear multiple times.
   * `tag_key` is `tag_key_len` bytes comprising the tag key name.
   * `tag_val` is 8 bytes, a little-endian int64, representing the tag value.
 
-#### True boolean tag
+#### Boolean tag
 
-* `field_id` = 2
-* `field_format` = `<tag_key_len><tag_key>` where
-
-  * `tag_key_len` is a varint encoded integer.
-  * `tag_key` is `tag_key_len` bytes comprising the tag key name.
-
-#### False boolean tag
-
-* `field_id` = 3
+* `field_id` = 2 or 3, where 2 represents a true value and 3 represents a false value.
 * `field_format` = `<tag_key_len><tag_key>` where
 
   * `tag_key_len` is a varint encoded integer.
