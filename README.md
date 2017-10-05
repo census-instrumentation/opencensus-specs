@@ -8,14 +8,14 @@ This repository uses terminology (MUST, SHOULD, etc) from [RFC 2119][RFC2119].
 
 ## Overview
 Today, distributed tracing systems and stats collection tend to use unique protocols and 
-specifications for propagating context and sending data to backend processing systems. This 
-is true amongst all the large vendors, and we aim to standardize these APIs and data models.
+specifications for propagating context and sending diagnostic data to backend processing systems.
+This is true amongst all the large vendors, and we aim to provide a reliable implementations in 
+service of frameworks and agents. We do that by standardizing APIs and data models.
 
-The OpenCensus library refers to a collection of tools/APIs that are intended to be used primarily
-by cloud and distributed applications for monitoring and performance debugging. OpenCensus is 
-intended to be the first open-source application performance management (APM) library available 
-in all the main programming languages including C/C++, Java, Go, Ruby, PHP, Python, C#, Node.js,
-Objective-C and Erlang.
+OpenCensus provides a tested set of application performance management (APM) libraries, such as
+Metrics and Tracing, under a friendly OSS license. We acknowlege the polyglot nature of modern 
+applications, and provide implementations in all main programming languages including C/C++, 
+Java, Go, Ruby, PHP, Python, C#, Node.js, Objective-C and Erlang.
 
 ## Ecosystem Design
 
@@ -24,7 +24,7 @@ Objective-C and Erlang.
 ### Layers
 
 #### Service Exporters
-Each backend service MUST implement this API to export data to their services.
+Each backend service SHOULD implement this API to export data to their services.
 
 #### OpenCensus Library
 This is what we design/describe in the current document.
@@ -55,12 +55,12 @@ Here is a layering structure of the proposed OpenCensus library:
 ![alt text][LibraryComponents]
 
 
-#### Generic Context
+#### Context
 Some of the features like tracing (distributed tracing) and tagging (possibly others) need a way 
 to propagate a specific context (trace, tags) in-process (possibly between threads) and function
 calls.
 
-The key elements of the Generic Context Support are:
+The key elements of the Context Support are:
 * Every implementation MUST offer an explicit or implicit generic Context propagation mechanism 
 that allows different sub-contexts to be propagated.
 * Languages that already have this support, like [Go][goContext] or C# (ExecutionContext), MUST 
@@ -69,21 +69,21 @@ use the language supported generic context instead of building their own.
 
 
 #### Trace
-Trace component is designed to support distributed tracing (see [dapper paper][DapperPaper]). This 
-component allows collecting and recording in memory trace data, tracks active requests, and keeps
-local samples for interesting requests.
+Trace component is designed to support distributed tracing (see [dapper paper][DapperPaper]).
+Census allows functionality beyond data collection and export, for example, tracking active and  
+keeping local samples for interesting requests.
 
 The key elements of the API can be broken down as:
 * A Span represents a single operation within a trace. Spans can be nested to form a trace tree. 
 * Libraries must allow users to record tracing events for a span (attributes, annotations, links, 
 etc.).
-* Spans are carried in the Generic Context. Libraries MUST provide a way of getting, manipulating,
+* Spans are carried in the Context. Libraries MUST provide a way of getting, manipulating,
 and replacing the Span in the current context.
 * Libraries MUST provide a means of dynamically controlling the trace global config at runtime (e
 .g. trace sampling rate/probability).
 * Libraries SHOULD keep track of active spans and in memory samples based on latency/errors and 
 offer ways to access the data.
-* Because context must also be propagated among processes, library MUST offer the functionality 
+* Because context must also be propagated across processes, library MUST offer the functionality 
 that allows any transport (e.g RPC, HTTP, etc.) systems to encode/decode the “trace context” for 
 placement on the wire.
 
@@ -92,19 +92,19 @@ placement on the wire.
 * Data model is defined [here][TraceDataModel].
 
 #### Tags
-Tags are values propagated through the Generic Context subsystem inside a process and among 
-processes by any transport (e.g RPC, HTTP, etc.). Tags are used by the Stats component to break 
-down  measurements by arbitrary metadata set in the current process or propagated from a remote 
+Tags are values propagated through the Context subsystem inside a process and among processes by 
+any transport (e.g RPC, HTTP, etc.). For example tags are used by the Stats component to break 
+down measurements by arbitrary metadata set in the current process or propagated from a remote 
 caller.
 
 The key elements of the Tags component are:
 * A tag: this is a key-value pair, where the key is a string, and the value can be one of a 64-bit
 integer, a boolean, or a string. The API allows for creating, modifying and querying objects 
 representing a tag value.
-* A set of tags (with unique keys) carried in the Generic Context. Libraries MUST provide a means 
+* A set of tags (with unique keys) carried in the Context. Libraries MUST provide a means 
 of manipulating the tags in the context, including adding new tags, replacing tag values, deleting
 tags, and querying the current value for a given tag key. 
-* Because tags must also be propagated between process, library MUST offer the functionality that 
+* Because tags must also be propagated across processes, library MUST offer the functionality that 
 allows RPC systems to encode/decode the set of tags for placement on the wire.
 
 ##### Links
