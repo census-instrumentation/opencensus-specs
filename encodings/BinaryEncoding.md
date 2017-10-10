@@ -1,5 +1,9 @@
 # BINARY FORMAT
 
+The binary format can be used to encode different data types, each with different fields. This
+document first describes the general format and then applies it to specific data types,
+including Trace Context and Tag Context.
+
 ## General Format
 Each encoding will have a 1 byte version followed by the version format encoding:
 
@@ -10,37 +14,47 @@ This will allow us to, in 1 deprecation cycle to completely switch to a new form
 ## Version Format (version_id = 0)
 The version format for the version_id = 0 is based on ideas from proto encoding. The main 
 requirements are to allow adding and removing fields in less than 1 deprecation cycle. It
-contains a list of repeated fields:
+contains a list of fields:
 
 `<field><field>...`
 
 ### Field
+Each field is a 1-byte field ID paired with a field value, where the format of the field value is
+determined by both the field ID and the data type. For example, field 0 in `Trace Context` may
+have a completely different format than field 0 in `Tag Context` or field 1 in `Trace Context`.
+
 Each field that we send on the wire will have the following format:
 
 `<field_id><field_format>`
 
 * `field_id` is a single byte.
 
-* `field_format` must be defined for each metadata field separately, that means that for field_id
- = 0 in trace context the field_value may have a completely different representation than the 
- field_id = 0 in the server-stats metadata.
+* `field_format` must be defined for each field separately.
 
-Each field is optional and MAY have defined a default value that can be used (if implementation 
-needs one) when the field is missing. Fields can be repeated, e.g. StringTag in the tagging example.
+The specification for a data type's format must also specify whether each field is single or
+repeated. For example, `Trace-id` in `Trace Context` in single, and `String tag` in `Tag Context`
+is repeated. Every single field is optional. The specification for a data type's format MAY define
+a default value for any single field, which must be used when the field is missing.
+
+The specification for a data type can define versions within a version of the format, called data
+type version, where each data type version adds new fields. The data type version can be useful
+for describing what fields an implementation supports, but it is not included in the
+serialized data.
 
 ### Serialization Rules
-Because each field has its own format that is not generically defined we are forced to always add
-new field ids at the end. The serialization MUST ensure that fields are serialized in version 
-order (i.e. fields from version (i) must precede fields from version (i+1)). This ordering 
-allows old decoders to ignore any new fields even if they do not know the format for that field.
-Systems that receive extra fields that they cannot decode MAY pass them on when possible (by 
-passing-through the whole opaque tail of bytes starting with the field id that the current 
-binary does not understand).
+Fields MUST be serialized in data type version order (i.e. all fields from version (i) of a data
+type must precede all fields from version (i+1)). That is because each field has its own format,
+and old implementations may not be able to determine where newer field values end. This ordering
+allows old decoders to ignore any new fields when they do not know the format for those fields.
+Fields within a data type version can be serialized in any order, and fields with the same field
+ID do not need to be serialized consecutively.
 
 ### Deserialization Rules
-Because all the fields will be decoded in the same order as they were defined/added, the 
-deserialization will simply read the encoded input until the end of the input (if no new fields 
-were received) or until the first unknown field_id.
+Because all the fields will be decoded in data type version order, the deserialization will
+simply read the encoded input until the end of the input or until the first unknown field_id.
+Implementations MAY pass on any fields that they cannot decode, when possible (by passing-through
+the whole opaque tail of bytes starting with the first field id that the current binary does not
+understand).
 
 ### How can we add new fields?
 If we follow the rules that we always append the new ids at the end of the buffer we can add up 
