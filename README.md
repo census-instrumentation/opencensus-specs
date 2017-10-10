@@ -136,11 +136,11 @@ allows applications to easily get access to their own data in-process.
 * Library MUST support the [TraceContext][TraceContextSpecs] format for Trace and Tags components.
 * Binary encoding is defined [here](https://github.com/census-instrumentation/opencensus-specs/blob/master/encodings/BinaryEncoding.md)
 
-[EcosystemLayers]: https://github.com/census-instrumentation/opencensus-specs/blob/master/drawings/EcosystemLayers.jpg "Ecosystem Layer"
+[EcosystemLayers]: https://github.com/census-instrumentation/opencensus-specs/blob/master/drawings/EcosystemLayers.png "Ecosystem Layer"
 [DapperPaper]: https://research.google.com/pubs/pub36356.html
 [goContext]: https://golang.org/pkg/context
 [gRPCContext]: https://github.com/grpc/grpc-java/blob/master/context/src/main/java/io/grpc/Context.java
-[LibraryComponents]: https://github.com/census-instrumentation/opencensus-specs/blob/master/drawings/LibraryComponents.jpg "OpenCensus Library Components"
+[LibraryComponents]: https://github.com/census-instrumentation/opencensus-specs/blob/master/drawings/LibraryComponents.png "OpenCensus Library Components"
 [NamespaceAndPackage]: https://github.com/census-instrumentation/opencensus-specs/blob/master/NamespaceAndPackage.md
 [RFC2119]: https://www.ietf.org/rfc/rfc2119.txt
 [TraceAPI]: https://github.com/census-instrumentation/opencensus-specs/blob/master/trace/README.md
