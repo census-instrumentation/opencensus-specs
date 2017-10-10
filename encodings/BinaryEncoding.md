@@ -31,10 +31,10 @@ Each field that we send on the wire will have the following format:
 
 * `field_format` must be defined for each field separately.
 
-The specification for a data type's format must also specify whether each field is single or
-repeated. For example, `Trace-id` in `Trace Context` in single, and `String tag` in `Tag Context`
-is repeated. Every single field is optional. The specification for a data type's format MAY define
-a default value for any single field, which must be used when the field is missing.
+The specification for a data type's format must also specify whether each field is optional or
+repeated. For example, `Trace-id` in `Trace Context` is optional, and `String tag` in `Tag Context`
+is repeated. The specification for a data type's format MAY define a default value for any
+optional field, which must be used when the field is missing.
 
 The specification for a data type can define versions within a version of the format, called data
 type version, where each data type version adds new fields. The data type version can be useful
