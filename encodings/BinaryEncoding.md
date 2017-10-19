@@ -32,7 +32,7 @@ Each field that we send on the wire will have the following format:
 * `field_format` must be defined for each field separately.
 
 The specification for a data type's format must also specify whether each field is optional or
-repeated. For example, `Trace-id` in `Trace Context` is optional, and `String tag` in `Tag Context`
+repeated. For example, `Trace-id` in `Trace Context` is optional, and `Tag` in `Tag Context`
 is repeated. The specification for a data type's format MAY define a default value for any
 optional field, which must be used when the field is missing.
 
@@ -117,9 +117,9 @@ This corresponds to:
 ### Tag Context
 The Tag Context format uses Varint encoding, which is described in
 https://developers.google.com/protocol-buffers/docs/encoding#varints. Note that
-each type of tag can appear multiple times.
+there can be multiple tags.
 
-#### String tag
+#### Tag
 
 * `field_id` = 0
 * `field_format` = `<tag_key_len><tag_key><tag_val_len><tag_val>` where
@@ -128,23 +128,6 @@ each type of tag can appear multiple times.
   * `tag_key` is `tag_key_len` bytes comprising the tag key name.
   * `tag_val_len` is a varint encoded integer.
   * `tag_val` is `tag_val_len` bytes comprising the tag value.
-
-#### Integer tag
-
-* `field_id` = 1
-* `field_format` = `<tag_key_len><tag_key><tag_val>` where
-
-  * `tag_key_len` is a varint encoded integer.
-  * `tag_key` is `tag_key_len` bytes comprising the tag key name.
-  * `tag_val` is 8 bytes, a little-endian int64, representing the tag value.
-
-#### Boolean tag
-
-* `field_id` = 2 or 3, where 2 represents a true value and 3 represents a false value.
-* `field_format` = `<tag_key_len><tag_key>` where
-
-  * `tag_key_len` is a varint encoded integer.
-  * `tag_key` is `tag_key_len` bytes comprising the tag key name.
 
 ## Related Work
 * [TraceContext Project](https://github.com/TraceContext/tracecontext-spec)
