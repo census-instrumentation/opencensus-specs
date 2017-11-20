@@ -69,24 +69,29 @@ and use the default values.
 
 ### Trace Context
 
-#### Trace-id
+#### Fields added in Trace Context version 0
 
+##### Trace-id
+
+* optional
 * `field_id` = 0
 * `len` = 16
 
 Is the ID of the whole trace forest. It is represented as an opaque 16-bytes array,
 e.g. (in hex), `4bf92f3577b34da6a3ce929d000e4736`. All bytes 0 is considered invalid.
 
-#### Span-id
+##### Span-id
 
+* optional
 * `field_id` = 1
 * `len` = 8
 
 Is the ID of the caller span (parent). It is represented as an opaque 8-bytes array,
 e.g. (in hex), `34f067aa0ba902b7`. All bytes 0 is considered invalid.
 
-#### Trace-options
+##### Trace-options
 
+* optional
 * `field_id` = 2
 * `len` = 1
 
@@ -116,11 +121,13 @@ This corresponds to:
 
 ### Tag Context
 The Tag Context format uses Varint encoding, which is described in
-https://developers.google.com/protocol-buffers/docs/encoding#varints. Note that
-there can be multiple tags.
+https://developers.google.com/protocol-buffers/docs/encoding#varints.
 
-#### Tag
+#### Fields added in Tag Context version 0
 
+##### Tag
+
+* repeated
 * `field_id` = 0
 * `field_format` = `<tag_key_len><tag_key><tag_val_len><tag_val>` where
 
