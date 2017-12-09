@@ -29,7 +29,9 @@ for specific formats.
 
 - The serialization format must preserve the `TagKey`-`TagValue` mapping.
 - A `TagContext` can only be serialized or deserialized if the combined size of
-  its keys and values is at most 8192 characters (8192 bytes).
+  its keys and values is at most 8192 characters (8192 bytes).  The size
+  restriction applies to the deserialized tags so that the set of serializable
+  `TagContext`s is independent of the serialization format.
 
 ### Error handling
 
