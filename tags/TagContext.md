@@ -3,11 +3,13 @@
 TODO(sebright): Add more detail to the Tag Context summary, including how it
 relates to the current context.
 
-`TagContext` is an abstract data type that represents a map of tags.  It can be
-used to label anything that is associated with a specific operation.  Keys are
-called `TagKey`s, and values are called `TagValue`s.  `TagContext` is serializable,
-and it represents all of the information that must be propagated across process
-boundaries.
+`TagContext` is an abstract data type that represents a collection of tags.  A
+`TagContext` can be used to label anything that is associated with a specific
+operation, such as an HTTP request.  Each tag is composed of a key (`TagKey`),
+and a value (`TagValue`).  A `TagContext` represents a map from keys to values,
+i.e., each key is associated with exactly one value, but multiple keys can be
+associated with the same value.  `TagContext` is serializable, and it represents
+all of the information that must be propagated across process boundaries.
 
 ## TagKey
 
