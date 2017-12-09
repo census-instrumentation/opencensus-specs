@@ -111,9 +111,8 @@ caller.
 
 The key elements of the Tags component are:
 
-* A tag: this is a key-value pair, where the key is a string, and the value can be one of a 64-bit
-  integer, a boolean, or a string. The API allows for creating, modifying and querying objects
-  representing a tag value.
+* A tag: this is a key-value pair, where the keys and values are strings. The API allows for
+  creating, modifying and querying objects representing a tag value.
 * A set of tags (with unique keys) carried in the Context. Libraries MUST provide a means
   of manipulating the tags in the context, including adding new tags, replacing tag values, deleting
   tags, and querying the current value for a given tag key.
