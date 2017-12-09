@@ -51,10 +51,10 @@ ID do not need to be serialized consecutively.
 
 ### Deserialization Rules
 Because all the fields will be decoded in data type version order, the deserialization will
-simply read the encoded input until the end of the input or until the first unknown field_id.
-Implementations MAY pass on any fields that they cannot decode, when possible (by passing-through
-the whole opaque tail of bytes starting with the first field id that the current binary does not
-understand).
+simply read the encoded input until the end of the input or until the first unknown field_id. An
+unknown field id should not be considered a parse error. Implementations MAY pass on any fields
+that they cannot decode, when possible (by passing-through the whole opaque tail of bytes
+starting with the first field id that the current binary does not understand).
 
 ### How can we add new fields?
 If we follow the rules that we always append the new ids at the end of the buffer we can add up 
@@ -135,6 +135,14 @@ https://developers.google.com/protocol-buffers/docs/encoding#varints.
   * `tag_key` is `tag_key_len` bytes comprising the tag key name.
   * `tag_val_len` is a varint encoded integer.
   * `tag_val` is `tag_val_len` bytes comprising the tag value.
+* Tags can be serialized in any order.
+* Multiple tag fields can contain the same tag key. All but the last value for
+  that key should be ignored.
+* The
+  [size limit for serialized Tag Contexts](https://github.com/census-instrumentation/opencensus-specs/blob/master/tags/TagContext.md#serialization)
+  should apply to all tag fields, even if some of them have duplicate keys. For
+  example, a serialized tag context with 10,000 small tags that all have the
+  same key should be considered too large.
 
 ## Related Work
 * [TraceContext Project](https://github.com/TraceContext/tracecontext-spec)
