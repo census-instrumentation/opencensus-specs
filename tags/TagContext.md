@@ -38,7 +38,8 @@ for specific formats.
 ### Error handling
 
 - There are no partial failures.  The result of serialization or deserialization
-  should always be a complete `TagContext` or an error.
+  should always be a complete `TagContext` or an error.  The type of error
+  reporting depends on the language.
 - Serialization should result in an error if the `TagContext` does not meet the
   size restriction above.
 - Deserialization should result in an error if the serialized `TagContext`
