@@ -1,7 +1,7 @@
 # Span API
 
 This class represents a Span. A span contains a SpanContext and  allows users to record 
-tracing events based on the data model defined [here](https://github.com/census-instrumentation/opencensus-proto/blob/master/trace/trace.proto).
+tracing events based on the data model defined [here](https://github.com/census-instrumentation/opencensus-proto/blob/master/opencensus/proto/trace/trace.proto).
 All Span implementations MUST not allow users to read the recorded data, 
 
 ## Span structure
