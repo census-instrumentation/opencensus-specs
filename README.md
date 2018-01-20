@@ -162,5 +162,5 @@ The key elements the API MUST provide are:
 [RFC2119]: https://www.ietf.org/rfc/rfc2119.txt
 [TraceAPI]: https://github.com/census-instrumentation/opencensus-specs/blob/master/trace/README.md
 [TraceContextSpecs]: https://github.com/TraceContext/tracecontext-spec
-[TraceDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/trace/trace.proto
+[TraceDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/opencensus/proto/trace/trace.proto
 [BinaryEncoding]: https://github.com/census-instrumentation/opencensus-specs/blob/master/encodings/BinaryEncoding.md
