@@ -72,7 +72,7 @@ The key elements of the context support are:
 
 * Every implementation MUST offer an explicit or implicit generic Context propagation mechanism
   that allows different sub-contexts to be propagated.
-* Languages that already have this support, like Go ([context.Context][goContext]) or C# (ExecutionContext),
+* Languages that already have this support, like Go ([context.Context][goContext]) or C# ([Activity][activity]),
   MUST use the language supported generic context instead of building their own.
 * For an explicit generic context implementation you can look at the Java [io.grpc.Context][gRPCContext].
 
@@ -164,3 +164,4 @@ The key elements the API MUST provide are:
 [TraceContextSpecs]: https://github.com/TraceContext/tracecontext-spec
 [TraceDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/trace/trace.proto
 [BinaryEncoding]: https://github.com/census-instrumentation/opencensus-specs/blob/master/encodings/BinaryEncoding.md
+[activity]: https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.DiagnosticSource/src/ActivityUserGuide.md
