@@ -6,6 +6,17 @@ All times (latencies) are measured in float64 fractions of microseconds.
 
 There is no special support for multi-part HTTP requests and responses. These are just treated as one request.
 
+## Units
+
+* Latencies are measures in float64 milliseconds, denoted "ms"
+* Sizes are measured in bytes, denoted "By"
+* Dimensionless values have unit "1"
+
+Buckets for distributions in default views are as follows:
+
+* Size in bytes: 0, 1024, 2048, 4096, 16384, 65536, 262144, 1048576, 4194304, 16777216, 67108864, 268435456, 1073741824, 4294967296
+* Latency in ms: 0, 1, 2, 3, 4, 5, 6, 8, 10, 13, 16, 20, 25, 30, 40, 50, 65, 80, 100, 130, 160, 200, 250, 300, 400, 500, 650, 800, 1000, 2000, 5000, 10000, 20000, 50000, 100000
+
 ## Client
 
 All views, measures and tags should have the prefix: "opencensus.io/http/client". For example: "opencensus.io/http/client/started".
@@ -13,17 +24,14 @@ All views, measures and tags should have the prefix: "opencensus.io/http/client"
 ### Measures
 
 Client stats are recorded for each individual HTTP request, including for each redirect (followed or not). 
+Views are defined with the same name as the measure and the aggregation specified under Default View Aggregation.
 
-| Measure suffix     | Default View Aggregation | Description                                                                                                                                                                                                                                                                                       |
-|--------------------|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| started            | sum                      | Number of all client requests started                                                                                                                                                                                                                                                             |
-| bytes_sent         | sum                      | Total bytes sent in request body (not including headers). This is uncompressed bytes.                                                                                                                                                                                                             |
-| bytes_recv         | sum                      | Total bytes received in response bodies (not including headers but including error responses with bodies). Should be measured from actual bytes received and read, not the value of the Content-Length header. This is uncompressed bytes. Responses with no body should record 0 for this value. |
-| headers_sent       | none                     | Total number of header lines sent in outgoing requests, not including trailing headers                                                                                                                                                                                                            |
-| headers_recv       | none                     | Total number of header lines received in responses, not including trailing headers                                                                                                                                                                                                                |
-| latency            | distribution             | Time between first byte of request headers sent to last byte of response received, or terminal error                                                                                                                                                                                              |
-| connections_opened | count                    | Number of underlying transport (TCP/TLS) connections opened                                                                                                                                                                                                                                       |
-| connections_closed | count                    | Number of underlying transport (TCP/TLS) connections closed                                                                                                                                                                                                                                       |
+| Measure suffix | Default View Aggregation | Description                                                                                                                                                                                                                                                                                       |
+|----------------|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| requests       | sum                      | Number of all client requests started                                                                                                                                                                                                                                                             |
+| request_size   | distribution             | Total bytes sent in request body (not including headers). This is uncompressed bytes.                                                                                                                                                                                                             |
+| response_size  | distribution             | Total bytes received in response bodies (not including headers but including error responses with bodies). Should be measured from actual bytes received and read, not the value of the Content-Length header. This is uncompressed bytes. Responses with no body should record 0 for this value. |
+| latency        | distribution             | Time between first byte of request headers sent to last byte of response received, or terminal error                                                                                                                                                                                              |
 
 ### Tags
 
@@ -33,9 +41,6 @@ All client metrics should be tagged with the following.
 |---------------|----------------------------------------------------------------|
 | method        | HTTP method, capitalized (i.e. GET, POST, PUT, DELETE, etc.)   |
 | status_code   | HTTP status code, or 0 if no response status line was received |
-| response_type | Response media type, if applicable                             |
-| request_type  | Request media type, if applicable                              |
-| version       | HTTP version in request                                        |
 | path          | URL path (not including query string)                          |
 | host          | Value of the request Host header                               |
 
@@ -43,11 +48,10 @@ All client metrics should be tagged with the following.
 
 The following default views are also defined:
 
-| View suffix          | Measure suffix | Aggregation  | Tags        |
-|----------------------|----------------|--------------|-------------|
-| count_by_status_code | latency        | count        | status-code |
-| ended                | latency        | count        | none        |
-| latency_by_path      | latency        | distribution | path        |
+| View suffix                   | Measure suffix | Aggregation | Tags        |
+|-------------------------------|----------------|-------------|-------------|
+| response_count_by_status_code | latency        | count       | status_code |
+| request_count_by_method       | latency        | count       | method      |
 
 ## Server
 
