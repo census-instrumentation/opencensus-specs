@@ -8,6 +8,8 @@ There is no special support for multi-part HTTP requests and responses. These ar
 
 ## Units
 
+Units are encoded according to the case-sensitive abbreviations from the [Unified Code for Units of Measure](http://unitsofmeasure.org/ucum.html):
+
 * Latencies are measures in float64 milliseconds, denoted "ms"
 * Sizes are measured in bytes, denoted "By"
 * Dimensionless values have unit "1"
