@@ -30,21 +30,21 @@ Views are defined with the same name as the measure and the aggregation specifie
 
 | Measure suffix | Default View Aggregation | Description                                                                                                                                                                                                                                                                                       |
 |----------------|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| requests       | sum                      | Number of all client requests started                                                                                                                                                                                                                                                             |
-| request_size   | distribution             | Total bytes sent in request body (not including headers). This is uncompressed bytes.                                                                                                                                                                                                             |
-| response_size  | distribution             | Total bytes received in response bodies (not including headers but including error responses with bodies). Should be measured from actual bytes received and read, not the value of the Content-Length header. This is uncompressed bytes. Responses with no body should record 0 for this value. |
+| request_count  | sum                      | Number of all client requests started                                                                                                                                                                                                                                                             |
+| request_bytes  | distribution             | Total bytes sent in request body (not including headers). This is uncompressed bytes.                                                                                                                                                                                                             |
+| response_bytes | distribution             | Total bytes received in response bodies (not including headers but including error responses with bodies). Should be measured from actual bytes received and read, not the value of the Content-Length header. This is uncompressed bytes. Responses with no body should record 0 for this value. |
 | latency        | distribution             | Time between first byte of request headers sent to last byte of response received, or terminal error                                                                                                                                                                                              |
 
 ### Tags
 
 All client metrics should be tagged with the following.
 
-| Tag suffix    | Description                                                    |
-|---------------|----------------------------------------------------------------|
-| method        | HTTP method, capitalized (i.e. GET, POST, PUT, DELETE, etc.)   |
-| status_code   | HTTP status code, or 0 if no response status line was received |
-| path          | URL path (not including query string)                          |
-| host          | Value of the request Host header                               |
+| Tag suffix  | Description                                                          |
+|-------------|----------------------------------------------------------------------|
+| http.method | HTTP method, capitalized (i.e. GET, POST, PUT, DELETE, etc.)         |
+| http.status | HTTP status code, or "error" if no response status line was received |
+| http.path   | URL path (not including query string)                                |
+| http.host   | Value of the request Host header                                     |
 
 ### Default views
 
