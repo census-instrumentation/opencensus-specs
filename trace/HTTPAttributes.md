@@ -7,10 +7,8 @@ HTTP integrations should set the following attributes on the client
 and server spans. For a server, request represents the incoming request.
 For a client, request represents the outgoing request.
 
-```
 | Attribute name       | Description            | Example value                   |
 |----------------------|------------------------|---------------------------------|
-| "http.url"           | Request URL            | "https://example.com/users?q=a" |
 | "http.host"          | Request URL host       | "example.com"                   |
 | "http.method"        | Request URL method     | "GET"                           |
 | "http.path"          | Request URL path       | "/users"                        |
@@ -18,14 +16,12 @@ For a client, request represents the outgoing request.
 | "http.status"        | Response status code   | 200                             |
 | "http.request_size"  | Request size in bytes  | 64328                           |
 | "http.response_size" | Response size in bytes | 128                             |
-```
 
 The following table summarizes how OpenCensus attributes maps to the
 known attributes/labels on tracing backends.
 
 | OpenCensus attribute | Stackdriver Trace label                     |
 |----------------------|---------------------------------------------|
-| "http.url"           | "trace.cloud.google.com/http/url"           |
 | "http.host"          | "trace.cloud.google.com/http/host"          |
 | "http.method"        | "trace.cloud.google.com/http/method"        |
 | "http.path"          |                                             |
