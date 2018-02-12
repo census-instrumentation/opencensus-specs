@@ -1,6 +1,7 @@
 # HTTP Stats
 
-All views and measures have the prefix: "opencensus.io/http". Any particular library might provide only a subset of these measures/views/tags.
+Any particular library might provide only a subset of these measures/views/tags.
+Check the language-specific documentation for the list of supported values.
 
 All times (latencies) are measured in float64 fractions of microseconds.
 
@@ -28,12 +29,12 @@ All views, measures and tags should have the prefix: "opencensus.io/http/client"
 Client stats are recorded for each individual HTTP request, including for each redirect (followed or not). 
 Views are defined with the same name as the measure and the aggregation specified under Default View Aggregation.
 
-| Measure suffix | Default View Aggregation | Description                                                                                                                                                                                                                                                                                       |
-|----------------|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| request_count  | sum                      | Number of all client requests started                                                                                                                                                                                                                                                             |
-| request_bytes  | distribution             | Total bytes sent in request body (not including headers). This is uncompressed bytes.                                                                                                                                                                                                             |
-| response_bytes | distribution             | Total bytes received in response bodies (not including headers but including error responses with bodies). Should be measured from actual bytes received and read, not the value of the Content-Length header. This is uncompressed bytes. Responses with no body should record 0 for this value. |
-| latency        | distribution             | Time between first byte of request headers sent to last byte of response received, or terminal error                                                                                                                                                                                              |
+| Measure suffix                           | Default View Aggregation | Description                                                                                                                                                                                                                                                                                       |
+|------------------------------------------|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| opencensus.io/http/client/request_count  | sum                      | Number of all client requests started                                                                                                                                                                                                                                                             |
+| opencensus.io/http/client/request_bytes  | distribution             | Total bytes sent in request body (not including headers). This is uncompressed bytes.                                                                                                                                                                                                             |
+| opencensus.io/http/client/response_bytes | distribution             | Total bytes received in response bodies (not including headers but including error responses with bodies). Should be measured from actual bytes received and read, not the value of the Content-Length header. This is uncompressed bytes. Responses with no body should record 0 for this value. |
+| opencensus.io/http/client/latency        | distribution             | Time between first byte of request headers sent to last byte of response received, or terminal error                                                                                                                                                                                              |
 
 ### Tags
 
@@ -50,10 +51,10 @@ All client metrics should be tagged with the following.
 
 The following default views are also defined:
 
-| View suffix                   | Measure suffix | Aggregation | Tags        |
-|-------------------------------|----------------|-------------|-------------|
-| response_count_by_status_code | latency        | count       | status_code |
-| request_count_by_method       | latency        | count       | method      |
+| View suffix                                             | Measure suffix | Aggregation | Tags        |
+|---------------------------------------------------------|----------------|-------------|-------------|
+| opencensus.io/http/client/response_count_by_status_code | latency        | count       | status_code |
+| opencensus.io/http/client/request_count_by_method       | latency        | count       | method      |
 
 ## Server
 
