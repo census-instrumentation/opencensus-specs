@@ -7,6 +7,8 @@ HTTP integrations should set the following attributes on the client
 and server spans. For a server, request represents the incoming request.
 For a client, request represents the outgoing request.
 
+All attributes are optional.
+
 | Attribute name       | Description            | Example value                   |
 |----------------------|------------------------|---------------------------------|
 | "http.host"          | Request URL host       | "example.com"                   |
