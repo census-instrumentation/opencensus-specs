@@ -1,6 +1,6 @@
 # Record API Overview
-The stats library MUST allow users to record metrics for their applications or third-party
-libraries. The core data types used are:
+The stats library allows users to record metrics for their applications or third-party libraries.
+ The core data types used are:
 * `Measure`: describes the type of the individual values recorded by an application.
 * `Measurement`: describes a data point to be collected for a `Measure`.
 
@@ -11,17 +11,17 @@ for the data. This provides the fundamental type used for recording data.
 
 A Measure describes a value with the following metadata:
 * `name`: a string by which the measure will be referred to, e.g. "rpc_server_latency", or
-"vm_cpu_cycles". Names MUST be unique within the library. It is recommended to use names compatible
-with the intended end usage, e.g, use host/path pattern.
-* `description`: a free format descriptive string, e.g. "RPC latency in seconds", "Virtual cycles
+"vm_cpu_cycles". Names MUST be unique within the library. It is recommended to use names 
+compatible with the intended end usage, e.g, use host/path pattern.
+* `description`: a string describes the measure, e.g. "RPC latency in seconds", "Virtual cycles
 executed on VM".
-* `unit`: a string describing the unit's used for this Measure. Follows the format described by
+* `unit`: a string describing the unit used for the 'Measure. Follows the format described by
 [Unified Code for Units of Measure](http://unitsofmeasure.org/ucum.html).
 * `type`: the only supported types are `int64` and `double`.
 
-Implementations MUST define a Measure class, constructed from the parameters above. Measure MAY have
-getters for retrieving all of the information used in `Measure` definition. Once created, Measure
-metadata is immutable.
+Implementations SHOULD define a `Measure` data taype, constructed from the parameters above. 
+Measure MAY have getters for retrieving all of the information used in `Measure` definition. 
+Once created, Measure metadata is immutable.
 
 Example in Java
 ```
@@ -37,8 +37,8 @@ Example in Java
 private static final MeasureDouble rpcLatency = Stats.findMeasureDoubleByName("grpc.io/latency");
 ```
 
-Implementations MAY define a `MeasureDescription` class which contains all the read-only fields from
-the `Measure` definition such as: `name`, `description`, `unit` and `type`.
+Implementations MAY define a `MeasureDescription` data type which contains all the read-only fields 
+from the `Measure` definition such as: `name`, `description`, `unit` and `type`.
 
 ## Measurement / MeasurementMap
 A `Measurement` describes a value with the following metadata:
@@ -50,14 +50,14 @@ for a set of Measures. Adding this functionality may improve the record usage AP
 
 ## Record usage
 
-Users MUST record Measurements with the current context (implicit or explicit). Tags from the
+Users should record Measurements with the current context (implicit or explicit). Tags from the
 current context are recorded with the Measurements if they are any.
 
-Implementations MUST provide a means of recording Measurements. This functionality SHOULD be
+Implementations SHOULD provide a means of recording Measurements. This functionality MAY be
 provided through one of the following options:
 * As a method in a class/package (recommended name Stats/stats), taking a list of Measurement as
 argument. e.g. `record(List<Measurement>)` or `record(...Measurement)`.
-* As a `record` method of the appropriate class. e.g. `MeasurementMap.record()`.
+* As a `record` method of the appropriate data type. e.g. `MeasurementMap.record()`.
 
 Example in Java
 ```

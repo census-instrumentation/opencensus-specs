@@ -6,10 +6,10 @@ The core data types used are:
 * `ViewData`: encapsulates `View` data aggregation.
 
 ### AggregationData
-An AggregationData describes the result of data aggregation. The library MUST define an
+An AggregationData describes the result of data aggregation. The library SHOULD define an
 AggregationData for each Aggregation types defined.
 
-The library MUST provide support for multiple types of Aggregations:
+The library SHOULD provide support for multiple types of Aggregations:
 * `CountData`: data generated for a `Count` aggregation.
 * `SumDataDouble` and `SumDataInt`: data generated for a `Sum` aggregation based on the `Measure`
 type.
@@ -31,4 +31,4 @@ collection of these data.
 * `end_time`: a timestamp, describing the end time at which the underlying View ended collection
 of these data.
 
-The library MUST provide a means of retrieving the ViewData for any registered view in the system.
+The library SHOULD provide a means of retrieving the ViewData for any registered view in the system.
