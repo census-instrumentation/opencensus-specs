@@ -63,18 +63,18 @@ Here is a layering structure of the proposed OpenCensus library:
 ![Library components][LibraryComponents]
 
 #### Context
-
-Some of the features for distributed tracing and tagging need a way
-to propagate a specific context (trace, tags) in-process (possibly between threads)
-and between function calls.
+Some of the features for distributed tracing and tagging need a way to propagate a specific 
+context (trace, tags) in-process (possibly between threads) and between function calls.
 
 The key elements of the context support are:
 
 * Every implementation MUST offer an explicit or implicit generic Context propagation mechanism
   that allows different sub-contexts to be propagated.
-* Languages that already have this support, like Go ([context.Context][goContext]) or C# ([Activity][activity]),
-  MUST use the language supported generic context instead of building their own.
-* For an explicit generic context implementation you can look at the Java [io.grpc.Context][gRPCContext].
+* Languages that already have this support, like Go ([context.Context][goContext]) or C# 
+([Activity][activity]), MUST use the language supported generic context instead of building their
+own.
+* For an explicit generic context implementation you can look at the Java
+[io.grpc.Context][gRPCContext].
 
 #### Trace
 
