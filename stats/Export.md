@@ -18,17 +18,11 @@ type.
 
 ### ViewData
 A ViewData is defined from the following:
-* `name`: the name of the exported `View`.
-* `columns`: the `columns` of the exported `View`.
-* `Measure`: the `Measure` of the exported `View`. This field MAY be replaced with
-`MeasureDescription` if defined.
-* `aggregation`: the `aggregation` of the exported `View`
+* `View`: the exported `View`.
 * `rows`: a map of repeated tag values, and, dependent on Aggregation type in the `View` an
 `AggregationData` object. These contain the respective tag values corresponding to the `columns`
 parameter from the `View` and the aggregated data associated with those `columns`.
-* `start_time`: a timestamp, describing the start time at which the underlying View started
-collection of these data.
-* `end_time`: a timestamp, describing the end time at which the underlying View ended collection
-of these data.
+* `start_time`: a timestamp, describing the start time of the current stats snapshot.
+* `end_time`: a timestamp, describing the end time of the current stats snapshot.
 
 The library SHOULD provide a means of retrieving the ViewData for any registered view in the system.

@@ -1,6 +1,6 @@
 # Record API Overview
-The stats library allows users to record metrics for their applications or third-party libraries.
- The core data types used are:
+The stats library allows users to record metrics for their applications or libraries. The core 
+data types used are:
 * `Measure`: describes the type of the individual values recorded by an application.
 * `Measurement`: describes a data point to be collected for a `Measure`.
 
@@ -24,7 +24,7 @@ Measure MAY have getters for retrieving all of the information used in `Measure`
 Once created, Measure metadata is immutable.
 
 Example in Java
-```
+```java
 private static final MeasureDouble RPC_LATENCY =
     MeasureDouble.create("grpc.io/latency", "latency", "ms");
 ```
@@ -32,18 +32,19 @@ private static final MeasureDouble RPC_LATENCY =
 References to Measures in the system MAY be obtained from querying of registered Measures. This
 functionality is required to decouple the recording of the data from the exporting of the data.
 
-Implementations MAY define a `MeasureDescription` data type which contains all the read-only fields 
-from the `Measure` definition such as: `name`, `description`, `unit` and `type`.
+For languages that do not allow private properties/metadata and if they are needed implementations 
+MAY define a `MeasureDescription` data type which contains all the read-only fields  from the 
+`Measure` definition such as: `name`, `description`, `unit` and `type`.
 
-## Measurement / MeasurementMap
-A `Measurement` describes a value with the following metadata:
+## Measurement
+A `Measurement` is defined from the following:
 * `Measure`: the `Measure` to which this `value` is applied.
 * `value`: recorded value, MUST have the appropriate type to match the `Measure` definition.
 
 Implementations MAY define a `MeasurementMap` which describes a set of data points to be collected
-for a set of Measures. Adding this functionality may improve the record usage API.
+for a set of Measures. Adding this functionality may improve the efficiency of the record usage API.
 
-## Record usage
+## Recording Stats
 
 Users should record Measurements with the current context (implicit or explicit). Tags from the
 current context are recorded with the Measurements if they are any.
@@ -55,14 +56,16 @@ argument. e.g. `record(List<Measurement>)` or `record(...Measurement)`.
 * As a `record` method of the appropriate data type. e.g. `MeasurementMap.record()`.
 
 Example in Java
-```
+
+```java
 private static final MeasureDouble RPC_LATENCY =
-    MeasureDouble.create("grpc.io/latency", "latency", "ms")
+    MeasureDouble.create("grpc.io/client/latency", "latency", "ms");
 private static final MeasureLong RPC_BYTES_SENT =
-    MeasureLong.create("grpc.io/bytes_sent", "bytes sent", "kb");
+    MeasureLong.create("grpc.io/client/bytes_sent", "bytes sent", "kb");
 
 MeasurementMap measurementMap = new MeasurementMap();
 measurementMap.put(RPC_LATENCY, 10.3);
 measurementMap.put(RPC_BYTES_SENT, 124);
 measurementMap.record();  // reads context from thread-local.
+}
 ```

@@ -99,7 +99,7 @@ The key elements of the API can be broken down as:
 
 ##### Links
 
-* Trace API is described at the [Trace API][TraceAPI] document.
+* Trace API is [here][TraceAPI].
 * Data model is defined at the [Trace Data Model][TraceDataModel] document.
 
 #### Tags
@@ -146,6 +146,7 @@ The key elements the API MUST provide are:
 
 ##### Links
 
+* Stats API is [here][StatsAPI].
 * TODO: Add links to API definition and data model.
 
 ### Supported propagation formats
@@ -161,6 +162,7 @@ The key elements the API MUST provide are:
 [NamespaceAndPackage]: https://github.com/census-instrumentation/opencensus-specs/blob/master/NamespaceAndPackage.md
 [RFC2119]: https://www.ietf.org/rfc/rfc2119.txt
 [TraceAPI]: https://github.com/census-instrumentation/opencensus-specs/blob/master/trace/README.md
+[StatsAPI]: https://github.com/census-instrumentation/opencensus-specs/blob/master/stats/README.md
 [TraceContextSpecs]: https://github.com/TraceContext/tracecontext-spec
 [TraceDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/opencensus/proto/trace/trace.proto
 [BinaryEncoding]: https://github.com/census-instrumentation/opencensus-specs/blob/master/encodings/BinaryEncoding.md

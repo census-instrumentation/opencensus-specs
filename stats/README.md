@@ -7,8 +7,8 @@ OpenCensus allows users to create typed measures, record measurements, define da
 export aggregated data.
 
 ### Main APIs
-* [Record API](Record.md): used by the application and third-party libraries (e.g gRPC) owners to
-record metrics.
+* [Record API](Record.md): used by the application and libraries (e.g gRPC) owners to record 
+metrics.
 * [Data Aggregation API](DataAggregation.md): used by the application owners to define and enable
 data aggregation.
 * [Export API](Export.md): used by the specific vendors to define vendor specific exporters (e.g.
