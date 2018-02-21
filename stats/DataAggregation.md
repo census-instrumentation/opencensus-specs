@@ -14,7 +14,7 @@ into a count value.
 * `Mean`: indicates that data collected and aggregated with this `Aggregation` will calculate the
 mean value.
 * `Distribution`: indicates that the desired `Aggregation` is a histogram distribution. A
-distribution `Aggregation` may contain a histogram of the values in the population. User can
+distribution `Aggregation` may contain a histogram of the values in the population. User should
 define the bucket boundaries for that histogram.
 
 ## View
@@ -40,22 +40,22 @@ Example in Java
 ```
 // Define a list of tags to break down view by RPC method.
 ArrayList tagKeyListForMethodViews = new ArrayList();
-tagKeyListForMethodViews.add(rpcMethodKey);
+tagKeyListForMethodViews.add(RPC_METHOD_KEY);
 
 // Create latency buckets from 100us to 10s.
-BucketBoundaries latencyDistributionBuckets =
+BucketBoundaries LATENCY_DISTRIBUTION_BUCKETS =
     new BucketBoundaries(Arrays.asList(0, 0.01, 0.1, 1.0, 10.0, 1000.0, 10000.0));
 
 // Create a distribution with the latency buckets.
-Distribution latencyDistribution = new Distribution.create(latencyDistributionBuckets);
+Distribution LATENCY_DISTRIBUTION = new Distribution.create(LATENCY_DISTRIBUTION_BUCKETS);
 
 // Define a view to collect RPC latency stats by RPC method.
 View rpcLatencyByMethodView = new View(
   "rpc_latency_by_method", // name
   "Distribution of RPC latency broken down by Method", // description
-  rpcLatency, // Measure
+  RPC_LATENCY, // Measure
   tagKeyListForMethodViews, // aggregation_tags
-  latencyDistribution);
+  LATENCY_DISTRIBUTION);
 ```
 
 References to Views MAY be obtained from querying of registered Views at runtime. This

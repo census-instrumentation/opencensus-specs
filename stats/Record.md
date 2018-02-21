@@ -19,23 +19,18 @@ executed on VM".
 [Unified Code for Units of Measure](http://unitsofmeasure.org/ucum.html).
 * `type`: the only supported types are `int64` and `double`.
 
-Implementations SHOULD define a `Measure` data taype, constructed from the parameters above. 
+Implementations MAY define a `Measure` data type, constructed from the parameters above. 
 Measure MAY have getters for retrieving all of the information used in `Measure` definition. 
 Once created, Measure metadata is immutable.
 
 Example in Java
 ```
-private static final MeasureDouble rpcLatency =
+private static final MeasureDouble RPC_LATENCY =
     MeasureDouble.create("grpc.io/latency", "latency", "ms");
 ```
 
 References to Measures in the system MAY be obtained from querying of registered Measures. This
 functionality is required to decouple the recording of the data from the exporting of the data.
-
-Example in Java
-```
-private static final MeasureDouble rpcLatency = Stats.findMeasureDoubleByName("grpc.io/latency");
-```
 
 Implementations MAY define a `MeasureDescription` data type which contains all the read-only fields 
 from the `Measure` definition such as: `name`, `description`, `unit` and `type`.
@@ -61,13 +56,13 @@ argument. e.g. `record(List<Measurement>)` or `record(...Measurement)`.
 
 Example in Java
 ```
-private static final MeasureDouble rpcLatency =
+private static final MeasureDouble RPC_LATENCY =
     MeasureDouble.create("grpc.io/latency", "latency", "ms")
-private static final MeasureLong rpcBytesSent =
+private static final MeasureLong RPC_BYTES_SENT =
     MeasureLong.create("grpc.io/bytes_sent", "bytes sent", "kb");
 
 MeasurementMap measurementMap = new MeasurementMap();
-measurementMap.put(rpcLatency, 10.3);
-measurementMap.put(rpcBytesSent, 124);
+measurementMap.put(RPC_LATENCY, 10.3);
+measurementMap.put(RPC_BYTES_SENT, 124);
 measurementMap.record();  // reads context from thread-local.
 ```
