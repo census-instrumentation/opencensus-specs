@@ -49,8 +49,8 @@ for a set of Measures. Adding this functionality may improve the efficiency of t
 Users should record Measurements with the current context (implicit or explicit). Tags from the
 current context are recorded with the Measurements if they are any.
 
-Implementations SHOULD provide a means of recording Measurements. This functionality MAY be
-provided through one of the following options:
+Implementations SHOULD provide a means of recording multiple Measurements at once. This 
+functionality can be provided through one of the following options:
 * As a method in a class/package (recommended name Stats/stats), taking a list of Measurement as
 argument. e.g. `record(List<Measurement>)` or `record(...Measurement)`.
 * As a `record` method of the appropriate data type. e.g. `MeasurementMap.record()`.
