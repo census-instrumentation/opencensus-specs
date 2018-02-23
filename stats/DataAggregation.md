@@ -24,7 +24,7 @@ aggregated (e.g. into Distributions). A single `Measure` can be used by multiple
 A View is defined from the following:
 * `name`: a string by which the View will be referred to, e.g. "rpc_latency". Names MUST be unique
 within the library.
-* `description`: a free format descriptive string, e.g. "RPC counts for last minute and hour"
+* `description`: a free format descriptive string, e.g. "RPC latency distribution".
 * `Measure`: the Measure to which this view is applied.
 * `columns`: an array of tag keys. These values associated with tags of this name form the basis 
 by which individual stats will be aggregated (one aggregation per unique tag value). If none are 
@@ -51,7 +51,7 @@ private static final Distribution LATENCY_DISTRIBUTION =
 
 // Define a view to collect RPC latency stats by RPC method.
 private static final View RPC_LATENCY_BY_METHOD_VIEW = new View(
-  "rpc_latency_by_method", // name
+  View.Name.create("rpc_latency_by_method"),
   "Distribution of RPC latency broken down by Method", // description
   RPC_LATENCY, // Measure
   tagKeyListForMethodViews, // aggregation_tags

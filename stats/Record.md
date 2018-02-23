@@ -15,7 +15,7 @@ A Measure describes a value with the following metadata:
 compatible with the intended end usage, e.g, use host/path pattern.
 * `description`: a string describes the measure, e.g. "RPC latency in seconds", "Virtual cycles
 executed on VM".
-* `unit`: a string describing the unit used for the 'Measure. Follows the format described by
+* `unit`: a string describing the unit used for the `Measure`. Follows the format described by
 [Unified Code for Units of Measure](http://unitsofmeasure.org/ucum.html).
 * `type`: the only supported types are `int64` and `double`.
 
@@ -46,8 +46,8 @@ for a set of Measures. Adding this functionality may improve the efficiency of t
 
 ## Recording Stats
 
-Users should record Measurements with the current context (implicit or explicit). Tags from the
-current context are recorded with the Measurements if they are any.
+Users should record Measurements against a context, either an explicit context or the implicit 
+current context. Tags from the context are recorded with the Measurements if they are any.
 
 Implementations SHOULD provide a means of recording multiple Measurements at once. This 
 functionality can be provided through one of the following options:
