@@ -14,6 +14,8 @@ The library SHOULD provide support for multiple types of Aggregations:
 * `SumDataDouble` and `SumDataInt64`: data generated for a `Sum` aggregation based on the `Measure`
 type.
 * `MeanData`: data generated for a `Mean` aggregation.
+* `MaxData`: data generated for a `Max` aggregation.
+* `LastValueData`: data generated for a `LastValue` aggregation.
 * `DistributionData`: data generated for a `Distribution` aggregation.
 
 ### ViewData

@@ -13,6 +13,10 @@ The library SHOULD provide support for multiple types of Aggregations:
 * `Sum`: indicates that data collected and aggregated with this `Aggregation` will be summed up.
 * `Mean`: indicates that data collected and aggregated with this `Aggregation` will calculate the
 mean value.
+* `Max`: indicates that data collected and aggregated with this `Aggregation` will calculate the 
+maximum value recorded.
+* `LastValue`: indicates that data collected and aggregated with this `Aggregation` will 
+represent the last recorded value. This is useful to support Gauges.
 * `Distribution`: indicates that the desired `Aggregation` is a histogram distribution. A
 distribution `Aggregation` may contain a histogram of the values in the population. User should
 define the bucket boundaries for that histogram.
