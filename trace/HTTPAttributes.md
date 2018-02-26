@@ -25,14 +25,14 @@ known attributes/labels.
 The following table summarizes how OpenCensus attributes maps to the
 known attributes/labels on supported tracing backends.
 
-| OpenCensus attribute      | Zipkin             | Jaeger             | Stackdriver Trace label                    |
-|---------------------------|--------------------|--------------------|--------------------------------------------|
-| "http.host"               | "http.host"        |                    | "trace.cloud.google.com/http/host"         |
-| "http.method"             | "http.method"      | "http.method"      | "trace.cloud.google.com/http/method"       |
-| "http.path"               | "http.path"        |                    |                                            |
-| "http.route"              | "http.route"       |                    |                                            |
-| "http.user_agent"         |                    |                    | "trace.cloud.google.com/http/user_agent"   |
-| "http.status_code"        | "http.status_code" | "http.status_code" | "trace.cloud.google.com/http/status_code"  |
+| OpenCensus attribute      | Zipkin             | Jaeger             | Stackdriver Trace label   |
+|---------------------------|--------------------|--------------------|---------------------------|
+| "http.host"               | "http.host"        |                    | "/http/host"              |
+| "http.method"             | "http.method"      | "http.method"      | "/http/method"            |
+| "http.path"               | "http.path"        |                    | "/http/path"              |
+| "http.route"              | "http.route"       |                    | "/http/route"             |
+| "http.user_agent"         |                    |                    | "/http/user_agent"        |
+| "http.status_code"        | "http.status_code" | "http.status_code" | "/http/status_code"       |
 
 Request body and response size of incoming and outgoing requests should be
 represented as message events. Each redirect should be represented as a
