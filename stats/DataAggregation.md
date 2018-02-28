@@ -11,8 +11,6 @@ An Aggregation describes how data collected is aggregated.
 The library SHOULD provide support for multiple types of Aggregations:
 * `Count`: counts the number of measurements recorded.
 * `Sum`: indicates that data collected and aggregated with this `Aggregation` will be summed up.
-* `Mean`: indicates that data collected and aggregated with this `Aggregation` will calculate the
-mean value.
 * `Max`: indicates that data collected and aggregated with this `Aggregation` will calculate the 
 maximum value recorded.
 * `LastValue`: indicates that data collected and aggregated with this `Aggregation` will 
