@@ -31,7 +31,7 @@ within the library.
 * `columns`: an array of tag keys. These values associated with tags of this name form the basis 
 by which individual stats will be aggregated (one aggregation per unique tag value). If none are 
 provided, then all data is recorded in a single aggregation.
-* `aggregation`: `Distribution`, `Count`, `Sum`, `Mean`.
+* `aggregation`: `Distribution`, `Count`, `Sum`, `LastValue`, `Max`.
 
 Implementations SHOULD define a View data type, constructed from the parameters above. Views MAY 
 have getters for retrieving all of the information used in View definition. Once created, View 

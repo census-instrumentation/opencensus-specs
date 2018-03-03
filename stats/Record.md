@@ -33,12 +33,13 @@ References to Measures in the system MAY be obtained from querying of registered
 functionality is required to decouple the recording of the data from the exporting of the data.
 
 For languages that do not allow private properties/metadata and if they are needed implementations 
-MAY define a `MeasureDescription` data type which contains all the read-only fields  from the 
+MAY define a `MeasureDescription` data type which contains all the read-only fields from the
 `Measure` definition such as: `name`, `description`, `unit` and `type`.
 
 ## Measurement
 A `Measurement` is defined from the following:
-* `Measure`: the `Measure` to which this `value` is applied.
+* `Measure`: the `Measure` to which this `value` is applied. Some implementations may use the
+measure name instead of the `Measure`.
 * `value`: recorded value, MUST have the appropriate type to match the `Measure` definition.
 
 Implementations MAY define a `MeasurementMap` which describes a set of data points to be collected
