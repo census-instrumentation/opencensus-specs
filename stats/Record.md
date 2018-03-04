@@ -13,7 +13,7 @@ A Measure describes a value with the following metadata:
 * `name`: a string by which the measure will be referred to, e.g. "rpc_server_latency", or
 "vm_cpu_cycles". Names MUST be unique within the library. It is recommended to use names 
 compatible with the intended end usage, e.g, use host/path pattern.
-* `description`: a string describes the measure, e.g. "RPC latency in seconds", "Virtual cycles
+* `description`: a string describing the measure, e.g. "RPC latency in seconds", "Virtual cycles
 executed on VM".
 * `unit`: a string describing the unit used for the `Measure`. Follows the format described by
 [Unified Code for Units of Measure](http://unitsofmeasure.org/ucum.html).
@@ -33,12 +33,13 @@ References to Measures in the system MAY be obtained from querying of registered
 functionality is required to decouple the recording of the data from the exporting of the data.
 
 For languages that do not allow private properties/metadata and if they are needed implementations 
-MAY define a `MeasureDescription` data type which contains all the read-only fields  from the 
+MAY define a `MeasureDescription` data type which contains all the read-only fields from the
 `Measure` definition such as: `name`, `description`, `unit` and `type`.
 
 ## Measurement
 A `Measurement` is defined from the following:
-* `Measure`: the `Measure` to which this `value` is applied.
+* `Measure`: the `Measure` to which this `value` is applied. Some implementations may use the
+measure name instead of the `Measure`.
 * `value`: recorded value, MUST have the appropriate type to match the `Measure` definition.
 
 Implementations MAY define a `MeasurementMap` which describes a set of data points to be collected
