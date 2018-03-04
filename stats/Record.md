@@ -13,7 +13,7 @@ A Measure describes a value with the following metadata:
 * `name`: a string by which the measure will be referred to, e.g. "rpc_server_latency", or
 "vm_cpu_cycles". Names MUST be unique within the library. It is recommended to use names 
 compatible with the intended end usage, e.g, use host/path pattern.
-* `description`: a string describes the measure, e.g. "RPC latency in seconds", "Virtual cycles
+* `description`: a string describing the measure, e.g. "RPC latency in seconds", "Virtual cycles
 executed on VM".
 * `unit`: a string describing the unit used for the `Measure`. Follows the format described by
 [Unified Code for Units of Measure](http://unitsofmeasure.org/ucum.html).
