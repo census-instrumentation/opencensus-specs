@@ -1,8 +1,11 @@
-# Span API
+# Span
 
-This class represents a Span. A span contains a SpanContext and  allows users to record 
-tracing events based on the data model defined [here](https://github.com/census-instrumentation/opencensus-proto/blob/master/opencensus/proto/trace/trace.proto).
-All Span implementations MUST not allow users to read the recorded data, 
+Span represents a single operation within a trace. Spans can be nested to form a trace tree. 
+Often, a trace contains a root span that describes the end-to-end latency and, optionally, one or
+more sub-spans for its sub-operations.
+ 
+A span contains a SpanContext and allows users to record tracing events based on the data model 
+defined [here][SpanDataModel].
 
 ## Span structure
 
@@ -27,6 +30,51 @@ Represents the options for a trace. It is represented as 1 byte (bitmap).
 ##### Supported bits
 * Sampling bit -  Bit to represent whether trace is sampled or not (mask `0x1`).
 
-## Span creation API
+## Span creation
+The implementation MUST allow users to create two types of Spans:
+* Root Spans - spans that do not have a parent.
+* Child Spans - the parent can be explicitly set or inherit from the Context.
 
-TODO(bdrutu): Add details here.
+When creating a Span the implementation MUST allow users to create the Span attached or detached 
+from the Context, this allows users to manage the interaction with the Context independently of 
+the Span lifetime:
+* Attached to the Context - the newly created Span is attached to the Context.
+* Detached from the Context - the newly created Span is not attached to any Context.
+
+### How Span interacts with Context?
+Context interaction represents the process of attaching/detaching a Span to the Context 
+in order to propagate it in-process (possibly between threads) and between function calls.
+
+There are two supported implementations for the Context based on how the propagation is implemented:
+* With implicit propagation - implicitly passed between function calls and threads, usually 
+implemented using thread-local variables (e.g. Java [io.grpc.Context][javaContext])
+* With explicit propagation - explicitly passed between function calls and threads (e.g. Go 
+[context.Context][goContext])
+
+When an implicit propagated Context is used, the implementation MUST use scoped objects to 
+attach/detach a Span (scoped objects represent auto closable objects, e.g. stack allocated 
+objects in C++):
+* When attach/detach an already created Span the API MAY be called `WithSpan`.
+* When attach/detach at the creation time the API MAY be called `StartSpan` or `StartScopedSpan`.
+
+When an explicit propagated Context is used, the implementation MUST create a new Context when a 
+Span is attached (immutable Context):
+* When attach/detach an already created Span the API MAY be called `WithSpan`.
+* When attach/detach at the creation time the API MAY be called `StartSpan` or `StartScopedSpan`.
+
+### What is Span lifetime?
+Span lifetime represents the process of recording the start and the end timestamps to the Span 
+object:
+* The start time is recorded when the Span is created.
+* The end time needs to be recorded when the operation is ended.
+
+### Why support Spans that are not attached to the Context?
+* Allow users to use the OpenCensus library without using a Context.
+* Allow users to have more control for the lifetime of the Span.
+* There are cases, for example HTTP/RPC interceptors, where the Span creation and usage happens in 
+different places, and the user does not have control of the framework to control the Context 
+propagation.
+
+[goContext]: https://golang.org/pkg/context
+[javaContext]: https://github.com/grpc/grpc-java/blob/master/context/src/main/java/io/grpc/Context.java
+[SpanDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/trace/trace.proto

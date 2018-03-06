@@ -1,4 +1,4 @@
-# TraceConfig API
+# TraceConfig
 
 Global configuration of the trace service. This allows users to change configs for the default
 sampler, maximum events to be kept, etc.
