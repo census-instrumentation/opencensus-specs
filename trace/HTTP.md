@@ -9,16 +9,22 @@ client and a span for incoming requests at the server.
 
 Span name is formatted as:
 
-* Sent.$host[:$port]/$path for outgoing requests.
-* Recv.$host[:$port]/$path for incoming requests.
+* /$path for outgoing requests.
+* /($path|$route) for incoming requests.
+
+If route cannot be determined, path is used to name the
+the span for outgoing requests.
 
 Port MUST be omitted if it is 80 or 443.
 
 Examples of span names:
 
-* Sent.example.com/users
-* Recv.example.com:78/messages
-* Sent.example.com/users/25f4c31d
+* /users
+* /messages/[:id]
+* /users/25f4c31d
+
+Outgoing requests should be a span kind of CLIENT and
+incoming requests should be a span kind of SERVER.
 
 ## Propagation
 
@@ -36,8 +42,10 @@ request object.
 
 ## Status
 
-Implementations should set status if HTTP request or response
-is not successful (not 2xx).
+Implementations MUST set status if HTTP request or response
+is not successful (e.g. not 2xx). In redirection case, if
+the client doesn't have autoredirection support, request
+should be considered successful.
 
 Set status code to UNKNOWN (2) if the reason cannot be inferred
 at the callsite or from the HTTP status code.
@@ -76,6 +84,7 @@ All attributes are optional.
 | Attribute name            | Description                 | Example value                   |
 |---------------------------|-----------------------------|---------------------------------|
 | "http.host"               | Request URL host            | "example.com"                   |
+| "http.port"               | Request URL port            | 443                             |
 | "http.method"             | Request URL method          | "GET"                           |
 | "http.path"               | Request URL path            | "/users/25f4c31d"               |
 | "http.route"              | Matched request URL route   | "/users/:userID"                |
@@ -91,15 +100,10 @@ known attributes/labels on supported tracing backends.
 
 | OpenCensus attribute      | Zipkin             | Jaeger             | Stackdriver Trace label   |
 |---------------------------|--------------------|--------------------|---------------------------|
-| "http.host"               | "http.host"        | *                  | "/http/host"              |
+| "http.host"               | "http.host"        | "http.host"        | "/http/host"              |
 | "http.method"             | "http.method"      | "http.method"      | "/http/method"            |
-| "http.path"               | "http.path"        | *                  | "/http/path"              |
-| "http.route"              | "http.route"       |                    | "/http/route"             |
-| "http.user_agent"         |                    |                    | "/http/user_agent"        |
+| "http.path"               | "http.path"        | "http.path"        | "/http/path"              |
+| "http.port"               | "http.port"        | "http.port"        | "http.port"               |
+| "http.route"              | "http.route"       | "http.route"       | "/http/route"             |
+| "http.user_agent"         | "http.user_agent"  | "http.user_agent"  | "/http/user_agent"        |
 | "http.status_code"        | "http.status_code" | "http.status_code" | "/http/status_code"       |
-
-
-(*) Jager supports "http.url" instead of a path and method attribute.
-OpenCensus doesn't collect the full URL for security reasons.
-Exporters can build a URL from the collected method and path and
-upload it as the "http.url" attribute for Jaeger.
