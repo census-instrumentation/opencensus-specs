@@ -13,10 +13,22 @@ all of the information that must be propagated across process boundaries.
 
 ## TagKey
 
-A string or string wrapper, with some restrictions:
+A TagKey consists of a Name and a Scope.
+
+The Name of a TagKey is a string or string wrapper, with some restrictions:
 
 - Must contain only printable ASCII (codes between 32 and 126, inclusive).
 - Must have length greater than zero and less than 256.
+
+Scope indicates the default propagation behavior. The Scope may be one of:
+
+* Local: Tags with this key are local to the current process and are not
+  propagated across process boundaries, but may be propagated within-process.
+* Request: Tags with this key are scoped to the processing of this request,
+  and are propagated across process boundaries.
+
+Scope should usually be explicitly specified. In cases where this isn't 
+convenient, the default scope should be Local.
 
 ## TagValue
 
