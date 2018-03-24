@@ -13,3 +13,6 @@ metrics.
 data aggregation.
 * [Export API](Export.md): used by the specific vendors to define vendor specific exporters (e.g.
 Prometheus, Stackdriver, SignalFx).
+
+## Utils
+* [HTTP integration](HTTP.md): document about how to instrument http frameworks.
