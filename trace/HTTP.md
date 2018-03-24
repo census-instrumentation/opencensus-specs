@@ -83,8 +83,7 @@ All attributes are optional.
 
 | Attribute name            | Description                 | Example value                   |
 |---------------------------|-----------------------------|---------------------------------|
-| "http.host"               | Request URL host            | "example.com"                   |
-| "http.port"               | Request URL port            | 443                             |
+| "http.host"               | Request URL host            | "example.com:779"               |
 | "http.method"             | Request URL method          | "GET"                           |
 | "http.path"               | Request URL path            | "/users/25f4c31d"               |
 | "http.route"              | Matched request URL route   | "/users/:userID"                |
@@ -103,7 +102,6 @@ known attributes/labels on supported tracing backends.
 | "http.host"               | "http.host"        | "http.host"        | "/http/host"              |
 | "http.method"             | "http.method"      | "http.method"      | "/http/method"            |
 | "http.path"               | "http.path"        | "http.path"        | "/http/path"              |
-| "http.port"               | "http.port"        | "http.port"        | "http.port"               |
 | "http.route"              | "http.route"       | "http.route"       | "/http/route"             |
 | "http.user_agent"         | "http.user_agent"  | "http.user_agent"  | "/http/user_agent"        |
 | "http.status_code"        | "http.status_code" | "http.status_code" | "/http/status_code"       |
