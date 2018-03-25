@@ -7,4 +7,5 @@ describes the key types and the overall behavior.
 * [TraceConfig](TraceConfig.md)
 
 ## Utils
-* [Sampling logic](Sampling.md)
+* [HTTP integration](HTTP.md): document about how to instrument http frameworks.
+* [Sampling logic](Sampling.md): document about how sampling works.
