@@ -51,7 +51,7 @@ This is customer's application/binary.
 
 ### Namespace and Package
 
-* For details about the library package names structure see [Namespace and Package][NamespaceAndPackage].
+* For details about the library package names structure see [Namespace and Package](NamespaceAndPackage.md).
 
 ### Components
 
@@ -99,8 +99,8 @@ The key elements of the API can be broken down as:
 
 ##### Links
 
-* Trace API is [here][TraceAPI].
-* Data model is defined at the [Trace Data Model][TraceDataModel] document.
+* Details about Trace package can be found [here](trace/README.md).
+* Data model is defined at the [Trace Data Model][TraceDataModel].
 
 #### Tags
 
@@ -121,7 +121,7 @@ The key elements of the Tags component are:
 
 ##### Links
 
-* TODO: Add links to API definition and data model.
+* Details about Tags package can be found [here](tags/README.md).
 
 #### Stats
 
@@ -146,24 +146,21 @@ The key elements the API MUST provide are:
 
 ##### Links
 
-* Stats API is [here][StatsAPI].
-* TODO: Add links to API definition and data model.
+* Details about Stats package can be found [here](stats/README.md).
+* Data model is defined at the [Stats Data Model][StatsDataModel].
 
 ### Supported propagation formats
 
 * Library MUST support the [TraceContext][TraceContextSpecs] format for Trace and Tags components.
-* Binary encoding is defined at the [BinaryEncoding][BinaryEncoding] document.
+* Binary encoding is defined at the [BinaryEncoding](encodings/BinaryEncoding.md) document.
 
 [EcosystemLayers]: /drawings/EcosystemLayers.png "Ecosystem Layer"
 [DapperPaper]: https://research.google.com/pubs/pub36356.html
 [goContext]: https://golang.org/pkg/context
 [gRPCContext]: https://github.com/grpc/grpc-java/blob/master/context/src/main/java/io/grpc/Context.java
 [LibraryComponents]: /drawings/LibraryComponents.png "OpenCensus Library Components"
-[NamespaceAndPackage]: https://github.com/census-instrumentation/opencensus-specs/blob/master/NamespaceAndPackage.md
 [RFC2119]: https://www.ietf.org/rfc/rfc2119.txt
-[TraceAPI]: https://github.com/census-instrumentation/opencensus-specs/blob/master/trace/README.md
-[StatsAPI]: https://github.com/census-instrumentation/opencensus-specs/blob/master/stats/README.md
+[StatsDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/opencensus/proto/stats/stats.proto
 [TraceContextSpecs]: https://github.com/TraceContext/tracecontext-spec
 [TraceDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/opencensus/proto/trace/trace.proto
-[BinaryEncoding]: https://github.com/census-instrumentation/opencensus-specs/blob/master/encodings/BinaryEncoding.md
 [activity]: https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.DiagnosticSource/src/ActivityUserGuide.md
