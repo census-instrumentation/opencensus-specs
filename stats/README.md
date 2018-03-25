@@ -1,5 +1,5 @@
-# OpenCensus Library Stats API
-This documentation serves to document the "look and feel" of the open source stats API's. It 
+# OpenCensus Library Stats Package
+This documentation serves to document the "look and feel" of the open source stats package. It 
 describes the key types and the overall behavior.
 
 ## Overview
