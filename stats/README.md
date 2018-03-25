@@ -16,3 +16,4 @@ Prometheus, Stackdriver, SignalFx).
 
 ## Utils
 * [HTTP integration](HTTP.md): document about how to instrument http frameworks.
+* [gRPC integration](gRPC.md): document about how to instrument gRPC framework.
