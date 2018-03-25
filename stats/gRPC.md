@@ -25,48 +25,48 @@ Client stats are recorded for each individual gRPC request. All measurements exc
 
 | Measure name                               | Unit | Description                                                                                   |
 |--------------------------------------------|------|-----------------------------------------------------------------------------------------------|
-| grpc.io/client/started_count               |      | Number of all client requests started. Records "1" at the beginning of each gRPC request.     |
-| grpc.io/client/request_count               |      | Number of request messages in a gRPC request.                                                 |
-| grpc.io/client/request_bytes               | By   | Total compressed bytes sent in a gRPC request.                                                |
-| grpc.io/client/uncompressed_request_bytes  | By   | Total uncompressed bytes sent in a gRPC request.                                              |
-| grpc.io/client/response_count              |      | Number of response messages in a gRPC request.                                                |
-| grpc.io/client/response_bytes              | By   | Total compressed bytes received in a gRPC request.                                            |
-| grpc.io/client/uncompressed_response_bytes | By   | Total uncompressed bytes received in a gRPC request.                                          |
-| grpc.io/client/latency                     | ms   | Time between first byte of request received to last byte of response sent, or terminal error. |
+| grpc.io/client/started_count               | 1    | Number of all client requests started. Records "1" at the beginning of each gRPC request.     |
+| grpc.io/client/request_messages_count      | 1    | Number of request messages sent in a gRPC request. Has value "1" for non-streaming RPCs.      |
+| grpc.io/client/request_bytes               | By   | Total compressed bytes sent in total across all request messages in a gRPC request.           |
+| grpc.io/client/uncompressed_request_bytes  | By   | Total uncompressed bytes sent in total across all request messages in a gRPC request.         |
+| grpc.io/client/response_messages_count     | 1    | Number of response messages received in a gRPC request. Has value "1" for non-streaming RPCs. |
+| grpc.io/client/response_bytes              | By   | Total compressed bytes received in total across all response messages in a gRPC request.      |
+| grpc.io/client/uncompressed_response_bytes | By   | Total uncompressed bytes received in total across all response messages in a gRPC request.    |
+| grpc.io/client/latency                     | ms   | Time between first byte of request sent to last byte of response received, or terminal error. |
 | grpc.io/client/server_latency              | ms   | Propagated from the server and should have the same value as "grpc.io/server/latency".        |
 
 ### Tags
 
 All client metrics should be tagged with the following. Some tags are not available for measurements recorded at the beginning of the gRPC request (e.g. `grpc.canonical_status`).
 
-| Tag name              | Description                                                   |
-|-----------------------|---------------------------------------------------------------|
-| grpc.client_method    | Full gRPC method name, including package, service and method. |
-| grpc.canonical_status | gRPC canonical status code.                                   |
+| Tag name           | Description                                                   |
+|--------------------|---------------------------------------------------------------|
+| grpc.client_method | Full gRPC method name, including package, service and method. |
+| grpc.client_status | gRPC client status code.                                      |
 
 ### Default views
 
 The following set of views are considered minimum required to monitor client side performance:
 
-| View name                                   | Measure suffix              | Aggregation  | Tags suffix                     |
-|---------------------------------------------|-----------------------------|--------------|---------------------------------|
-| grpc.io/client/started_count                | started_count               | count        | client_method                   |
-| grpc.io/client/request_bytes                | request_bytes               | distribution | client_method                   |
-| grpc.io/client/response_bytes               | response_bytes              | distribution | client_method                   |
-| grpc.io/client/latency                      | latency                     | distribution | client_method                   |
-| grpc.io/client/finished_count               | latency                     | count        | client_method, canonical_status |
+| View name                                   | Measure suffix              | Aggregation  | Tags suffix                  |
+|---------------------------------------------|-----------------------------|--------------|------------------------------|
+| grpc.io/client/started_count                | started_count               | count        | client_method                |
+| grpc.io/client/request_bytes                | request_bytes               | distribution | client_method                |
+| grpc.io/client/response_bytes               | response_bytes              | distribution | client_method                |
+| grpc.io/client/latency                      | latency                     | distribution | client_method                |
+| grpc.io/client/finished_count               | latency                     | count        | client_method, client_status |
 
 ### Extra views
 
 The following set of views are considered useful but not mandatory to monitor client side performance:
 
-| View name                                   | Measure suffix              | Aggregation  | Tags suffix                     |
-|---------------------------------------------|-----------------------------|--------------|---------------------------------|
-| grpc.io/client/request_count                | request_count               | distribution | client_method                   |
-| grpc.io/client/uncompressed_request_bytes   | uncompressed_request_bytes  | distribution | client_method                   |
-| grpc.io/client/response_count               | response_count              | distribution | client_method                   |
-| grpc.io/client/uncompressed_response_bytes  | uncompressed_response_bytes | distribution | client_method                   |
-| grpc.io/client/server_latency               | server_latency              | distribution | client_method                   |
+| View name                                   | Measure suffix              | Aggregation  | Tags suffix                  |
+|---------------------------------------------|-----------------------------|--------------|------------------------------|
+| grpc.io/client/request_messages_count       | request_messages_count      | distribution | client_method                |
+| grpc.io/client/uncompressed_request_bytes   | uncompressed_request_bytes  | distribution | client_method                |
+| grpc.io/client/response_messages_count      | response_messages_count     | distribution | client_method                |
+| grpc.io/client/uncompressed_response_bytes  | uncompressed_response_bytes | distribution | client_method                |
+| grpc.io/client/server_latency               | server_latency              | distribution | client_method                |
 
 ## Server
 
@@ -74,52 +74,52 @@ Server stats are recorded for each individual gRPC request. All measurements exc
 
 | Measure name                               | Unit | Description                                                                                   |
 |--------------------------------------------|------|-----------------------------------------------------------------------------------------------|
-| grpc.io/server/started_count               |      | Number of all server requests started. Records "1" at the beginning of each gRPC request.     |
-| grpc.io/server/request_count               |      | Number of request messages in a gRPC request.                                                 |
-| grpc.io/server/request_bytes               | By   | Total compressed bytes received in a gRPC request.                                            |
-| grpc.io/server/uncompressed_request_bytes  | By   | Total uncompressed bytes received in a gRPC request.                                          |
-| grpc.io/server/response_count              |      | Number of response messages in a gRPC request.                                                |
-| grpc.io/server/response_bytes              | By   | Total compressed bytes sent in a gRPC request.                                                |
-| grpc.io/server/uncompressed_response_bytes | By   | Total uncompressed bytes sent in a gRPC request.                                              |
+| grpc.io/server/started_count               | 1    | Number of all server requests started. Records "1" at the beginning of each gRPC request.     |
+| grpc.io/server/request_messages_count      | 1    | Number of request messages received in a gRPC request. Has value "1" for non-streaming RPCs.  |
+| grpc.io/server/request_bytes               | By   | Total compressed bytes received in total across all request messages in a gRPC request.       |
+| grpc.io/server/uncompressed_request_bytes  | By   | Total uncompressed bytes received in total across all request messages in a gRPC request.     |
+| grpc.io/server/response_messages_count     | 1    | Number of response messages sent  in a gRPC request. Has value "1" for non-streaming RPCs.    |
+| grpc.io/server/response_bytes              | By   | Total compressed bytes sent in total across all response messages in a gRPC request.          |
+| grpc.io/server/uncompressed_response_bytes | By   | Total uncompressed bytes sent in total across all response messages in a gRPC request.        |
 | grpc.io/server/latency                     | ms   | Time between first byte of request received to last byte of response sent, or terminal error. |
 
 ### Tags
 
 All server metrics should be tagged with the following. Some tags are not available for measurements recorded at the beginning of the gRPC request (e.g. `grpc.canonical_status`).
 
-| Tag name              | Description                                                   |
-|-----------------------|---------------------------------------------------------------|
-| grpc.server_method    | Full gRPC method name, including package, service and method. |
-| grpc.canonical_status | gRPC canonical status code.                                   |
+| Tag name           | Description                                                   |
+|--------------------|---------------------------------------------------------------|
+| grpc.server_method | Full gRPC method name, including package, service and method. |
+| grpc.server_status | gRPC server status code.                                      |
 
 ### Default views
 
 The following set of views are considered minimum required to monitor server side performance:
 
-| View name                                   | Measure suffix              | Aggregation  | Tags suffix                     |
-|---------------------------------------------|-----------------------------|--------------|---------------------------------|
-| grpc.io/server/started_count                | started_count               | count        | server_method                   |
-| grpc.io/server/request_bytes                | request_bytes               | distribution | server_method                   |
-| grpc.io/server/response_bytes               | response_bytes              | distribution | server_method                   |
-| grpc.io/server/latency                      | latency                     | distribution | server_method                   |
-| grpc.io/server/finished_count               | latency                     | count        | server_method, canonical_status |
+| View name                                   | Measure suffix              | Aggregation  | Tags suffix                  |
+|---------------------------------------------|-----------------------------|--------------|------------------------------|
+| grpc.io/server/started_count                | started_count               | count        | server_method                |
+| grpc.io/server/request_bytes                | request_bytes               | distribution | server_method                |
+| grpc.io/server/response_bytes               | response_bytes              | distribution | server_method                |
+| grpc.io/server/latency                      | latency                     | distribution | server_method                |
+| grpc.io/server/finished_count               | latency                     | count        | server_method, server_status |
 
 ### Extra views
 
 The following set of views are considered useful but not mandatory to monitor server side performance:
 
-| View name                                   | Measure suffix              | Aggregation  | Tags suffix                     |
-|---------------------------------------------|-----------------------------|--------------|---------------------------------|
-| grpc.io/server/request_count                | request_count               | distribution | server_method                   |
-| grpc.io/server/uncompressed_request_bytes   | uncompressed_request_bytes  | distribution | server_method                   |
-| grpc.io/server/response_count               | response_count              | distribution | server_method                   |
-| grpc.io/server/uncompressed_response_bytes  | uncompressed_response_bytes | distribution | server_method                   |
+| View name                                   | Measure suffix              | Aggregation  | Tags suffix                  |
+|---------------------------------------------|-----------------------------|--------------|------------------------------|
+| grpc.io/server/request_messages_count       | request_messages_count      | distribution | server_method                |
+| grpc.io/server/uncompressed_request_bytes   | uncompressed_request_bytes  | distribution | server_method                |
+| grpc.io/server/response_messages_count      | response_messages_count     | distribution | server_method                |
+| grpc.io/server/uncompressed_response_bytes  | uncompressed_response_bytes | distribution | server_method                |
 
 ## FAQ
 
 ### Why different tag name for server/client method?
 This way users can configure views to correlate incoming with outgoing requests. A view example:
 
-| View name                                   | Measure suffix              | Aggregation  | Tags suffix                     |
-|---------------------------------------------|-----------------------------|--------------|---------------------------------|
-| grpc.io/client/latency_by_server_method     | latency                     | distribution | client_method, server_method    |
+| View name                                   | Measure suffix              | Aggregation  | Tags suffix                  |
+|---------------------------------------------|-----------------------------|--------------|------------------------------|
+| grpc.io/client/latency_by_server_method     | latency                     | distribution | client_method, server_method |
