@@ -20,8 +20,8 @@ A string or string wrapper, with some restrictions:
 
 ## TagValue
 
-A string or string wrapper with the same restrictions as `TagKey`, except that it
-is allowed to be empty.
+A TagValue can be any unicode string whose size when encoded in UTF-8
+is less than 256 bytes. An empty value is allowed.
 
 ## Serialization
 
