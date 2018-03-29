@@ -36,10 +36,10 @@ All client metrics should be tagged with the following.
 
 | Tag suffix         | Description                                                                                              |
 |--------------------|----------------------------------------------------------------------------------------------------------|
-| http.client_method | HTTP method, capitalized (i.e. GET, POST, PUT, DELETE, etc.)                                             |
-| http.client_path   | URL path (not including query string)                                                                    |
-| http.client_status | HTTP status code as an integer (e.g. 200, 404, 500.), or "error" if no response status line was received |
-| http.client_host   | Value of the request Host header                                                                         |
+| http_client_method | HTTP method, capitalized (i.e. GET, POST, PUT, DELETE, etc.)                                             |
+| http_client_path   | URL path (not including query string)                                                                    |
+| http_client_status | HTTP status code as an integer (e.g. 200, 404, 500.), or "error" if no response status line was received |
+| http_client_host   | Value of the request Host header                                                                         |
 
 ### Default views
 
@@ -74,10 +74,10 @@ All server metrics should be tagged with the following.
 
 | Tag suffix         | Description                                                         |
 |--------------------|---------------------------------------------------------------------|
-| http.server_method | HTTP method, capitalized (i.e. GET, POST, PUT, DELETE, etc.)        |
-| http.server_path   | URL path (not including query string)                               |
-| http.server_status | HTTP server status code returned, as an integer e.g. 200, 404, 500. |
-| http.server_host   | Value of the request Host header                                    |
+| http_server_method | HTTP method, capitalized (i.e. GET, POST, PUT, DELETE, etc.)        |
+| http_server_path   | URL path (not including query string)                               |
+| http_server_status | HTTP server status code returned, as an integer e.g. 200, 404, 500. |
+| http_server_host   | Value of the request Host header                                    |
 
 ### Default views
 
