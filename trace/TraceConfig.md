@@ -5,7 +5,8 @@ sampler, maximum events to be kept, etc.
 
 ## TraceParams
 Represents the set of parameters that users can control 
-* Default `Sampler` - used when creating a Span if no specific sampler is given.
+* Default `Sampler` - used when creating a Span if no specific sampler is given. The default sampler
+is a [Probability](Sampling.md) sampler with the probability set to `1/10000`.
 
 TODO(bdrutu): Define the rest of the params.
 
