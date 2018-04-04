@@ -69,8 +69,8 @@ Server stats are recorded for each individual HTTP request, including for each r
 ### Tags
 
 All server metrics should be tagged with the following. 
-`http.server_method`, `http.server_path`, `http.server_host` are available in the context for the entire request processing.
-`http.server_status` is only available around the stats recorded at the end of request processing.
+`http_server_method`, `http_server_path`, `http_server_host` are available in the context for the entire request processing.
+`http_server_status` is only available around the stats recorded at the end of request processing.
 
 | Tag suffix         | Description                                                         |
 |--------------------|---------------------------------------------------------------------|

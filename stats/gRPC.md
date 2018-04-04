@@ -89,8 +89,8 @@ All server metrics should be tagged with the following.
 | grpc_server_method | Full gRPC method name, including package, service and method, e.g. com.exampleapi.v4.BookshelfService/Checkout |
 | grpc_server_status | gRPC server status code returned, e.g. OK, CANCELLED, DEADLINE_EXCEEDED                                        |
 
-`grpc.server_method` is available in the context for the entire RPC call handling. 
-`grpc.server_status` is only available around metrics recorded at the end of the request.
+`grpc_server_method` is available in the context for the entire RPC call handling. 
+`grpc_server_status` is only available around metrics recorded at the end of the request.
 
 ### Default views
 
