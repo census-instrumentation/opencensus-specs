@@ -13,7 +13,6 @@ The library SHOULD provide support for multiple types of Aggregations:
 * `CountData`: data generated for a `Count` aggregation.
 * `SumDataDouble` and `SumDataInt64`: data generated for a `Sum` aggregation based on the `Measure`
 type.
-* `MaxData`: data generated for a `Max` aggregation.
 * `LastValueDataDouble` and `LastValueDataInt64`: data generated for a `LastValue` aggregation based 
 on the `Measure` type.
 * `DistributionData`: data generated for a `Distribution` aggregation.
@@ -28,3 +27,16 @@ parameter from the `View` and the aggregated data associated with those `columns
 * `end_time`: a timestamp, describing the end time of the current stats snapshot.
 
 The library SHOULD provide a means of retrieving the ViewData for any registered view in the system.
+
+### Aggregation to Metric
+
+| Aggregation  | Measure Type    | Metric Type  | Value Type   | Unit               |
+|--------------|-----------------|--------------|--------------|--------------------|
+| Count        | Int64 or Double | CUMULATIVE   | INT64        | Dimensionless Unit |
+| Sum          | Double          | CUMULATIVE   | DOUBLE       | Measure Unit       |
+| Sum          | Int64           | CUMULATIVE   | INT64        | Measure Unit       |
+| LastValue    | Double          | GAUGE        | DOUBLE       | Measure Unit       |
+| LastValue    | Int64           | GAUGE        | INT64        | Measure Unit       |
+| Distribution | Int64 or Double | CUMULATIVE   | DISTRIBUTION | Measure Unit       |
+
+Dimensionless Unit can be represented as "1".
