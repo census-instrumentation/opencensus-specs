@@ -28,7 +28,7 @@ parameter from the `View` and the aggregated data associated with those `columns
 
 The library SHOULD provide a means of retrieving the ViewData for any registered view in the system.
 
-### Aggregation to Metrics
+### Aggregation to Metric
 
 | Aggregation  | Measure Type    | Metric Type  | Value Type   | Unit               |
 |--------------|-----------------|--------------|--------------|--------------------|
