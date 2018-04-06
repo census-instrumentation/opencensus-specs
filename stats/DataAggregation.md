@@ -11,8 +11,6 @@ An Aggregation describes how data collected is aggregated.
 The library SHOULD provide support for multiple types of Aggregations:
 * `Count`: counts the number of measurements recorded.
 * `Sum`: indicates that data collected and aggregated with this `Aggregation` will be summed up.
-* `Max`: indicates that data collected and aggregated with this `Aggregation` will calculate the 
-maximum value recorded.
 * `LastValue`: indicates that data collected and aggregated with this `Aggregation` will 
 represent the last recorded value. This is useful to support Gauges.
 * `Distribution`: indicates that the desired `Aggregation` is a histogram distribution. A
@@ -31,7 +29,7 @@ within the library.
 * `columns`: an array of tag keys. These values associated with tags of this name form the basis 
 by which individual stats will be aggregated (one aggregation per unique tag value). If none are 
 provided, then all data is recorded in a single aggregation.
-* `aggregation`: `Distribution`, `Count`, `Sum`, `LastValue`, `Max`.
+* `aggregation`: `Distribution`, `Count`, `Sum`, `LastValue`.
 
 Implementations SHOULD define a View data type, constructed from the parameters above. Views MAY 
 have getters for retrieving all of the information used in View definition. Once created, View 

@@ -13,7 +13,6 @@ The library SHOULD provide support for multiple types of Aggregations:
 * `CountData`: data generated for a `Count` aggregation.
 * `SumDataDouble` and `SumDataInt64`: data generated for a `Sum` aggregation based on the `Measure`
 type.
-* `MaxData`: data generated for a `Max` aggregation.
 * `LastValueDataDouble` and `LastValueDataInt64`: data generated for a `LastValue` aggregation based 
 on the `Measure` type.
 * `DistributionData`: data generated for a `Distribution` aggregation.
@@ -28,3 +27,14 @@ parameter from the `View` and the aggregated data associated with those `columns
 * `end_time`: a timestamp, describing the end time of the current stats snapshot.
 
 The library SHOULD provide a means of retrieving the ViewData for any registered view in the system.
+
+### Aggregation to Metrics
+
+| Aggregation  | Measure Type | Metric Type  | Value Type   |
+|--------------|--------------|--------------|--------------|
+| Count        | Any          | CUMULATIVE   | INT64        |
+| Sum          | Double       | CUMULATIVE   | DOUBLE       |
+| Sum          | Int64        | CUMULATIVE   | INT64        |
+| LastValue    | Double       | GAUGE        | DOUBLE       |
+| LastValue    | Int64        | GAUGE        | INT64        |
+| Distribution | Int64        | CUMULATIVE   | DISTRIBUTION |
