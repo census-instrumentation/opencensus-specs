@@ -30,13 +30,13 @@ The library SHOULD provide a means of retrieving the ViewData for any registered
 
 ### Aggregation to Metrics
 
-| Aggregation  | Measure Type | Metric Type  | Value Type   | Unit               |
-|--------------|--------------|--------------|--------------|--------------------|
-| Count        | Any          | CUMULATIVE   | INT64        | Dimensionless Unit |
-| Sum          | Double       | CUMULATIVE   | DOUBLE       | Measure Unit       |
-| Sum          | Int64        | CUMULATIVE   | INT64        | Measure Unit       |
-| LastValue    | Double       | GAUGE        | DOUBLE       | Measure Unit       |
-| LastValue    | Int64        | GAUGE        | INT64        | Measure Unit       |
-| Distribution | Any          | CUMULATIVE   | DISTRIBUTION | Measure Unit       |
+| Aggregation  | Measure Type    | Metric Type  | Value Type   | Unit               |
+|--------------|-----------------|--------------|--------------|--------------------|
+| Count        | Int64 or Double | CUMULATIVE   | INT64        | Dimensionless Unit |
+| Sum          | Double          | CUMULATIVE   | DOUBLE       | Measure Unit       |
+| Sum          | Int64           | CUMULATIVE   | INT64        | Measure Unit       |
+| LastValue    | Double          | GAUGE        | DOUBLE       | Measure Unit       |
+| LastValue    | Int64           | GAUGE        | INT64        | Measure Unit       |
+| Distribution | Int64 or Double | CUMULATIVE   | DISTRIBUTION | Measure Unit       |
 
 Dimensionless Unit can be represented as "1".
