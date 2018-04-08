@@ -31,10 +31,10 @@ Client stats are recorded at the end of each outbound RPC.
 
 | Measure name                             | Unit | Description                                                                                   |
 |------------------------------------------|------|-----------------------------------------------------------------------------------------------|
-| grpc.io/client/sent_messages_per_rpc     | 1    | Number of messages sent in the RPC (always `1` for non-streaming RPCs).                       |
-| grpc.io/client/sent_bytes_per_rpc        | By   | Total bytes sent across all request messages per RPC.                                       |
-| grpc.io/client/received_messages_per_rpc | 1    | Number of response messages received per RPC (always `1` for non-streaming RPCs).           |
-| grpc.io/client/received_bytes_per_rpc    | By   | Total bytes received across all response messages per RPC.                                  |
+| grpc.io/client/sent_messages_per_rpc     | 1    | Number of messages sent in the RPC (always 1 for non-streaming RPCs).                         |
+| grpc.io/client/sent_bytes_per_rpc        | By   | Total bytes sent across all request messages per RPC.                                         |
+| grpc.io/client/received_messages_per_rpc | 1    | Number of response messages received per RPC (always 1 for non-streaming RPCs).               |
+| grpc.io/client/received_bytes_per_rpc    | By   | Total bytes received across all response messages per RPC.                                    |
 | grpc.io/client/roundtrip_latency         | ms   | Time between first byte of request sent to last byte of response received, or terminal error. |
 | grpc.io/client/server_latency            | ms   | Propagated from the server and should have the same value as "grpc.io/server/latency".        |
 
@@ -55,8 +55,8 @@ The following set of views are considered minimum required to monitor client-sid
 |---------------------------------------|------------------------|--------------|------------------------------|
 | grpc.io/client/sent_bytes_per_rpc     | sent_bytes_per_rpc     | distribution | client_method                |
 | grpc.io/client/received_bytes_per_rpc | received_bytes_per_rpc | distribution | client_method                |
-| grpc.io/client/roundtrip_latency      | latency                | distribution | client_method                |
-| grpc.io/client/completed_rpcs         | latency                | count        | client_method, client_status |
+| grpc.io/client/roundtrip_latency      | roundtrip_latency      | distribution | client_method                |
+| grpc.io/client/completed_rpcs         | roundtrip_latency      | count        | client_method, client_status |
 
 ### Extra views
 
@@ -64,7 +64,7 @@ The following set of views are considered useful but not mandatory to monitor cl
 
 | View name                                | Measure suffix            | Aggregation  | Tags suffix   |
 |------------------------------------------|---------------------------|--------------|---------------|
-| grpc.io/client/send_messages_per_rpc     | send_messages_per_rpc     | distribution | client_method |
+| grpc.io/client/sent_messages_per_rpc     | sent_messages_per_rpc     | distribution | client_method |
 | grpc.io/client/received_messages_per_rpc | received_messages_per_rpc | distribution | client_method |
 | grpc.io/client/server_latency            | server_latency            | distribution | client_method |
 
@@ -74,10 +74,10 @@ Server stats are recorded at the end of processing each RPC.
 
 | Measure name                             | Unit | Description                                                                                   |
 |------------------------------------------|------|-----------------------------------------------------------------------------------------------|
-| grpc.io/server/received_messages_per_rpc | 1    | Number of messages received in each RPC. Has value `1` for non-streaming RPCs.                |
+| grpc.io/server/received_messages_per_rpc | 1    | Number of messages received in each RPC. Has value 1 for non-streaming RPCs.                  |
 | grpc.io/server/received_bytes_per_rpc    | By   | Total bytes received across all messages per RPC.                                             |
-| grpc.io/server/send_messages_per_rpc     | 1    | Number of messages sent in each RPC. Has value `1` for non-streaming RPCs.                    |
-| grpc.io/server/send_bytes_per_rpc        | By   | Total bytes sent in across all response messages per RPC.                            |
+| grpc.io/server/sent_messages_per_rpc     | 1    | Number of messages sent in each RPC. Has value 1 for non-streaming RPCs.                      |
+| grpc.io/server/sent_bytes_per_rpc        | By   | Total bytes sent in across all response messages per RPC.                                     |
 | grpc.io/server/server_latency            | ms   | Time between first byte of request received to last byte of response sent, or terminal error. |
 
 ### Tags
@@ -99,7 +99,7 @@ The following set of views are considered minimum required to monitor server sid
 | View name                             | Measure suffix         | Aggregation  | Tags suffix                  |
 |---------------------------------------|------------------------|--------------|------------------------------|
 | grpc.io/server/received_bytes_per_rpc | received_bytes_per_rpc | distribution | server_method                |
-| grpc.io/server/send_bytes_per_rpc     | send_bytes_per_rpc     | distribution | server_method                |
+| grpc.io/server/sent_bytes_per_rpc     | sent_bytes_per_rpc     | distribution | server_method                |
 | grpc.io/server/server_latency         | server_latency         | distribution | server_method                |
 | grpc.io/server/completed_rpcs         | server_latency         | count        | server_method, server_status |
 
@@ -110,16 +110,16 @@ The following set of views are considered useful but not mandatory to monitor se
 | View name                                | Measure suffix            | Aggregation  | Tags suffix   |
 |------------------------------------------|---------------------------|--------------|---------------|
 | grpc.io/server/received_messages_per_rpc | received_messages_per_rpc | distribution | server_method |
-| grpc.io/server/send_messages_per_rpc     | response_messages_count   | distribution | server_method |
+| grpc.io/server/sent_messages_per_rpc     | sent_messages_per_rpc     | distribution | server_method |
 
 ## FAQ
 
 ### Why different tag name for server/client method?
 This way users can configure views to correlate incoming with outgoing requests. A view example:
 
-| View name                               | Measure suffix | Aggregation  | Tags suffix                  |
-|-----------------------------------------|----------------|--------------|------------------------------|
-| grpc.io/client/latency_by_server_method | latency        | distribution | client_method, server_method |
+| View name                               | Measure                          | Aggregation  | Tags suffix                  |
+|-----------------------------------------|----------------------------------|--------------|------------------------------|
+| grpc.io/client/latency_by_server_method | grpc.io/client/roundtrip_latency | distribution | client_method, server_method |
 
 ### How is the server latency on the client recorded (grcp.io/client/server_latency)?
 This is TBD, eventually a designated gRPC metadata key will be specified for this purpose.
