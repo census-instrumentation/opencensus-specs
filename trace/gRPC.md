@@ -7,7 +7,7 @@ This document explains tracing of gRPC requests with OpenCensus.
 Implementations MUST create a span, when the gRPC call starts, for the client and a span for the 
 server.
 
-Span name is formatted as:
+Span name is formatted as (also known as full gRPC method name):
 
 * $package.$service/$method
 
@@ -18,8 +18,8 @@ Examples of span names:
 Outgoing requests should be a span kind of CLIENT and
 incoming requests should be a span kind of SERVER.
 
-In Stackdriver Trace where currently the data model does not have a Span.Kind, the exported span 
-names will be prefixed with `Sent.` (for CLIENT kind) and `Recv.` (for SERVER kind).
+For backends that does not support Span.Kind, the exported span names can be prefixed with `Sent.`
+(for CLIENT kind) and `Recv.` (for SERVER kind).
 
 ## Propagation
 
@@ -39,8 +39,7 @@ mapping between gRPC canonical codes and OpenCensus status codes can be found
 
 In the lifetime of a gRPC stream, the following message events SHOULD be created:
 
-* A message event for the each message sent/received.
-* A message event for the each message sent/received.
+* A message event for each message sent/received on client and server spans.
 
 ```
 -> [time], MessageEventTypeSent, MessageId, UncompressedByteSize, CompressedByteSize
