@@ -47,6 +47,10 @@ If the environment variable `KUBERNETES_SERVICE_HOST` is set.
 | container_name | CONTAINER_NAME       |                                  |
 | zone           |                      | instance/zone                    |
 
+The namespace_id and container_name are optional. We cannot get their value from environment
+variables unless k8s users expose them via the Downward API. See k8s
+[documentation][K8SDocumentation] and [code sample][K8SCodeSample].
+
 ### GCP_GCE_INSTANCE
 
 If the GCP metadata service returns a value for "instance/id" and not GCP_GKE_CONTAINER.
@@ -74,3 +78,5 @@ The value return by the `instance-identity/document` metadata request is a docum
 [AWSMetadataIdentityDocument]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-identity-documents.html
 [GCPMetadata]: https://cloud.google.com/compute/docs/storing-retrieving-metadata
 [GCPMetadataJavaExmple]: https://github.com/GoogleCloudPlatform/google-cloud-java/blob/master/google-cloud-core/src/main/java/com/google/cloud/MetadataConfig.java
+[K8SDocumentation]: https://cloud.google.com/kubernetes-engine/docs/tutorials/custom-metrics-autoscaling#exporting_metrics_from_the_application
+[K8SCodeSample]: https://cloud.google.com/kubernetes-engine/docs/tutorials/custom-metrics-autoscaling#exporting_metrics_from_the_application
