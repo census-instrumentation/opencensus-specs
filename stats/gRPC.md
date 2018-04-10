@@ -47,6 +47,11 @@ All client metrics should be tagged with the following.
 | grpc_client_method | Full gRPC method name, including package, service and method, e.g. google.bigtable.v2.Bigtable/CheckAndMutateRow |
 | grpc_client_status | gRPC server status code received, e.g. OK, CANCELLED, DEADLINE_EXCEEDED                                          |
 
+`grpc_client_method` is set when an outgoing request starts and is available in all the recorded
+metrics. 
+`grpc_client_status` is set when an outgoing request finishes and is only available around metrics
+recorded at the end of the outgoing request.
+
 ### Default views
 
 The following set of views are considered minimum required to monitor client-side performance:
@@ -89,8 +94,10 @@ All server metrics should be tagged with the following.
 | grpc_server_method | Full gRPC method name, including package, service and method, e.g. com.exampleapi.v4.BookshelfService/Checkout |
 | grpc_server_status | gRPC server status code returned, e.g. OK, CANCELLED, DEADLINE_EXCEEDED                                        |
 
-`grpc_server_method` is available in the context for the entire RPC call handling. 
-`grpc_server_status` is only available around metrics recorded at the end of the request.
+`grpc_server_method` is set when an incoming request starts and is available in the context for
+the entire RPC call handling. 
+`grpc_server_status` is set when an incoming request finishes and is only available around metrics
+recorded at the end of the incoming request.
 
 ### Default views
 

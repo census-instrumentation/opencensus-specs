@@ -41,6 +41,12 @@ All client metrics should be tagged with the following.
 | http_client_status | HTTP status code as an integer (e.g. 200, 404, 500.), or "error" if no response status line was received |
 | http_client_host   | Value of the request Host header                                                                         |
 
+`http_client_method`, `http_client_path`, `http_client_host` are set when an outgoing request 
+starts and are available in the context for the entire outgoing request processing.
+`http_client_status` is set when an outgoing request finishes and is only available around the 
+stats recorded at the end of request processing.
+
+
 ### Default views
 
 The following set of views are considered minimum required to monitor client side performance:
@@ -69,8 +75,6 @@ Server stats are recorded for each individual HTTP request, including for each r
 ### Tags
 
 All server metrics should be tagged with the following. 
-`http_server_method`, `http_server_path`, `http_server_host` are available in the context for the entire request processing.
-`http_server_status` is only available around the stats recorded at the end of request processing.
 
 | Tag suffix         | Description                                                         |
 |--------------------|---------------------------------------------------------------------|
@@ -78,6 +82,11 @@ All server metrics should be tagged with the following.
 | http_server_path   | URL path (not including query string)                               |
 | http_server_status | HTTP server status code returned, as an integer e.g. 200, 404, 500. |
 | http_server_host   | Value of the request Host header                                    |
+
+`http_server_method`, `http_server_path`, `http_server_host` are set when an incoming request 
+starts and are available in the context for the entire incoming request processing.
+`http_server_status` is set when an incoming request finishes and is only available around the stats
+recorded at the end of request processing.
 
 ### Default views
 
