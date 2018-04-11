@@ -77,4 +77,4 @@ propagation.
 
 [goContext]: https://golang.org/pkg/context
 [javaContext]: https://github.com/grpc/grpc-java/blob/master/context/src/main/java/io/grpc/Context.java
-[SpanDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/trace/trace.proto
+[SpanDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/opencensus/proto/trace/trace.proto
