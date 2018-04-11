@@ -51,6 +51,8 @@ All client metrics should be tagged with the following.
 metrics. 
 `grpc_client_status` is set when an outgoing request finishes and is only available around metrics
 recorded at the end of the outgoing request.
+Status codes should be stringified according to:
+https://github.com/grpc/grpc/blob/master/doc/statuscodes.md
 
 ### Default views
 
@@ -96,8 +98,11 @@ All server metrics should be tagged with the following.
 
 `grpc_server_method` is set when an incoming request starts and is available in the context for
 the entire RPC call handling. 
+
 `grpc_server_status` is set when an incoming request finishes and is only available around metrics
 recorded at the end of the incoming request.
+Status codes should be stringified according to:
+https://github.com/grpc/grpc/blob/master/doc/statuscodes.md
 
 ### Default views
 
