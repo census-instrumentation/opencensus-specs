@@ -7,5 +7,6 @@ describes the key types and the overall behavior.
 * [TraceConfig](TraceConfig.md)
 
 ## Utils
+* [gRPC integration](gRPC.md): document about how to instrument gRPC framework.
 * [HTTP integration](HTTP.md): document about how to instrument http frameworks.
 * [Sampling logic](Sampling.md): document about how sampling works.
