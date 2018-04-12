@@ -72,7 +72,8 @@ If the AWS metadata service returns a value for "instance_id".
 | region         |                      | instance-identity/document |
 
 The value return by the `instance-identity/document` metadata request is a document described 
-[here][AWSMetadataIdentityDocument].
+[here][AWSMetadataIdentityDocument]. Please note that the value for property
+"region" should have [a prefix "aws:"][SDMonitoringResourcesEC2].
 
 [AWSMetadata]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html#instancedata-data-retrieval
 [AWSMetadataIdentityDocument]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-identity-documents.html
@@ -81,3 +82,4 @@ The value return by the `instance-identity/document` metadata request is a docum
 [GCPMetadataJavaExmple]: https://github.com/GoogleCloudPlatform/google-cloud-java/blob/master/google-cloud-core/src/main/java/com/google/cloud/MetadataConfig.java
 [K8SDocumentation]: https://cloud.google.com/kubernetes-engine/docs/tutorials/custom-metrics-autoscaling#exporting_metrics_from_the_application
 [K8SCodeSample]: https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/blob/master/custom-metrics-autoscaling/direct-to-sd/sd_dummy_exporter.go
+[SDMonitoringResourcesEC2]: https://cloud.google.com/monitoring/api/resources#tag_aws_ec2_instance
