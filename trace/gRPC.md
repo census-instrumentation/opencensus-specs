@@ -49,7 +49,7 @@ In the lifetime of a gRPC stream, the following message events SHOULD be created
 -> [time], MessageEventTypeRecv, MessageId, UncompressedByteSize, CompressedByteSize
 ```
 
-The `MessageId` must be calculated as an increment starting from `1` for sent messages and 
-received message. This way we guarantee that the values will be consistent between different 
-implementations. In case of unary calls only one sent and one received message will be recorded 
-for both client and server spans.
+The `MessageId` must be calculated as two different counters starting from `1` one for sent 
+messages and one for received message. This way we guarantee that the values will be consistent 
+between different implementations. In case of unary calls only one sent and one received message 
+will be recorded for both client and server spans.
