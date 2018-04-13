@@ -63,12 +63,13 @@ If the GCP metadata service returns a value for "instance/id" and not GCP_GKE_CO
 
 ### AWS_EC2_INSTANCE
  
-If the AWS metadata service returns a value for "instance_id".
+If the AWS metadata service returns a valid document for
+"instance-identity/document".
 
 | Property Name  | Environment Variable | Metadata Request           |
 |----------------|----------------------|----------------------------|
 | aws_account    |                      | instance-identity/document |
-| instance_id    |                      | instance_id                |
+| instance_id    |                      | instance-identity/document |
 | region         |                      | instance-identity/document |
 
 The value return by the `instance-identity/document` metadata request is a document described 
