@@ -49,6 +49,25 @@ status code.
 Don't set the status message if the reason can be inferred at the callsite of from the HTTP 
 status code.
 
+### Mapping from HTTP status codes to Trace status codes
+
+| HTTP code             | Trace status code      |
+|-----------------------|------------------------|
+| 0...199               | 2 Unknown              |
+| 200...399             | 0 (OK)                 |
+| 400 Bad Request       | 3 (INVALID_ARGUMENT)   |
+| 504 Gateway Timeout   | 4 (DEADLINE_EXCEEDED)  |
+| 404 Not Found         | 5 (NOT_FOUND)          |
+| 403 Forbidden         | 7 (PERMISSION_DENIED)  |
+| 401 Unauthorized*     | 16 (UNAUTHENTICATED)   |
+| 429 Too Many Requests | 8 (RESOURCE_EXHAUSTED) |
+| 501 Not Implemented   | 12 (UNIMPLEMENTED)     |
+| 503 Unavailable       | 14 (UNAVAILABLE)       |
+
+Notes: 401 Unauthorized actually means unauthenticated according to RFC 7235, 3.1.
+
+The Status message should be the Reason-Phrase (RFC 2616 6.1.1) from the response status line (if available).
+
 ## Message events
 
 In the lifetime of an incoming and outgoing request, the following message events SHOULD be created:
