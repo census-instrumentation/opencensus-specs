@@ -58,22 +58,22 @@ https://github.com/grpc/grpc/blob/master/doc/statuscodes.md
 
 The following set of views are considered minimum required to monitor client-side performance:
 
-| View name                             | Measure suffix         | Aggregation  | Tags suffix                  |
-|---------------------------------------|------------------------|--------------|------------------------------|
-| grpc.io/client/sent_bytes_per_rpc     | sent_bytes_per_rpc     | distribution | client_method                |
-| grpc.io/client/received_bytes_per_rpc | received_bytes_per_rpc | distribution | client_method                |
-| grpc.io/client/roundtrip_latency      | roundtrip_latency      | distribution | client_method                |
-| grpc.io/client/completed_rpcs         | roundtrip_latency      | count        | client_method, client_status |
+| View name                             | Measure                               | Aggregation  | Tags                                   |
+|---------------------------------------|---------------------------------------|--------------|----------------------------------------|
+| grpc.io/client/sent_bytes_per_rpc     | grpc.io/client/sent_bytes_per_rpc     | distribution | grpc_client_method                     |
+| grpc.io/client/received_bytes_per_rpc | grpc.io/client/received_bytes_per_rpc | distribution | grpc_client_method                     |
+| grpc.io/client/roundtrip_latency      | grpc.io/client/roundtrip_latency      | distribution | grpc_client_method                     |
+| grpc.io/client/completed_rpcs         | grpc.io/client/roundtrip_latency      | count        | grpc_client_method, grpc_client_status |
 
 ### Extra views
 
 The following set of views are considered useful but not mandatory to monitor client side performance:
 
-| View name                                | Measure suffix            | Aggregation  | Tags suffix   |
-|------------------------------------------|---------------------------|--------------|---------------|
-| grpc.io/client/sent_messages_per_rpc     | sent_messages_per_rpc     | distribution | client_method |
-| grpc.io/client/received_messages_per_rpc | received_messages_per_rpc | distribution | client_method |
-| grpc.io/client/server_latency            | server_latency            | distribution | client_method |
+| View name                                | Measure                                  | Aggregation  | Tags               |
+|------------------------------------------|------------------------------------------|--------------|--------------------|
+| grpc.io/client/sent_messages_per_rpc     | grpc.io/client/sent_messages_per_rpc     | distribution | grpc_client_method |
+| grpc.io/client/received_messages_per_rpc | grpc.io/client/received_messages_per_rpc | distribution | grpc_client_method |
+| grpc.io/client/server_latency            | grpc.io/client/server_latency            | distribution | grpc_client_method |
 
 ## Server
 
@@ -108,30 +108,30 @@ https://github.com/grpc/grpc/blob/master/doc/statuscodes.md
 
 The following set of views are considered minimum required to monitor server side performance:
 
-| View name                             | Measure suffix         | Aggregation  | Tags suffix                  |
-|---------------------------------------|------------------------|--------------|------------------------------|
-| grpc.io/server/received_bytes_per_rpc | received_bytes_per_rpc | distribution | server_method                |
-| grpc.io/server/sent_bytes_per_rpc     | sent_bytes_per_rpc     | distribution | server_method                |
-| grpc.io/server/server_latency         | server_latency         | distribution | server_method                |
-| grpc.io/server/completed_rpcs         | server_latency         | count        | server_method, server_status |
+| View name                             | Measure                               | Aggregation  | Tags                                   |
+|---------------------------------------|---------------------------------------|--------------|----------------------------------------|
+| grpc.io/server/received_bytes_per_rpc | grpc.io/server/received_bytes_per_rpc | distribution | grpc_server_method                     |
+| grpc.io/server/sent_bytes_per_rpc     | grpc.io/server/sent_bytes_per_rpc     | distribution | grpc_server_method                     |
+| grpc.io/server/server_latency         | grpc.io/server/server_latency         | distribution | grpc_server_method                     |
+| grpc.io/server/completed_rpcs         | grpc.io/server/server_latency         | count        | grpc_server_method, grpc_server_status |
 
 ### Extra views
 
 The following set of views are considered useful but not mandatory to monitor server side performance:
 
-| View name                                | Measure suffix            | Aggregation  | Tags suffix   |
-|------------------------------------------|---------------------------|--------------|---------------|
-| grpc.io/server/received_messages_per_rpc | received_messages_per_rpc | distribution | server_method |
-| grpc.io/server/sent_messages_per_rpc     | sent_messages_per_rpc     | distribution | server_method |
+| View name                                | Measure                                  | Aggregation  | Tag                |
+|------------------------------------------|------------------------------------------|--------------|--------------------|
+| grpc.io/server/received_messages_per_rpc | grpc.io/server/received_messages_per_rpc | distribution | grpc_server_method |
+| grpc.io/server/sent_messages_per_rpc     | grpc.io/server/sent_messages_per_rpc     | distribution | grpc_server_method |
 
 ## FAQ
 
 ### Why different tag name for server/client method?
 This way users can configure views to correlate incoming with outgoing requests. A view example:
 
-| View name                               | Measure                          | Aggregation  | Tags suffix                  |
-|-----------------------------------------|----------------------------------|--------------|------------------------------|
-| grpc.io/client/latency_by_server_method | grpc.io/client/roundtrip_latency | distribution | client_method, server_method |
+| View name                               | Measure                          | Aggregation  | Tag                                    |
+|-----------------------------------------|----------------------------------|--------------|----------------------------------------|
+| grpc.io/client/latency_by_server_method | grpc.io/client/roundtrip_latency | distribution | grpc_client_method, grpc_server_method |
 
 ### How is the server latency on the client recorded (grcp.io/client/server_latency)?
 This is TBD, eventually a designated gRPC metadata key will be specified for this purpose.

@@ -51,12 +51,12 @@ stats recorded at the end of request processing.
 
 The following set of views are considered minimum required to monitor client side performance:
 
-| View name                                   | Measure suffix    | Aggregation  | Tags suffix                               |
-|---------------------------------------------|-------------------|--------------|-------------------------------------------|
-| opencensus.io/http/client/sent_bytes        | sent_bytes        | distribution | client_method, client_path                |
-| opencensus.io/http/client/received_bytes    | received_bytes    | distribution | client_method, client_path                |
-| opencensus.io/http/client/roundtrip_latency | roundtrip_latency | distribution | client_method, client_path                |
-| opencensus.io/http/client/completed_count   | roundtrip_latency | count        | client_method, client_path, client_status |
+| View name                                   | Measure                                     | Aggregation  | Tags                                                     |
+|---------------------------------------------|---------------------------------------------|--------------|----------------------------------------------------------|
+| opencensus.io/http/client/sent_bytes        | opencensus.io/http/client/sent_bytes        | distribution | http_client_method, http_client_path                     |
+| opencensus.io/http/client/received_bytes    | opencensus.io/http/client/received_bytes    | distribution | http_client_method, http_client_path                     |
+| opencensus.io/http/client/roundtrip_latency | opencensus.io/http/client/roundtrip_latency | distribution | http_client_method, http_client_path                     |
+| opencensus.io/http/client/completed_count   | opencensus.io/http/client/roundtrip_latency | count        | http_client_method, http_client_path, http_client_status |
 
 ## Server
 
@@ -92,9 +92,9 @@ recorded at the end of request processing.
 
 The following set of views are considered minimum required to monitor server side performance:
 
-| View name                                 | Measure suffix | Aggregation  | Tags suffix                               |
-|-------------------------------------------|----------------|--------------|-------------------------------------------|
-| opencensus.io/http/server/received_bytes  | received_bytes | distribution | server_method, server_path                |
-| opencensus.io/http/server/sent_bytes      | sent_bytes     | distribution | server_method, server_path                |
-| opencensus.io/http/server/server_latency  | server_latency | distribution | server_method, server_path                |
-| opencensus.io/http/server/completed_count | server_latency | count        | server_method, server_path, server_status |
+| View name                                 | Measure                                  | Aggregation  | Tags                                                     |
+|-------------------------------------------|------------------------------------------|--------------|----------------------------------------------------------|
+| opencensus.io/http/server/received_bytes  | opencensus.io/http/server/received_bytes | distribution | http_server_method, http_server_path                     |
+| opencensus.io/http/server/sent_bytes      | opencensus.io/http/server/sent_bytes     | distribution | http_server_method, http_server_path                     |
+| opencensus.io/http/server/server_latency  | opencensus.io/http/server/server_latency | distribution | http_server_method, http_server_path                     |
+| opencensus.io/http/server/completed_count | opencensus.io/http/server/server_latency | count        | http_server_method, http_server_path, http_server_status |
