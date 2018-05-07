@@ -34,7 +34,7 @@ Client stats are recorded for each individual HTTP request, including for each i
 
 All client metrics should be tagged with the following.
 
-| Tag suffix         | Description                                                                                              |
+| Tag name           | Description                                                                                              |
 |--------------------|----------------------------------------------------------------------------------------------------------|
 | http_client_method | HTTP method, capitalized (i.e. GET, POST, PUT, DELETE, etc.)                                             |
 | http_client_path   | URL path (not including query string)                                                                    |
@@ -76,7 +76,7 @@ Server stats are recorded for each individual HTTP request, including for each r
 
 All server metrics should be tagged with the following. 
 
-| Tag suffix         | Description                                                         |
+| Tag name           | Description                                                         |
 |--------------------|---------------------------------------------------------------------|
 | http_server_method | HTTP method, capitalized (i.e. GET, POST, PUT, DELETE, etc.)        |
 | http_server_path   | URL path (not including query string)                               |
