@@ -46,6 +46,8 @@ starts and are available in the context for the entire outgoing request processi
 `http_client_status` is set when an outgoing request finishes and is only available around the 
 stats recorded at the end of request processing.
 
+`http_client_path` and `http_client_host` might have high cardinality and you should be careful about using these
+in views if your metrics backend cannot tolerate high-cardinality labels.
 
 ### Default views
 
@@ -53,10 +55,10 @@ The following set of views are considered minimum required to monitor client sid
 
 | View name                                   | Measure                                     | Aggregation  | Tags                                                     |
 |---------------------------------------------|---------------------------------------------|--------------|----------------------------------------------------------|
-| opencensus.io/http/client/sent_bytes        | opencensus.io/http/client/sent_bytes        | distribution | http_client_method, http_client_path                     |
-| opencensus.io/http/client/received_bytes    | opencensus.io/http/client/received_bytes    | distribution | http_client_method, http_client_path                     |
-| opencensus.io/http/client/roundtrip_latency | opencensus.io/http/client/roundtrip_latency | distribution | http_client_method, http_client_path                     |
-| opencensus.io/http/client/completed_count   | opencensus.io/http/client/roundtrip_latency | count        | http_client_method, http_client_path, http_client_status |
+| opencensus.io/http/client/sent_bytes        | opencensus.io/http/client/sent_bytes        | distribution | http_client_method                     |
+| opencensus.io/http/client/received_bytes    | opencensus.io/http/client/received_bytes    | distribution | http_client_method                     |
+| opencensus.io/http/client/roundtrip_latency | opencensus.io/http/client/roundtrip_latency | distribution | http_client_method                     |
+| opencensus.io/http/client/completed_count   | opencensus.io/http/client/roundtrip_latency | count        | http_client_method, http_client_status |
 
 ## Server
 
@@ -88,13 +90,23 @@ starts and are available in the context for the entire incoming request processi
 `http_server_status` is set when an incoming request finishes and is only available around the stats
 recorded at the end of request processing.
 
+`http_server_path` and `http_server_host` are set by the client: you should be careful about using these
+in views if your metrics backend cannot tolerate high-cardinality labels.
+
 ### Default views
 
 The following set of views are considered minimum required to monitor server side performance:
 
-| View name                                 | Measure                                  | Aggregation  | Tags                                                     |
-|-------------------------------------------|------------------------------------------|--------------|----------------------------------------------------------|
-| opencensus.io/http/server/received_bytes  | opencensus.io/http/server/received_bytes | distribution | http_server_method, http_server_path                     |
-| opencensus.io/http/server/sent_bytes      | opencensus.io/http/server/sent_bytes     | distribution | http_server_method, http_server_path                     |
-| opencensus.io/http/server/server_latency  | opencensus.io/http/server/server_latency | distribution | http_server_method, http_server_path                     |
-| opencensus.io/http/server/completed_count | opencensus.io/http/server/server_latency | count        | http_server_method, http_server_path, http_server_status |
+| View name                                 | Measure                                  | Aggregation  | Tags                                   |
+|-------------------------------------------|------------------------------------------|--------------|----------------------------------------|
+| opencensus.io/http/server/received_bytes  | opencensus.io/http/server/received_bytes | distribution | http_server_method                     |
+| opencensus.io/http/server/sent_bytes      | opencensus.io/http/server/sent_bytes     | distribution | http_server_method                     |
+| opencensus.io/http/server/server_latency  | opencensus.io/http/server/server_latency | distribution | http_server_method                     |
+| opencensus.io/http/server/completed_count | opencensus.io/http/server/server_latency | count        | http_server_method, http_server_status |
+
+## FAQ
+
+### Why was the path removed from the default views?
+
+Path can have unbounded cardinality, which causes problems for time-series databases like Prometheus.
+This is especially true of public-facing HTTP servers, where this becomes a DoS vector.
