@@ -7,7 +7,7 @@ label keys). Metrics is intended to be a superset of what's possible, not a
 lowest common denominator that's supported everywhere.
 
 Because of this, Metrics puts minimal constraints on the data (e.g. which
-characters are allowed in kets), and code dealing with Metrics should avoid
+characters are allowed in keys), and code dealing with Metrics should avoid
 validation and sanitization of the Metrics data. Instead, pass the data to the
 backend, rely on the backend to perform validation, and pass back any errors
 from the backend.
