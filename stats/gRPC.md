@@ -37,6 +37,7 @@ Client stats are recorded at the end of each outbound RPC.
 | grpc.io/client/received_bytes_per_rpc    | By   | Total bytes received across all response messages per RPC.                                    |
 | grpc.io/client/roundtrip_latency         | ms   | Time between first byte of request sent to last byte of response received, or terminal error. |
 | grpc.io/client/server_latency            | ms   | Propagated from the server and should have the same value as "grpc.io/server/latency".        |
+| grpc.io/client/started_rpcs              | 1    | The total number of client RPCs ever opened, including those that have not completed.         |
 
 ### Tags
 
@@ -64,6 +65,7 @@ The following set of views are considered minimum required to monitor client-sid
 | grpc.io/client/received_bytes_per_rpc | grpc.io/client/received_bytes_per_rpc | distribution | grpc_client_method                     |
 | grpc.io/client/roundtrip_latency      | grpc.io/client/roundtrip_latency      | distribution | grpc_client_method                     |
 | grpc.io/client/completed_rpcs         | grpc.io/client/roundtrip_latency      | count        | grpc_client_method, grpc_client_status |
+| grpc.io/client/started_rpcs           | grpc.io/client/started_rpcs           | count        | grpc_client_method                     |
 
 ### Extra views
 
@@ -86,6 +88,8 @@ Server stats are recorded at the end of processing each RPC.
 | grpc.io/server/sent_messages_per_rpc     | 1    | Number of messages sent in each RPC. Has value 1 for non-streaming RPCs.                      |
 | grpc.io/server/sent_bytes_per_rpc        | By   | Total bytes sent in across all response messages per RPC.                                     |
 | grpc.io/server/server_latency            | ms   | Time between first byte of request received to last byte of response sent, or terminal error. |
+| grpc.io/server/started_rpcs              | 1    | The total number of server RPCs ever opened, including those that have not completed.         |
+
 
 ### Tags
 
@@ -114,6 +118,7 @@ The following set of views are considered minimum required to monitor server sid
 | grpc.io/server/sent_bytes_per_rpc     | grpc.io/server/sent_bytes_per_rpc     | distribution | grpc_server_method                     |
 | grpc.io/server/server_latency         | grpc.io/server/server_latency         | distribution | grpc_server_method                     |
 | grpc.io/server/completed_rpcs         | grpc.io/server/server_latency         | count        | grpc_server_method, grpc_server_status |
+| grpc.io/server/started_rpcs           | grpc.io/server/started_rpcs           | count        | grpc_server_method                     |
 
 ### Extra views
 
