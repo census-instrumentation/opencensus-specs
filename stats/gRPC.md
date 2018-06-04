@@ -65,7 +65,7 @@ The following set of views are considered minimum required to monitor client-sid
 | grpc.io/client/received_bytes_per_rpc | grpc.io/client/received_bytes_per_rpc | distribution | grpc_client_method                     |
 | grpc.io/client/roundtrip_latency      | grpc.io/client/roundtrip_latency      | distribution | grpc_client_method                     |
 | grpc.io/client/completed_rpcs         | grpc.io/client/roundtrip_latency      | count        | grpc_client_method, grpc_client_status |
-| grpc.io/client/started_rpcs           | grpc.io/client/started_rpcs           | count        | grpc_client_method, grpc_client_status |
+| grpc.io/client/started_rpcs           | grpc.io/client/started_rpcs           | count        | grpc_client_method                     |
 
 ### Extra views
 
@@ -118,7 +118,7 @@ The following set of views are considered minimum required to monitor server sid
 | grpc.io/server/sent_bytes_per_rpc     | grpc.io/server/sent_bytes_per_rpc     | distribution | grpc_server_method                     |
 | grpc.io/server/server_latency         | grpc.io/server/server_latency         | distribution | grpc_server_method                     |
 | grpc.io/server/completed_rpcs         | grpc.io/server/server_latency         | count        | grpc_server_method, grpc_server_status |
-| grpc.io/server/started_rpcs           | grpc.io/server/started_rpcs           | count        | grpc_server_method, grpc_server_status |
+| grpc.io/server/started_rpcs           | grpc.io/server/started_rpcs           | count        | grpc_server_method                     |
 
 ### Extra views
 
