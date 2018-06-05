@@ -11,6 +11,7 @@ The encoding is based on [BinaryEncoding](BinaryEncoding.md)
 * `len` = 8
 
 Request processing latency observed on Load Balance. The unit is nanoseconds.
+It is int64 little endian.
 
 ##### Server-Latency_Ns
 
@@ -19,6 +20,7 @@ Request processing latency observed on Load Balance. The unit is nanoseconds.
 * `len` = 8
 
 Request processing latency observed on Server. The unit is nanoseconds.
+It is int64 little endian.
 
 ##### Trace-Options
 

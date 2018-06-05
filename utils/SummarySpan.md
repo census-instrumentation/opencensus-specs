@@ -16,6 +16,9 @@ then the problem could very well be on the Provider’s internal network between
 LB and the Server. Providing visibility into response time from various vantage
 points helps narrow down the problem for the customer and the provider. 
 
+Note: All reference to LB here is L7 Load Balancer. L4 Load Balancer and Client
+side Load Balancer are out of scope of this specification.
+
 ![Summary Span Overview][SummarySpanOverview]
 
 The objective of this spec is to provide visibility into response time of the
@@ -103,6 +106,15 @@ Sampling-bit is used to compare traces and measurements end-to-end. Customers
 can use the sampling-bit information to log traces and measurements on its side.
 The traces and measurement from both sides can then be used to isolate the
 problem.  
+It is particularly helpful when the server owner is different then the client 
+owner. The reason is that this helps the client to find traces that are sampled
+on both sides. The client owners typically do not have control over server side
+tracing.
+
+Also mention that it is useful if the Server owner is different than the
+client owner because then this information helps client to find traces that are
+sampled on both sides (usually in this case client does not have access to the
+server traces).
 
 ### Encoding
 
@@ -113,7 +125,7 @@ using http and gRPC.
 
 #### Encoding with gRPC
 For gRPC census-server-stats-bin metadata will be sent in gRPC trailer. The
-encoding of this metadata is as per the format defined [here](https://github.com/census-instrumentation/opencensus-specs/blob/master/encodings/BinaryEncoding.md). All data is encoded
+encoding of this metadata is as per the format defined [here](../encodings/CensusServerStatsEncoding.md). All data is encoded
 in little-endian.
 
 #### Census-server-stats-bin Encoding
