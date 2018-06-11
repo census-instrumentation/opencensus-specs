@@ -44,6 +44,8 @@ measure name instead of the `Measure`.
 
 Implementations MAY define a `MeasurementMap` which describes a set of data points to be collected
 for a set of Measures. Adding this functionality may improve the efficiency of the record usage API.
+Besides, when recording Measurements, `MeasurementMap` SHOULD have an optional field SpanContext for 
+supporting exemplars.
 
 ## Recording Stats
 
@@ -67,6 +69,7 @@ private static final MeasureLong RPC_BYTES_SENT =
 MeasurementMap measurementMap = new MeasurementMap();
 measurementMap.put(RPC_LATENCY, 10.3);
 measurementMap.put(RPC_BYTES_SENT, 124);
+measurementMap.withSpanContext(spanContext);
 measurementMap.record();  // reads context from thread-local.
 }
 ```
