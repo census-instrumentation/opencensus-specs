@@ -44,7 +44,7 @@ measure name instead of the `Measure`.
 
 Implementations MAY define a `MeasurementMap` which describes a set of data points to be collected
 for a set of Measures. Adding this functionality may improve the efficiency of the record usage API.
-Besides, when recording Measurements, `MeasurementMap` SHOULD have an optional field SpanContext for 
+Besides, when recording Measurements, `MeasurementMap` should have an optional field SpanContext for 
 supporting exemplars.
 
 ## Recording Stats
