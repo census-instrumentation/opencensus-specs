@@ -44,8 +44,8 @@ measure name instead of the `Measure`.
 
 Implementations MAY define a `MeasurementMap` which describes a set of data points to be collected
 for a set of Measures. Adding this functionality may improve the efficiency of the record usage API.
-Besides, when recording Measurements, `MeasurementMap` should have an optional field SpanContext for 
-supporting exemplars.
+Besides, when recording Measurements, `MeasurementMap` should optionally take a map of string 
+key-value pairs as the attachment of exemplar.
 
 ## Recording Stats
 
@@ -69,7 +69,15 @@ private static final MeasureLong RPC_BYTES_SENT =
 MeasurementMap measurementMap = new MeasurementMap();
 measurementMap.put(RPC_LATENCY, 10.3);
 measurementMap.put(RPC_BYTES_SENT, 124);
-measurementMap.withSpanContext(spanContext);
 measurementMap.record();  // reads context from thread-local.
+
+// Another example on recording against sampled SpanContext.
+SpanContext spanContext = tracer.getCurrentSpan().getContext();
+if (spanContext.getTraceOptions().isSampled()) {
+  Map<String, String> attachments = new HashMap<>();
+  // Client code needs to take care of encoding.
+  attachments.put("TraceId", encode(spanContext.getTraceId));
+  attachments.put("SpanId", encode(spanContext.getSpanId));
+  measurementMap.record(attachments);
 }
 ```
