@@ -76,8 +76,8 @@ SpanContext spanContext = tracer.getCurrentSpan().getContext();
 if (spanContext.getTraceOptions().isSampled()) {
   Map<String, String> attachments = new HashMap<>();
   // Client code needs to take care of encoding.
-  attachments.put("TraceId", encode(spanContext.getTraceId));
-  attachments.put("SpanId", encode(spanContext.getSpanId));
-  measurementMap.record(attachments);
+  attachments.put("TraceId", encode(spanContext.getTraceId()));
+  attachments.put("SpanId", encode(spanContext.getSpanId()));
+  measurementMap.record(tagContext, attachments);
 }
 ```
