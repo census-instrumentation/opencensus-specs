@@ -45,7 +45,7 @@ measure name instead of the `Measure`.
 Implementations MAY define a `MeasurementMap` which describes a set of data points to be collected
 for a set of Measures. Adding this functionality may improve the efficiency of the record usage API.
 Additionally, when recording Measurements, `MeasurementMap` should optionally take a map of string 
-key-value pairs as the attachment of exemplar.
+key-value pairs to record an exemplar.
 
 ## Recording Stats
 
