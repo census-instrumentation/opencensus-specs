@@ -15,7 +15,8 @@ The library SHOULD provide support for multiple types of Aggregations:
 type.
 * `LastValueDataDouble` and `LastValueDataInt64`: data generated for a `LastValue` aggregation based 
 on the `Measure` type.
-* `DistributionData`: data generated for a `Distribution` aggregation.
+* `DistributionData`: data generated for a `Distribution` aggregation. If there is a histogram in 
+the `Distribution`, `DistributionData` may contain a list of `Exemplar`s.
 
 ### ViewData
 A ViewData is defined from the following:
