@@ -51,6 +51,8 @@ key-value pairs as the attachment of exemplar.
 
 Users should record Measurements against a context, either an explicit context or the implicit 
 current context. Tags from the context are recorded with the Measurements if they are any.
+Note that there is no implicit recording for exemplars. If you want to record a `Measurement`
+against an exemplar, you have to explicitly pass the exemplar attachments (a string-string map).
 
 Implementations SHOULD provide a means of recording multiple Measurements at once. This 
 functionality can be provided through one of the following options:
