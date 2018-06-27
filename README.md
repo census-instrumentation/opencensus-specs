@@ -151,7 +151,7 @@ The key elements the API MUST provide are:
 
 ### Supported propagation formats
 
-* Library MUST support the [TraceContext][TraceContextSpecs] format for Trace and Tags components.
+* Library MUST support the [W3C Distributed Tracing][DistributedTracingSpecs] format for Trace and Tags components.
 * Binary encoding is defined at the [BinaryEncoding](encodings/BinaryEncoding.md) document.
 
 [EcosystemLayers]: /drawings/EcosystemLayers.png "Ecosystem Layer"
@@ -161,6 +161,6 @@ The key elements the API MUST provide are:
 [LibraryComponents]: /drawings/LibraryComponents.png "OpenCensus Library Components"
 [RFC2119]: https://www.ietf.org/rfc/rfc2119.txt
 [StatsDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/opencensus/proto/stats/stats.proto
-[TraceContextSpecs]: https://github.com/TraceContext/tracecontext-spec
+[DistributedTracingSpecs]: https://github.com/w3c/distributed-tracing
 [TraceDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/opencensus/proto/trace/trace.proto
 [activity]: https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.DiagnosticSource/src/ActivityUserGuide.md
