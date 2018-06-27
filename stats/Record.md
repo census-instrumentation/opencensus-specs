@@ -52,7 +52,7 @@ key-value pairs to record an exemplar.
 Users should record Measurements against a context, either an explicit context or the implicit 
 current context. Tags from the context are recorded with the Measurements if they are any.
 Note that there is no implicit recording for exemplars. If you want to record a `Measurement`
-against an exemplar, you have to explicitly pass the exemplar attachments (a string-string map).
+against an exemplar, you have to explicitly pass a string-string map.
 
 Implementations SHOULD provide a means of recording multiple Measurements at once. This 
 functionality can be provided through one of the following options:
@@ -76,10 +76,10 @@ measurementMap.record();  // reads context from thread-local.
 // Another example on recording against sampled SpanContext.
 SpanContext spanContext = tracer.getCurrentSpan().getContext();
 if (spanContext.getTraceOptions().isSampled()) {
-  Map<String, String> attachments = new HashMap<>();
+  Map<String, String> map = new HashMap<>();
   // Client code needs to take care of encoding.
-  attachments.put("TraceId", encode(spanContext.getTraceId()));
-  attachments.put("SpanId", encode(spanContext.getSpanId()));
-  measurementMap.record(tagContext, attachments);
+  map.put("TraceId", encode(spanContext.getTraceId()));
+  map.put("SpanId", encode(spanContext.getSpanId()));
+  measurementMap.record(tagContext, map);
 }
 ```
