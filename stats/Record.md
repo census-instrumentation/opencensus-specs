@@ -45,7 +45,8 @@ measure name instead of the `Measure`.
 Implementations MAY define a `MeasurementMap` which describes a set of data points to be collected
 for a set of Measures. Adding this functionality may improve the efficiency of the record usage API.
 Additionally, when recording Measurements, `MeasurementMap` should optionally take a map of string 
-key-value pairs to record an exemplar.
+key-value pairs to record an exemplar. The string map is called `attachments` and represents the 
+contextual information of an exemplar, for example trace id, span id or dropped labels.
 
 ## Recording Stats
 
@@ -76,10 +77,10 @@ measurementMap.record();  // reads context from thread-local.
 // Another example on recording against sampled SpanContext.
 SpanContext spanContext = tracer.getCurrentSpan().getContext();
 if (spanContext.getTraceOptions().isSampled()) {
-  Map<String, String> map = new HashMap<>();
   // Client code needs to take care of encoding.
-  map.put("TraceId", encode(spanContext.getTraceId()));
-  map.put("SpanId", encode(spanContext.getSpanId()));
-  measurementMap.record(tagContext, map);
+  // 'Attachment' is the string representation of the contextual information of an exemplar.
+  measurementMap.putAttachment("TraceId", encode(spanContext.getTraceId()));
+  measurementMap.putAttachment("SpanId", encode(spanContext.getSpanId()));
+  measurementMap.record(tagContext);
 }
 ```
