@@ -76,10 +76,10 @@ measurementMap.record();  // reads context from thread-local.
 // Another example on recording against sampled SpanContext.
 SpanContext spanContext = tracer.getCurrentSpan().getContext();
 if (spanContext.getTraceOptions().isSampled()) {
-  Map<String, String> map = new HashMap<>();
   // Client code needs to take care of encoding.
-  map.put("TraceId", encode(spanContext.getTraceId()));
-  map.put("SpanId", encode(spanContext.getSpanId()));
-  measurementMap.record(tagContext, map);
+  // 'Attachment' is the string representation of the contextual information of an exemplar.
+  measurementMap.putAttachment("TraceId", encode(spanContext.getTraceId()));
+  measurementMap.putAttachment("SpanId", encode(spanContext.getSpanId()));
+  measurementMap.record(tagContext);
 }
 ```
