@@ -30,6 +30,12 @@ Represents the options for a trace. It is represented as 1 byte (bitmap).
 ##### Supported bits
 * Sampling bit -  Bit to represent whether trace is sampled or not (mask `0x1`).
 
+#### TraceState
+Carries tracing-system specific context in a list of key value pairs. TraceState allows different
+vendors propagate additional information and inter-operate with their legacy Id formats.
+
+For more details see [this][TraceStateLink].
+
 ## Span creation
 The implementation MUST allow users to create two types of Spans:
 * Root Spans - spans that do not have a parent.
@@ -78,3 +84,4 @@ propagation.
 [goContext]: https://golang.org/pkg/context
 [javaContext]: https://github.com/grpc/grpc-java/blob/master/context/src/main/java/io/grpc/Context.java
 [SpanDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/opencensus/proto/trace/trace.proto
+[TraceStateLink]: https://github.com/w3c/distributed-tracing/blob/master/trace_context/HTTP_HEADER_FORMAT.md#tracestate-field
