@@ -3,6 +3,9 @@
 This document describes the YAML configuration for views.
 
 Implementations should provide a way to load this configuration to define views.
+Implementations may provide facilities to:
+* watch the configuration file for changes and reload the views
+* reload the file explicitly by function call
 
 ## Schema
 
