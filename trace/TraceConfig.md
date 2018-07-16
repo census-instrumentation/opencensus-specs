@@ -14,7 +14,7 @@ is a [Probability](Sampling.md) sampler with the probability set to `1/10000`.
 * Default max number of `Message Event`s per `Span` - used when creating a Span if no specific limit 
 on `Message Event`s is given. The default limit is 128.
 * Default max number of `Link`s per `Span` - used when creating a Span if no specific limit on 
-`Link`s is given. The default limit is 128.
+`Link`s is given. The default limit is 32.
 
 ## API Summary
 * Permanently update the active TraceParams.
