@@ -77,6 +77,12 @@ measurementMap.put(RPC_LATENCY, 10.3);
 measurementMap.put(RPC_BYTES_SENT, 124);
 measurementMap.record();  // reads context from thread-local.
 
+MeasurementMap measurementMap = new MeasurementMap();
+measurementMap.put(RPC_LATENCY, 15);
+measurementMap.put(RPC_BYTES_SENT, 200);
+measurementMap.record(
+    Tags.getTagger().currentBuilder().put(myKey, myValue).build());  // record against an extra tag.
+
 // Another example on recording against sampled SpanContext.
 SpanContext spanContext = tracer.getCurrentSpan().getContext();
 if (spanContext.getTraceOptions().isSampled()) {
