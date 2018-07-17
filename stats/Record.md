@@ -51,7 +51,10 @@ contextual information of an exemplar, for example trace id, span id or dropped 
 ## Recording Stats
 
 Users should record Measurements against a context, either an explicit context or the implicit 
-current context. Tags from the context are recorded with the Measurements if they are any.
+current context. Tags from the context are recorded with the Measurements if they are any. 
+When recording against an explicit context, implmentations should allow users to add extra tags,
+and those tags should be non-propagating.
+
 Note that there is no implicit recording for exemplars. If you want to record a `Measurement`
 against an exemplar, you have to explicitly pass a string-string map.
 
