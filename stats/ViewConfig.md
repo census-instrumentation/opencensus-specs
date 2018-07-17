@@ -49,10 +49,38 @@ Each view definition contains the following fields:
 
 ### Aggregation object
 
-| Field        | Type             | Required | Comments                                                                                |
-|--------------|------------------|----------|-----------------------------------------------------------------------------------------|
-| type         | string           | yes      | Type of aggregation. Must be one of the strings: distribution, sum, lastValue, or mean. |
-| bucketBounds | array of numbers | no       | Bucket bounds for distribution type aggregation. Required for type: distribution.       |
+| Field              | Type                                             | Required | Comments                                                                                |
+|--------------------|--------------------------------------------------|----------|-----------------------------------------------------------------------------------------|
+| type               | string                                           | yes      | Type of aggregation. Must be one of the strings: distribution, sum, lastValue, or mean. |
+| explicitBuckets    | array of numbers                                 | no       | Bucket bounds for distribution type aggregation.                                        |
+| exponentialBuckets | [ExponentialBuckets](#exponentialbuckets-object) | no       | Bucket bounds for distribution type aggregation                                         |
+| linearBuckets      | [LinearBuckets](#linearbuckets-object)           | no       | Linear buckets for distribution type aggregation                                        |
+
+One and only one of `explicitBuckets`, `exponentialBuckets`, and `linearBuckets` should be specified if an only if type is distribution.
+
+### ExponentialBuckets object
+
+| Field  | Type   | Required | Comments                           |
+|--------|--------|----------|------------------------------------|
+| start  | number | yes      | First (lowest) bucket upper bound. |
+| factor | number | yes      | Factor to multiple by each bucket. |
+| count  | number | yes      | Total number of buckets.           |
+
+Creates `count` buckets,
+where the lowest bucket has an upper bound of `start` and each following bucket's upper bound is `factor`
+times the previous bucket's upper bound.
+
+### LinearBuckets object
+
+| Field     | Type   | Required | Comments                               |
+|-----------|--------|----------|----------------------------------------|
+| start     | number | yes      | First (lowest) bucket upper bound.     |
+| increment | number | yes      | Amount to increment each bucket bound. |
+| count     | number | yes      | Total number of buckets.               |
+
+Creates `count` buckets,
+where the lowest bucket has an upper bound of `start` and each following bucket's upper bound is `increment`
+more than the previous bucket's upper bound.
 
 ### Column object
 
@@ -78,7 +106,7 @@ Implementations should check that:
 1. Required fields are set
 1. View names are unique and valid
 1. Tag keys per view are unique and valid
-1. Bucket bounds are strictly increasing
+1. Bucket specification is present and valid for all distribution-type views
 
 ### Determine added/deleted/changed views
 
