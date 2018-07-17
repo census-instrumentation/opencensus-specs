@@ -67,22 +67,33 @@ argument. e.g. `record(List<Measurement>)` or `record(...Measurement)`.
 Example in Java
 
 ```java
+// Static constants.
 private static final MeasureDouble RPC_LATENCY =
     MeasureDouble.create("grpc.io/client/latency", "latency", "ms");
 private static final MeasureLong RPC_BYTES_SENT =
     MeasureLong.create("grpc.io/client/bytes_sent", "bytes sent", "kb");
+private static final TagKey MY_KEY = TagKey.create("my.org/key");
+```
 
+```java
+// Record against implicit context.
 MeasurementMap measurementMap = new MeasurementMap();
 measurementMap.put(RPC_LATENCY, 10.3);
 measurementMap.put(RPC_BYTES_SENT, 124);
 measurementMap.record();  // reads context from thread-local.
+```
 
+```java
+// Record against explicit context.
 MeasurementMap measurementMap = new MeasurementMap();
 measurementMap.put(RPC_LATENCY, 15);
 measurementMap.put(RPC_BYTES_SENT, 200);
+TagValue value = TagValue.create("some value");
 measurementMap.record(
-    Tags.getTagger().currentBuilder().put(myKey, myValue).build());  // record against an extra tag.
+    Tags.getTagger().currentBuilder().put(MY_KEY, value).build());  // record against an extra tag.
+```
 
+```java
 // Another example on recording against sampled SpanContext.
 SpanContext spanContext = tracer.getCurrentSpan().getContext();
 if (spanContext.getTraceOptions().isSampled()) {
