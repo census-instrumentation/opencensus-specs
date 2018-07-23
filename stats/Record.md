@@ -23,7 +23,7 @@ Implementations MAY define a `Measure` data type, constructed from the parameter
 Measure MAY have getters for retrieving all of the information used in `Measure` definition. 
 Once created, Measure metadata is immutable.
 
-Example in Java
+Example in Java:
 ```java
 private static final MeasureDouble RPC_LATENCY =
     MeasureDouble.create("grpc.io/latency", "latency", "ms");
@@ -52,8 +52,8 @@ contextual information of an exemplar, for example trace id, span id or dropped 
 
 Users should record Measurements against a context, either an explicit context or the implicit 
 current context. Tags from the context are recorded with the Measurements if they are any. 
-When recording against an explicit context, implmentations should allow users to add extra tags,
-and those tags should not be added to current context..
+When recording against an explicit context, implementations should allow users to add extra tags,
+and those tags should not be added to the current context.
 
 Note that there is no implicit recording for exemplars. If you want to record a `Measurement`
 against an exemplar, you have to explicitly pass a string-string map.
@@ -64,7 +64,7 @@ functionality can be provided through one of the following options:
 argument. e.g. `record(List<Measurement>)` or `record(...Measurement)`.
 * As a `record` method of the appropriate data type. e.g. `MeasurementMap.record()`.
 
-Example in Java
+Example in Java:
 
 ```java
 // Static constants.
@@ -80,7 +80,7 @@ private static final TagKey MY_KEY = TagKey.create("my.org/key");
 MeasurementMap measurementMap = new MeasurementMap();
 measurementMap.put(RPC_LATENCY, 10.3);
 measurementMap.put(RPC_BYTES_SENT, 124);
-measurementMap.record();  // reads context from thread-local.
+measurementMap.record();  // Reads context from thread-local.
 ```
 
 ```java
@@ -90,7 +90,7 @@ measurementMap.put(RPC_LATENCY, 15);
 measurementMap.put(RPC_BYTES_SENT, 200);
 TagValue value = TagValue.create("some value");
 measurementMap.record(
-    Tags.getTagger().currentBuilder().put(MY_KEY, value).build());  // record against an extra tag.
+    Tags.getTagger().currentBuilder().put(MY_KEY, value).build());  // Record against an extra tag.
 ```
 
 ```java
