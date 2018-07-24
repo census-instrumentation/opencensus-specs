@@ -90,7 +90,7 @@ measurementMap.put(RPC_LATENCY, 15);
 measurementMap.put(RPC_BYTES_SENT, 200);
 TagValue value = TagValue.create("some value");
 measurementMap.record(
-    Tags.getTagger().currentBuilder().put(MY_KEY, value).build());  // Record against an extra tag.
+    Tags.getTagger().currentBuilder().put(MY_KEY, value).build());  // Records against an extra tag.
 ```
 
 ```java
