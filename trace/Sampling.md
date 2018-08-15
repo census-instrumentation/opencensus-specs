@@ -14,9 +14,9 @@ The Sampling bit is always set only at the start of a Span, using a `Sampler`
 * `Probability` - sampler that tries to uniformly sample traces with a given probability. When 
 applied to a child `Span` of a **sampled** parent `Span`, the child `Span` keeps the sampling
 decision.
-* `QPS` - sampler that tries to sample traces based on QPS (e.g. 1 trace/second). When applied to a
-child `Span` of a **sampled** parent `Span`, the child `Span` keeps the sampling decision. For
-implementation details see [this](#qps-sampler-implementation-details)
+* `RateLimiting` - sampler that tries to sample with a rate per time window (0.1 traces/second). 
+When applied to a child `Span` of a **sampled** parent `Span`, the child `Span` keeps the sampling 
+decision. For implementation details see [this](#ratelimiting-sampler-implementation-details)
 
 ### How can users control the Sampler that is used for sampling?
 There are 2 ways to control the `Sampler` used when the library samples:
@@ -38,7 +38,7 @@ The OpenCensus library samples based on the following rules:
    * If a "span-scoped" `Sampler` is provided, use it to determine the sampling decision.
    * Else keep the sampling decision from the parent.
 
-### QPS sampler implementation details
+### RateLimiting sampler implementation details
 The problem we are trying to solve is:
 1. Getting QPS based sampling.
 2. Providing real sampling probabilities.
