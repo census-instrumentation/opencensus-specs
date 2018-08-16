@@ -1,5 +1,5 @@
 # Record API Overview
-The stats library allows users to record metrics for their applications or libraries. The core 
+The stats library allows users to record metrics for their applications or libraries. The core
 data types used are:
 * `Measure`: describes the type of the individual values recorded by an application.
 * `Measurement`: describes a data point to be collected for a `Measure`.
@@ -11,7 +11,7 @@ for the data. This provides the fundamental type used for recording data.
 
 A Measure describes a value with the following metadata:
 * `name`: a string by which the measure will be referred to, e.g. "rpc_server_latency", or
-"vm_cpu_cycles". Names MUST be unique within the library. It is recommended to use names 
+"vm_cpu_cycles". Names MUST be unique within the library. It is recommended to use names
 compatible with the intended end usage, e.g, use host/path pattern.
 * `description`: a string describing the measure, e.g. "RPC latency in seconds", "Virtual cycles
 executed on VM".
@@ -19,8 +19,8 @@ executed on VM".
 [Unified Code for Units of Measure](http://unitsofmeasure.org/ucum.html).
 * `type`: the only supported types are `int64` and `double`.
 
-Implementations MAY define a `Measure` data type, constructed from the parameters above. 
-Measure MAY have getters for retrieving all of the information used in `Measure` definition. 
+Implementations MAY define a `Measure` data type, constructed from the parameters above.
+Measure MAY have getters for retrieving all of the information used in `Measure` definition.
 Once created, Measure metadata is immutable.
 
 Example in Java:
@@ -32,7 +32,7 @@ private static final MeasureDouble RPC_LATENCY =
 References to Measures in the system MAY be obtained from querying of registered Measures. This
 functionality is required to decouple the recording of the data from the exporting of the data.
 
-For languages that do not allow private properties/metadata and if they are needed implementations 
+For languages that do not allow private properties/metadata and if they are needed implementations
 MAY define a `MeasureDescription` data type which contains all the read-only fields from the
 `Measure` definition such as: `name`, `description`, `unit` and `type`.
 
@@ -44,25 +44,34 @@ measure name instead of the `Measure`.
 
 Implementations MAY define a `MeasurementMap` which describes a set of data points to be collected
 for a set of Measures. Adding this functionality may improve the efficiency of the record usage API.
-Additionally, when recording Measurements, `MeasurementMap` should optionally take a map of string 
-key-value pairs to record an exemplar. The string map is called `attachments` and represents the 
+Additionally, when recording Measurements, `MeasurementMap` should optionally take a map of string
+key-value pairs to record an exemplar. The string map is called `attachments` and represents the
 contextual information of an exemplar, for example trace id, span id or dropped labels.
 
 ## Recording Stats
 
-Users should record Measurements against a context, either an explicit context or the implicit 
-current context. Tags from the context are recorded with the Measurements if they are any. 
+Users should record Measurements against a context, either an explicit context or the implicit
+current context. Tags from the context are recorded with the Measurements if they are any.
 When recording against an explicit context, implementations should allow users to add extra tags,
 and those tags should not be added to the current context.
 
 Note that there is no implicit recording for exemplars. If you want to record a `Measurement`
 against an exemplar, you have to explicitly pass a string-string map.
 
-Implementations SHOULD provide a means of recording multiple Measurements at once. This 
+Implementations SHOULD provide a means of recording multiple Measurements at once. This
 functionality can be provided through one of the following options:
 * As a method in a class/package (recommended name Stats/stats), taking a list of Measurement as
 argument. e.g. `record(List<Measurement>)` or `record(...Measurement)`.
 * As a `record` method of the appropriate data type. e.g. `MeasurementMap.record()`.
+
+### Record semantics
+
+Record may defer view updates to a background thread or process. Therefore, updates to views
+may not take effect right away. No guarantees are necessarily provided about the order in
+which Record calls are processed.
+
+Record calls should never block. In case of overload (e.g. views cannot be updated fast enough),
+Record should prefer to drop data rather than block the caller.
 
 Example in Java:
 
