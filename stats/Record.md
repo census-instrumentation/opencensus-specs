@@ -70,8 +70,7 @@ Record may defer view updates to a background thread or process. Therefore, upda
 may not take effect right away. No guarantees are necessarily provided about the order in
 which Record calls are processed.
 
-Record calls should never block. In case of overload (e.g. views cannot be updated fast enough),
-Record should prefer to drop data rather than block the caller.
+In particular, in case of overload (e.g. views cannot be updated fast enough), Record may drop data.
 
 Example in Java:
 
