@@ -41,9 +41,9 @@ All client metrics should be tagged with the following.
 | http_client_status | HTTP status code as an integer (e.g. 200, 404, 500.), or "error" if no response status line was received |
 | http_client_host   | Value of the request Host header                                                                         |
 
-`http_client_method`, `http_client_path`, `http_client_host` are set when an outgoing request 
+`http_client_method`, `http_client_path`, `http_client_host` are set when an outgoing request
 starts and are available in the context for the entire outgoing request processing.
-`http_client_status` is set when an outgoing request finishes and is only available around the 
+`http_client_status` is set when an outgoing request finishes and is only available around the
 stats recorded at the end of request processing.
 
 `http_client_path` and `http_client_host` might have high cardinality and you should be careful about using these
@@ -53,8 +53,8 @@ in views if your metrics backend cannot tolerate high-cardinality labels.
 
 The following set of views are considered minimum required to monitor client side performance:
 
-| View name                                   | Measure                                     | Aggregation  | Tags                                                     |
-|---------------------------------------------|---------------------------------------------|--------------|----------------------------------------------------------|
+| View name                                   | Measure                                     | Aggregation  | Tags                                   |
+|---------------------------------------------|---------------------------------------------|--------------|----------------------------------------|
 | opencensus.io/http/client/sent_bytes        | opencensus.io/http/client/sent_bytes        | distribution | http_client_method                     |
 | opencensus.io/http/client/received_bytes    | opencensus.io/http/client/received_bytes    | distribution | http_client_method                     |
 | opencensus.io/http/client/roundtrip_latency | opencensus.io/http/client/roundtrip_latency | distribution | http_client_method                     |
@@ -66,7 +66,7 @@ Server measures are recorded at the end of request processing.
 
 ### Measures
 
-Server stats are recorded for each individual HTTP request, including for each redirect (followed or not). 
+Server stats are recorded for each individual HTTP request, including for each redirect (followed or not).
 
 | Measure name                             | Unit | Description                                                                                                                                                                                                                                                                                   |
 |------------------------------------------|------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -76,7 +76,7 @@ Server stats are recorded for each individual HTTP request, including for each r
 
 ### Tags
 
-All server metrics should be tagged with the following. 
+All server metrics should be tagged with the following.
 
 | Tag name           | Description                                                         |
 |--------------------|---------------------------------------------------------------------|
@@ -84,14 +84,20 @@ All server metrics should be tagged with the following.
 | http_server_path   | URL path (not including query string)                               |
 | http_server_status | HTTP server status code returned, as an integer e.g. 200, 404, 500. |
 | http_server_host   | Value of the request Host header                                    |
+| http_server_route  | Logical route of the handler of this request                        |
 
-`http_server_method`, `http_server_path`, `http_server_host` are set when an incoming request 
+`http_server_method`, `http_server_path`, `http_server_host` are set when an incoming request
 starts and are available in the context for the entire incoming request processing.
 `http_server_status` is set when an incoming request finishes and is only available around the stats
 recorded at the end of request processing.
 
 `http_server_path` and `http_server_host` are set by the client: you should be careful about using these
 in views if your metrics backend cannot tolerate high-cardinality labels.
+
+`http_server_route` should always be a low cardinality string representing the logical route or handler of the
+request. A reasonable interpretation of this would be the URL path pattern matched to handle the request,
+or an explicitly specified function name. Defaults to the empty string if no other suitable value is
+available.
 
 ### Default views
 
