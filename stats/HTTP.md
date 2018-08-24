@@ -103,12 +103,12 @@ available.
 
 The following set of views are considered minimum required to monitor server side performance:
 
-| View name                                 | Measure                                  | Aggregation  | Tags                                   |
-|-------------------------------------------|------------------------------------------|--------------|----------------------------------------|
-| opencensus.io/http/server/received_bytes  | opencensus.io/http/server/received_bytes | distribution | http_server_method                     |
-| opencensus.io/http/server/sent_bytes      | opencensus.io/http/server/sent_bytes     | distribution | http_server_method                     |
-| opencensus.io/http/server/server_latency  | opencensus.io/http/server/server_latency | distribution | http_server_method                     |
-| opencensus.io/http/server/completed_count | opencensus.io/http/server/server_latency | count        | http_server_method, http_server_status |
+| View name                                 | Measure                                  | Aggregation  | Tags                                                      |
+|-------------------------------------------|------------------------------------------|--------------|-----------------------------------------------------------|
+| opencensus.io/http/server/received_bytes  | opencensus.io/http/server/received_bytes | distribution | http_server_method, http_server_route, http_server_status |
+| opencensus.io/http/server/sent_bytes      | opencensus.io/http/server/sent_bytes     | distribution | http_server_method, http_server_route, http_server_status |
+| opencensus.io/http/server/server_latency  | opencensus.io/http/server/server_latency | distribution | http_server_method, http_server_route, http_server_status |
+| opencensus.io/http/server/completed_count | opencensus.io/http/server/server_latency | count        | http_server_method, http_server_route, http_server_status |
 
 ## FAQ
 
