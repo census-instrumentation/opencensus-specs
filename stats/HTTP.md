@@ -78,13 +78,13 @@ Server stats are recorded for each individual HTTP request, including for each r
 
 All server metrics should be tagged with the following.
 
-| Tag name            | Description                                                         |
-|---------------------|---------------------------------------------------------------------|
-| http_server_method  | HTTP method, capitalized (i.e. GET, POST, PUT, DELETE, etc.)        |
-| http_server_path    | URL path (not including query string)                               |
-| http_server_status  | HTTP server status code returned, as an integer e.g. 200, 404, 500. |
-| http_server_host    | Value of the request Host header                                    |
-| http_server_handler | Logical name of the handler of this request (see below)             |
+| Tag name           | Description                                                         |
+|--------------------|---------------------------------------------------------------------|
+| http_server_method | HTTP method, capitalized (i.e. GET, POST, PUT, DELETE, etc.)        |
+| http_server_path   | URL path (not including query string)                               |
+| http_server_status | HTTP server status code returned, as an integer e.g. 200, 404, 500. |
+| http_server_host   | Value of the request Host header                                    |
+| http_server_route  | Logical route of the handler of this request                        |
 
 `http_server_method`, `http_server_path`, `http_server_host` are set when an incoming request
 starts and are available in the context for the entire incoming request processing.
@@ -94,9 +94,9 @@ recorded at the end of request processing.
 `http_server_path` and `http_server_host` are set by the client: you should be careful about using these
 in views if your metrics backend cannot tolerate high-cardinality labels.
 
-`http_server_handler` should always be a low cardinality string representing the logical handler of the
+`http_server_route` should always be a low cardinality string representing the logical route or handler of the
 request. A reasonable interpretation of this would be the URL path pattern matched to handle the request,
-or an explicitly specified handler function name. Defaults to the empty string if no other suitable value is
+or an explicitly specified function name. Defaults to the empty string if no other suitable value is
 available.
 
 ### Default views
