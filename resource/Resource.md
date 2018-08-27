@@ -1,13 +1,13 @@
 # Resource API Overview
-The resource library primarily defines a type that captures about information about the entity
+The resource library primarily defines a type that captures information about the entity
 for which stats or traces are recorded. It further provides a framework for detection of
 resource information from the environment and progressive population as signals propagate
-from the core instrumentation library to the a backend's exporter.
+from the core instrumentation library to a backend's exporter.
 
 ## Resource type
 A `Resource` describes the entity for which a signal was collected through two fields:
 * `type`: a string which describes a well-known type of entity. It SHOULD be namespaced
-to avoid collisions across different environment, e.g. `kubernetes.io/container`,
+to avoid collisions across different environment, e.g. `k8s.io/container`,
 `cloud.google.com/gce/instance`. 
 * `labels`: a dictionary of labels with string keys and values that provide information
 about the entity.
@@ -17,7 +17,7 @@ single slashes. All other characters MUST be alphanumeric. Label values MAY cont
 unicode character.
 
 Implementations MAY define a `Resource` data type, constructed from the parameters above.
-Resource MAY have getters for retrieving all the information used in `Resource` definition.
+`Resource` MUST have getters for retrieving all the information used in `Resource` definition.
 
 Example in Go:
 ```go
@@ -29,7 +29,7 @@ type Resource {
 
 ## Populating resources
 Resource information MAY be populated at any point between startup of the instrumented
-application and passing it the a backend-specific exporter. This explicitly includes
+application and passing it to a backend-specific exporter. This explicitly includes
 the path through future OpenCensus components such as agents or services.
 
 For example, process-identifying information may be populated through the library while
@@ -46,6 +46,10 @@ Two environment varibales are used:
 The key MUST be seperated from the value by a single `=`. Values MAY be quoted with a single
 leading and trailing `"`. If a values contains whitespaces, `=`, or `"` characters it MUST be
 quoted and `"` characters MUST be escaped.
+
+For example:
+* `OC_RESOURCE_TYPE=k8s.io/container`
+* `OC_RESOURCE_LABELS=k8s.io/pod_name="pod-xyz-123",k8s.io/container_name="c1",k8s.io/namespace="default"`
 
 Population from environment variables MUST be the first applied detection process unless
 the user explicitly overwrites this behavior.
@@ -90,7 +94,7 @@ For example, from a resource object
 
 ```javascript
 {
-	"type": "kubernetes.io/container",
+	"type": "k8s.io/container",
 	"labels": {
 		// Populated from VM environment through auto-detection library.
 		"cloud.google.com/gce/instance_id": "instance1",
@@ -98,9 +102,9 @@ For example, from a resource object
 		"cloud.google.com/project_id": "project1",
 		"cloud.google.com/gce/attributes/cluster_name": "cluster1",
 		// Populated through OpenCensus resource environment varibales.
-		"kubernetes.io/namespace": "ns1",
-		"kubernetes.io/pod_name": "pod1",
-		"kubernetes.io/container_name": "container1",
+		"k8s.io/namespace": "ns1",
+		"k8s.io/pod_name": "pod1",
+		"k8s.io/container_name": "container1",
 	},
 }
 ```
@@ -128,6 +132,6 @@ Those would generally be based on community-supported detection integrations mai
 
 Additionally, exporters SHOULD provide configuration hooks for users to provide their own
 translation unless the exporter's backend does not support resources at all. For such backends,
-exporters SHOULD allow attaching converting resource labels to metric labels.
+exporters SHOULD allow attaching converting resource labels to metric tags.
 
 [census-ecosystem]: https://github.com/census-ecosystem
