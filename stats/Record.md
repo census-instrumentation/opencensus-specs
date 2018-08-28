@@ -70,8 +70,6 @@ Record may defer view updates to a background thread or process. Therefore, upda
 may not take effect right away. No guarantees are necessarily provided about the order in
 which Record calls are processed.
 
-In particular, in case of overload (e.g. views cannot be updated fast enough), Record may drop data.
-
 Example in Java:
 
 ```java
@@ -112,3 +110,11 @@ if (spanContext.getTraceOptions().isSampled()) {
   measurementMap.record(tagContext);
 }
 ```
+
+## Flush
+
+All libraries should provide a Flush function that, once it returns, guarantees that all
+outstanding Record calls that began before the call to Flush have successfully exported
+the associated stats. Applications may call this function immediately before program
+termination to ensure all the collected stats have been exported before the program
+exits.
