@@ -32,9 +32,8 @@ Implementations may support tracking the total number of dropped items in stats 
 No views should be registered by default on these measures. Users may register views if they
 are interested in recording these measures.
 
-* Default `attributes` - used when creating a span. The default attribute is a empty map.
-Attributes are key-value pairs that are attached to spans. Developers are free to override
-or disable/skip default attributes for any given span.
+* Default `attributes` - used when creating a [Span](Span.md). The default attribute is a empty map.
+Developers are free to override or disable/skip default attributes for any given Span.
 
 Implementations should provide a way to override the globals per-span.
 
