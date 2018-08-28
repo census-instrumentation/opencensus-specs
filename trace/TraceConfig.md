@@ -1,7 +1,7 @@
 # TraceConfig
 
 Global configuration of the trace service. This allows users to change configs for the default
-sampler, maximum events to be kept, etc.
+sampler, maximum events to be kept, set top level attribute(s) for the entire trace etc.
 
 ## TraceParams
 Represents the set of parameters that users can control
@@ -31,6 +31,10 @@ Implementations may support tracking the total number of dropped items in stats 
 
 No views should be registered by default on these measures. Users may register views if they
 are interested in recording these measures.
+
+* Default `attributes` - used when creating a span. The default attribute is a empty map.
+Attributes are key-value pairs that are attached to spans. Developers are free to override
+or disable/skip default attributes for any given span.
 
 Implementations should provide a way to override the globals per-span.
 
