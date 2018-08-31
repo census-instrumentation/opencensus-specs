@@ -160,7 +160,7 @@ The key elements the API MUST provide are:
 [gRPCContext]: https://github.com/grpc/grpc-java/blob/master/context/src/main/java/io/grpc/Context.java
 [LibraryComponents]: /drawings/LibraryComponents.png "OpenCensus Library Components"
 [RFC2119]: https://www.ietf.org/rfc/rfc2119.txt
-[StatsDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/opencensus/proto/stats/stats.proto
+[StatsDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/opencensus/proto/stats/v1/stats.proto
 [DistributedTracingSpecs]: https://github.com/w3c/distributed-tracing
-[TraceDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/opencensus/proto/trace/trace.proto
+[TraceDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/opencensus/proto/trace/v1/trace.proto
 [activity]: https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.DiagnosticSource/src/ActivityUserGuide.md
