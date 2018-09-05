@@ -13,7 +13,7 @@ backend, rely on the backend to perform validation, and pass back any errors
 from the backend.
 
 The Metrics data model is defined as
-[metrics.proto](https://github.com/census-instrumentation/opencensus-proto/blob/master/opencensus/proto/metrics/metrics.proto),
+[metrics.proto](https://github.com/census-instrumentation/opencensus-proto/blob/master/opencensus/proto/metrics/v1/metrics.proto),
 but the proto is just to illustrate the concepts. OpenCensus implementations
 don't have to use the actual proto, and can instead use a language-specific
 in-memory data structure that captures what exporters need. This structure
