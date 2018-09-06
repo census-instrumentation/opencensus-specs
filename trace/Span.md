@@ -30,8 +30,8 @@ Represents the options for a trace. It is represented as 1 byte (bitmap).
 ##### Supported bits
 * Sampling bit -  Bit to represent whether trace is sampled or not (mask `0x1`).
 
-#### TraceState
-Carries tracing-system specific context in a list of key value pairs. TraceState allows different
+#### Tracestate
+Carries tracing-system specific context in a list of key value pairs. Tracestate allows different
 vendors propagate additional information and inter-operate with their legacy Id formats.
 
 For more details see [this][TraceStateLink].
