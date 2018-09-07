@@ -110,11 +110,3 @@ if (spanContext.getTraceOptions().isSampled()) {
   measurementMap.record(tagContext);
 }
 ```
-
-## Flush
-
-All libraries should provide a Flush function that, once it returns, guarantees that all
-outstanding Record calls that began before the call to Flush have successfully exported
-the associated stats. Applications may call this function immediately before program
-termination to ensure all the collected stats have been exported before the program
-exits.
