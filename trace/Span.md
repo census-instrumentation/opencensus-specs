@@ -34,7 +34,7 @@ Represents the options for a trace. It is represented as 1 byte (bitmap).
 Carries tracing-system specific context in a list of key value pairs. Tracestate allows different
 vendors propagate additional information and inter-operate with their legacy Id formats.
 
-For more details see [this][TraceStateLink].
+For more details see [this][TracestateLink].
 
 ## Span creation
 The implementation MUST allow users to create two types of Spans:
@@ -84,4 +84,4 @@ propagation.
 [goContext]: https://golang.org/pkg/context
 [javaContext]: https://github.com/grpc/grpc-java/blob/master/context/src/main/java/io/grpc/Context.java
 [SpanDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/opencensus/proto/trace/trace.proto
-[TraceStateLink]: https://github.com/w3c/distributed-tracing/blob/master/trace_context/HTTP_HEADER_FORMAT.md#tracestate-field
+[TracestateLink]: https://github.com/w3c/distributed-tracing/blob/master/trace_context/HTTP_HEADER_FORMAT.md#tracestate-field
