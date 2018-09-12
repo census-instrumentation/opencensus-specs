@@ -41,8 +41,8 @@ scm {
 
 ## Build Configuration
 The purpose of the build configuration is to tell kokoro how to build your
-project. It includes (but not limited to ) reference to buildscript location
-(build_file), build timeout value (timout_mins), etc.
+project. It includes (but not limited to) reference to buildscript location
+(build_file), build timeout value (timeout_mins), etc.
 For detail description please refer to Kokoro documentation.
 
 The build configuration file resides in the directory specified by the field
