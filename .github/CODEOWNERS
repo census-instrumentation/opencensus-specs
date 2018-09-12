@@ -1,0 +1,13 @@
+# Code owners file.
+# This file controls who is tagged for review for any given pull request.
+
+# For anything not explicitly taken by someone else:
+*                 @bogdandrutu
+
+# Owners per module:
+builds/*          @rghetia
+encodings/*       @bogdandrutu
+metrics/*         @bogdandrutu
+stats/*           @bogdandrutu
+trace/*           @bogdandrutu
+utils/*           @bogdandrutu
