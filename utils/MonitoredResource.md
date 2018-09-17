@@ -79,6 +79,6 @@ The value return by the `instance-identity/document` metadata request is a docum
 [AWSMetadataIdentityDocument]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-identity-documents.html
 [DownwardAPI]: https://kubernetes.io/docs/tasks/inject-data-application/downward-api-volume-expose-pod-information/
 [GCPMetadata]: https://cloud.google.com/compute/docs/storing-retrieving-metadata
-[GCPMetadataJavaExmple]: https://github.com/GoogleCloudPlatform/google-cloud-java/blob/master/google-cloud-core/src/main/java/com/google/cloud/MetadataConfig.java
+[GCPMetadataJavaExmple]: https://github.com/GoogleCloudPlatform/google-cloud-java/blob/739d519e14649f8b7612631d90eed97a614bf93a/google-cloud-clients/google-cloud-core/src/main/java/com/google/cloud/MetadataConfig.java
 [K8SDocumentation]: https://cloud.google.com/kubernetes-engine/docs/tutorials/custom-metrics-autoscaling#exporting_metrics_from_the_application
 [K8SCodeSample]: https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/blob/master/custom-metrics-autoscaling/direct-to-sd/sd_dummy_exporter.go
