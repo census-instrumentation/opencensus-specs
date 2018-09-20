@@ -9,6 +9,13 @@ logging framework that it supports.  Therefore, this document only covers the as
 correlation that could be shared across log correlation implementations for multiple languages and
 logging frameworks.  It doesn't cover how to hook into the logging framework.
 
+## Identifying the span to associate with a log entry
+
+A log correlation implementation should look up tracing data from the span that is current at the
+point of the log statement.  See
+[Span.md#how-span-interacts-with-context](Span.md#how-span-interacts-with-context) for the
+definition of the current span.
+
 ## Tracing data to include in log entries
 
 A log correlation implementation should insert the following pieces of tracing data from the current
