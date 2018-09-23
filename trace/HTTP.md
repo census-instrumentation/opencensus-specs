@@ -117,3 +117,41 @@ known attributes/labels on supported tracing backends.
 | "http.route"              | "http.route"       | "http.route"       | "/http/route"             |
 | "http.user_agent"         | "http.user_agent"  | "http.user_agent"  | "/http/user_agent"        |
 | "http.status_code"        | "http.status_code" | "http.status_code" | "/http/status_code"       |
+
+## Test Cases
+
+Test cases for outgoing http calls are in the file
+[http-out-test-cases.json](http-out-test-cases.json).
+
+File consists of a set of test cases. Each test case represents outgoing http
+call, response it receives and the resulting span properties. It looks like
+this:
+
+``` json
+{
+"name": "Name is populated as a path",
+"method": "GET",
+"url": "http://{host}:{port}/path/to/resource/",
+"headers": {
+    "User-Agent": "test-user-agent"
+},
+"responseCode": 200,
+"spanName": "/path/to/resource/",
+"spanStatus": "OK",
+"spanKind": "Client",
+"spanAttributes": {
+    "http.path": "/path/to/resource/",
+    "http.method": "GET",
+    "http.host": "{host}:{port}",
+    "http.status_code": "200",
+    "http.user_agent": "test-user-agent"
+}
+}
+```
+
+Where `name` is the name of the test case. Properties `method`, `url` and
+`headers` collection represents the outgoing call. The field `responseCode`
+describes the response code status code.
+
+The rest of the properties describe the span details of the resulting span -
+it's name, kind, status and attributes.
