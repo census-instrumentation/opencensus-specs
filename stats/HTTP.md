@@ -22,7 +22,7 @@ Buckets for distributions in default views are as follows:
 
 ### Measures
 
-Client stats are recorded for each individual HTTP request, including for each individual redirect (followed or not).
+Client stats are recorded for each individual HTTP request, including for each individual redirect (followed or not). All stats are recorded after request processing (usually after the response body has been fully read).
 
 | Measure name                                | Unit | Description                                                                                                                                                                                                                                                                                       |
 |---------------------------------------------|------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -32,7 +32,7 @@ Client stats are recorded for each individual HTTP request, including for each i
 
 ### Tags
 
-All client metrics should be tagged with the following.
+All client measures should be tagged with the following.
 
 | Tag name           | Description                                                                                              |
 |--------------------|----------------------------------------------------------------------------------------------------------|
@@ -55,9 +55,9 @@ The following set of views are considered minimum required to monitor client sid
 
 | View name                                   | Measure                                     | Aggregation  | Tags                                   |
 |---------------------------------------------|---------------------------------------------|--------------|----------------------------------------|
-| opencensus.io/http/client/sent_bytes        | opencensus.io/http/client/sent_bytes        | distribution | http_client_method                     |
-| opencensus.io/http/client/received_bytes    | opencensus.io/http/client/received_bytes    | distribution | http_client_method                     |
-| opencensus.io/http/client/roundtrip_latency | opencensus.io/http/client/roundtrip_latency | distribution | http_client_method                     |
+| opencensus.io/http/client/sent_bytes        | opencensus.io/http/client/sent_bytes        | distribution | http_client_method, http_client_status                     |
+| opencensus.io/http/client/received_bytes    | opencensus.io/http/client/received_bytes    | distribution | http_client_method, http_client_status |
+| opencensus.io/http/client/roundtrip_latency | opencensus.io/http/client/roundtrip_latency | distribution | http_client_method, http_client_status |
 | opencensus.io/http/client/completed_count   | opencensus.io/http/client/roundtrip_latency | count        | http_client_method, http_client_status |
 
 ## Server
@@ -66,7 +66,7 @@ Server measures are recorded at the end of request processing.
 
 ### Measures
 
-Server stats are recorded for each individual HTTP request, including for each redirect (followed or not).
+Server stats are recorded for each individual HTTP request handled. They are recorded at the end of request handling.
 
 | Measure name                             | Unit | Description                                                                                                                                                                                                                                                                                   |
 |------------------------------------------|------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
