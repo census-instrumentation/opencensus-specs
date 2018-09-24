@@ -81,9 +81,6 @@ Here are example of mapping those to the Open Census status codes.
 | Url cannot be parsed         | 3 (INVALID_ARGUMENT)  |
 | Request timed out            | 1 (DEADLINE_EXCEEDED) |
 
-In case of DNS resolution failed to indicate that the span resulted in
-error boolean attribute `error` with the value `true` should be added.
-
 ## Message events
 
 In the lifetime of an incoming and outgoing request, the following message events SHOULD be created:
