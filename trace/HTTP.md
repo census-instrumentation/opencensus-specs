@@ -53,7 +53,7 @@ status code.
 
 | HTTP code             | Trace status code      |
 |-----------------------|------------------------|
-| 0...199               | 2 Unknown              |
+| 0...199               | 2 (UNKNOWN)            |
 | 200...399             | 0 (OK)                 |
 | 400 Bad Request       | 3 (INVALID_ARGUMENT)   |
 | 504 Gateway Timeout   | 4 (DEADLINE_EXCEEDED)  |
@@ -66,7 +66,23 @@ status code.
 
 Notes: 401 Unauthorized actually means unauthenticated according to RFC 7235, 3.1.
 
-The Status message should be the Reason-Phrase (RFC 2616 6.1.1) from the response status line (if available).
+The Status message should be the Reason-Phrase (RFC 2616 6.1.1) from the
+response status line (if available).
+
+### Client errors for client HTTP calls
+
+There are a number of client errors when trying to access http endpoint.
+Here are example of mapping those to the Open Census status codes.
+
+| Client error                 | Trace status code     |
+|------------------------------|-----------------------|
+| DNS resolution failed        | 2 (UNKNOWN)           |
+| Request cancelled by caller  | 1 (CANCELLED)         |
+| Url cannot be parsed         | 3 (INVALID_ARGUMENT)  |
+| Request timed out            | 1 (DEADLINE_EXCEEDED) |
+
+In case of DNS resolution failed to indicate that the span resulted in
+error boolean attribute `error` with the value `true` should be added.
 
 ## Message events
 
@@ -100,7 +116,7 @@ All attributes are optional.
 | "http.method"             | Request URL method          | "GET"                           |
 | "http.path"               | Request URL path            | "/users/25f4c31d"               |
 | "http.route"              | Matched request URL route   | "/users/:userID"                |
-| "http.user_agent"         | Request user-agent          | "HTTPClient/1.2"                |
+| "http.user_agent"         | Request user-agent. Do not inject attribute if user-agent is empty. | "HTTPClient/1.2" |
 | "http.status_code"        | Response status code        | 200                             |
 
 Exporters should always export the collected attributes. Exporters should map the collected 
