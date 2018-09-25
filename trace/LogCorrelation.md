@@ -46,25 +46,3 @@ Some logging frameworks allow the insertion of arbitrary key-value pairs into lo
 a log correlation implementation inserts tracing data by that method, the key names should be
 "opencensusTraceId", "opencensusSpanId", and "opencensusTraceSampled" by default.  The log
 correlation implementation may allow the user to override the tracing data key names.
-
-## Deciding when to add tracing data to a log entry
-
-The log correlation implementation may allow the user to configure the choice to add tracing data to
-a log entry.  This configuration option should be called "span selection", though the format and
-case of the option name may depend on the method of configuration.  For example, a Java logging
-property name might include a class name, as in
-"io.opencensus.logcorrelation.OpenCensusTracingDataInserter.spanSelection".  Span selection should
-have the following values, also with a format and case that depends on the method of configuration:
-
-### All Spans
-
-Always add tracing data to log entries, even when the current span is not sampled.  This is the
-default.
-
-### Sampled Spans
-
-Add tracing data to a log entry iff the current span is sampled.
-
-### No Spans
-
-Never add tracing data to log entries.  This option disables the log correlation feature.
