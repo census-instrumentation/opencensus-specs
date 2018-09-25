@@ -108,17 +108,17 @@ request represents the incoming request. For a client, request represents the ou
 All attributes are optional, but collector should make the best effort
 to collect those.
 
-| Attribute name            | Description                 | Example value                   |
-|---------------------------|-----------------------------|---------------------------------|
-| "http.host"               | Request URL host            | `example.com:779`               |
-| "http.method"             | Request URL method          | `GET`                           |
-| "http.path"               | Request URL path. If empty - set to `/`            | `/users/25f4c31d`  |
-| "http.route"              | Matched request URL route   | `/users/:userID`                |
-| "http.user_agent"         | Request user-agent. Do not inject attribute if user-agent is empty. | `HTTPClient/1.2` |
-| "http.status_code"        | Response status code        | 200                             |
-| "http.url"                | Response status code        | 200                             |
+| Attribute name            | Description                 | Type   |Example value              |
+|---------------------------|-----------------------------|--------|---------------------------|
+| "http.host"               | Request URL host            | string | `example.com:779`         |
+| "http.method"             | Request URL method          | string | `GET`                     |
+| "http.path"               | Request URL path. If empty - set to `/` | `/users/25f4c31d`  |
+| "http.route"              | Matched request URL route   | string | `/users/:userID`          |
+| "http.user_agent"         | Request user-agent. Do not inject attribute if user-agent is empty. | string | `HTTPClient/1.2` |
+| "http.status_code"        | Response status code        | int64  | `200`                     |
+| "http.url"                | Absolute request URL        | string | `https://example.com:779/path/12314/?q=ddds#123` |
 
-Exporters should always export the collected attributes. Exporters should map the collected 
+Exporters should always export the collected attributes. Exporters should map the collected
 attributes to backend's known attributes/labels.
 
 The following table summarizes how OpenCensus attributes maps to the
