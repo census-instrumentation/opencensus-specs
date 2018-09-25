@@ -18,8 +18,8 @@ definition of the current span.
 
 ## Tracing data to include in log entries
 
-A log correlation implementation should insert the following pieces of tracing data from the current
-span context into each log entry:
+A log correlation implementation should make the following pieces of tracing data from the current
+span context available in each log entry:
 
 ### Trace ID
 
