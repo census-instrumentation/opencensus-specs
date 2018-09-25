@@ -44,5 +44,7 @@ and format the sampling decision as "true" or "false".
 
 Some logging frameworks allow the insertion of arbitrary key-value pairs into log entries.  When
 a log correlation implementation inserts tracing data by that method, the key names should be
-"opencensusTraceId", "opencensusSpanId", and "opencensusTraceSampled" by default.  The log
-correlation implementation may allow the user to override the tracing data key names.
+"opencensus trace id", "opencensus span id", and "opencensus trace sampled" by default.  The case
+and format of the names should be consistent with the supported logging framework.  For example, the
+trace ID key name could be "opencensusTraceId" or "opencensus_trace_id".  The log correlation
+implementation may allow the user to override the tracing data key names.
