@@ -25,7 +25,7 @@ include at least:
 #### SamplingDecision
 `SamplingDecision` is the object returned by the `Sampler` and SHOULD include:
 * A boolean value that represents the sampling decision.
-* A list of `Attribute`'s that are added to the newly created `Span`.
+* A list of `Attribute`'s that will be added to the newly created `Span`.
 
 The list of returned `Attribute`'s MAY include:
 * An `Attribute` with a key `sampler.type` to record the type of `Sampler` used.
