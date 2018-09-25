@@ -103,18 +103,20 @@ Implementations SHOULD create message event when response size is determined.
 ## Attributes
 
 Implementations SHOULD set the following attributes on the client and server spans. For a server,
- request represents the incoming request. For a client, request represents the outgoing request.
+request represents the incoming request. For a client, request represents the outgoing request.
 
-All attributes are optional.
+All attributes are optional, but collector should make the best effort
+to collect those.
 
 | Attribute name            | Description                 | Example value                   |
 |---------------------------|-----------------------------|---------------------------------|
-| "http.host"               | Request URL host            | "example.com:779"               |
-| "http.method"             | Request URL method          | "GET"                           |
-| "http.path"               | Request URL path            | "/users/25f4c31d"               |
-| "http.route"              | Matched request URL route   | "/users/:userID"                |
-| "http.user_agent"         | Request user-agent. Do not inject attribute if user-agent is empty. | "HTTPClient/1.2" |
+| "http.host"               | Request URL host            | `example.com:779`               |
+| "http.method"             | Request URL method          | `GET`                           |
+| "http.path"               | Request URL path. If empty - set to `/`            | `/users/25f4c31d`  |
+| "http.route"              | Matched request URL route   | `/users/:userID`                |
+| "http.user_agent"         | Request user-agent. Do not inject attribute if user-agent is empty. | `HTTPClient/1.2` |
 | "http.status_code"        | Response status code        | 200                             |
+| "http.url"                | Response status code        | 200                             |
 
 Exporters should always export the collected attributes. Exporters should map the collected 
 attributes to backend's known attributes/labels.
@@ -130,6 +132,13 @@ known attributes/labels on supported tracing backends.
 | "http.route"              | "http.route"       | "http.route"       | "/http/route"             |
 | "http.user_agent"         | "http.user_agent"  | "http.user_agent"  | "/http/user_agent"        |
 | "http.status_code"        | "http.status_code" | "http.status_code" | "/http/status_code"       |
+| "http.url"                | "http.url"         | "http.url"         | "/http/url"               |
+
+References:
+
+- [Stackdriver Trace
+  label](https://cloud.google.com/trace/docs/reference/v1/rest/v1/projects.traces)
+- [Jaeger/Open Tracing](https://github.com/opentracing/specification/blob/master/semantic_conventions.md)
 
 ## Test Cases
 
