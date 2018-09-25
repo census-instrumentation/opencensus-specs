@@ -2,7 +2,7 @@
 
 Log correlation is a feature that inserts information about the current span into log entries
 created by existing logging frameworks.  The feature can be used to add more context to log entries,
-filter log entries by trace ID, or show log entries as annotations on a trace.
+filter log entries by trace ID, or find log entries associated with a specific trace or span.
 
 The design of a log correlation implementation depends heavily on the details of the particular
 logging framework that it supports.  Therefore, this document only covers the aspects of log
