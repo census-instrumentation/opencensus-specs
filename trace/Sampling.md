@@ -8,7 +8,31 @@ exporters.
 
 The Sampling bit is always set only at the start of a Span, using a `Sampler`
 
-### What kind of samplers does OpenCensus support?
+### Sampler interface
+A `Sampler` is an interface with only one method `sample` that accepts a set of sampling
+parameters and returns a `SamplingDecision` object.
+
+#### Sampling parameters
+Based on the language the sampling parameters can be embedded into an object called
+`SamplingParameters` or explicitly passed as arguments. The list of sampling parameters SHOULD
+include at least:
+* The parent `SpanContext`;
+* The current `TraceId`;
+* The current `SpanId`;
+* The current `Span`'s name;
+* The current `Span`'s kind;
+
+#### SamplingDecision
+`SamplingDecision` is the object returned by the `Sampler` and SHOULD include:
+* A boolean value that represents the sampling decision;
+* A list of `Attribute`'s that are added to the newly created `Span`;
+
+The list of returned `Attribute`'s MAY include:
+* An `Attribute` with a key `sampler.type` to record the type of `Sampler` used.
+* An `Attribute` with a key `sampler.param` to record the `Sampler` parameters (e.g. probability).
+It can be ignored for `AlwaysSample` or `NeverSample`.
+
+### What type of samplers does OpenCensus support?
 * `AlwaysSample` - sampler that makes a "yes" decision every time.
 * `NeverSample` - sampler that makes a "no" decision every time.
 * `Probability` - sampler that tries to uniformly sample traces with a given probability. When 
