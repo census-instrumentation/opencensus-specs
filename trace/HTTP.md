@@ -139,6 +139,7 @@ References:
 - [Stackdriver Trace
   label](https://cloud.google.com/trace/docs/reference/v1/rest/v1/projects.traces)
 - [Jaeger/Open Tracing](https://github.com/opentracing/specification/blob/master/semantic_conventions.md)
+- [Zipkin](https://github.com/openzipkin/zipkin-api/blob/master/thrift/zipkinCore.thrift)
 
 ## Test Cases
 
