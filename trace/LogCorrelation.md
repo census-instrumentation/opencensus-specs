@@ -34,6 +34,8 @@ The span ID of the current span.  See [Span.md#spanid](Span.md#spanid).
 The sampling bit of the current span, as a boolean.  See
 [Span.md#supported-bits](Span.md#supported-bits).
 
+TODO(sebright): Consider adding parent span ID, to allow recreating the trace structure from logs.
+
 ## String format for tracing data
 
 The logging framework may require the pieces of tracing data to be converted to strings.  In that
