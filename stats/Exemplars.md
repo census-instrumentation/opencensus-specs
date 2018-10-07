@@ -1,4 +1,4 @@
-#Exemplars
+# Exemplars
 
 Exemplars are example data points for aggregated data. In particular, for distribution-type
 metrics, exemplars are points associated with each bucket in the distribution giving an
