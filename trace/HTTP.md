@@ -117,3 +117,43 @@ known attributes/labels on supported tracing backends.
 | "http.route"              | "http.route"       | "http.route"       | "/http/route"             |
 | "http.user_agent"         | "http.user_agent"  | "http.user_agent"  | "/http/user_agent"        |
 | "http.status_code"        | "http.status_code" | "http.status_code" | "/http/status_code"       |
+
+## Sampling
+
+There are two ways to control the `Sampler` used:
+* Controlling the global default `Sampler` via [TraceConfig](https://github.com/census-instrumentation/opencensus-specs/blob/master/trace/TraceConfig.md).
+* Pass a specific `Sampler` as an option to the HTTP plugin. Plugins should support setting
+a sampler per HTTP request.
+
+Example cases where per-request sampling is useful:
+
+- Having different sampling policy per route
+- Having different sampling policy per method
+- Filtering out certain paths (e.g. health endpoints) to disable tracing
+- Always sampling critical paths
+- Sampling based on the custom request header or query parameter
+
+In the following Go example, incoming and outgoing request objects can
+dynamically inspected to set a sampler.
+
+For outgoing requests:
+
+```go
+type Transport struct {
+ 	// GetStartOptions allows to set start options per request.
+	GetStartOptions func(*http.Request) trace.StartOptions
+
+	// ...
+}
+```
+
+For incoming requests:
+
+```go
+type Handler struct {
+ 	// GetStartOptions allows to set start options per request.
+	GetStartOptions func(*http.Request) trace.StartOptions
+
+	// ...
+}
+```
