@@ -138,22 +138,22 @@ dynamically inspected to set a sampler.
 
 For outgoing requests:
 
-```
+```go
 type Transport struct {
  	// GetStartOptions allows to set start options per request.
 	GetStartOptions func(*http.Request) trace.StartOptions
 
-    // ...
+	// ...
 }
 ```
 
 For incoming requests:
 
-```
+```go
 type Handler struct {
  	// GetStartOptions allows to set start options per request.
 	GetStartOptions func(*http.Request) trace.StartOptions
 
-    // ...
+	// ...
 }
 ```
