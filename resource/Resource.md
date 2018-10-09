@@ -26,6 +26,8 @@ type Resource {
 }
 ```
 
+TODO(fabxc): link protobuf definition.
+
 ## Populating resources
 Resource information MAY be populated at any point between startup of the instrumented
 application and passing it to a backend-specific exporter. This explicitly includes
@@ -73,15 +75,11 @@ Example in Go:
 ```go
 type Detector func(context.Context) (*Resource, error)
 
-// Returns a detector that always returns a specific resource.
-func NewDetectorFromResource(*Resource) Detector
-
 // Returns a detector that runs all input detectors sequentially and merges their results.
 func ChainedDetector(...Detector) Detector
 ```
 
 ### Updates
-Over the runtime of an application, attributes of a resource may change in some cases.
 OpenCensus's resource representation is focused on providing static, uniquely identifying
 information and thus those mutable attributes SHOULD NOT be included in the resource
 representation.
