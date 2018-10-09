@@ -1,20 +1,19 @@
 # Resource API Overview
 The resource library primarily defines a type that captures information about the entity
-for which stats or traces are recorded. It further provides a framework for detection of
+for which stats or traces are reported. It further provides a framework for detection of
 resource information from the environment and progressive population as signals propagate
 from the core instrumentation library to a backend's exporter.
 
 ## Resource type
 A `Resource` describes the entity for which a signal was collected through two fields:
-* `type`: a string which describes a well-known type of entity. It SHOULD be namespaced
-to avoid collisions across different environment, e.g. `k8s.io/container`,
-`cloud.google.com/gce/instance`. 
+* `type`: an optional string which describes a well-known type of resource.
 * `labels`: a dictionary of labels with string keys and values that provide information
 about the entity.
 
-Type strings and label keys MAY start with a domain name and MAY be further namespaced through
-single slashes. All other characters MUST be alphanumeric. Label values MAY contain any valid
-unicode character.
+Type, label keys, and label values MUST contain only printable ASCII (codes between 32
+and 126, inclusive) and not exceed 256 characters.
+Type and label keys MUST have a length greater than zero. They SHOULD start with a domain
+name and separate hierarchies with `/` characters, e.g. `k8s.io/namespace/name`.
 
 Implementations MAY define a `Resource` data type, constructed from the parameters above.
 `Resource` MUST have getters for retrieving all the information used in `Resource` definition.
@@ -42,14 +41,12 @@ that may not be detectable automatically through available integration libraries
 
 Two environment variables are used:
 * `OC_RESOURCE_TYPE`: defines the resource type. Leading and trailing whitespaces are trimmed.
-* `OC_RESOURCE_LABELS`: defines resource labels as a comma-seperated list of key/value pairs.
-The key MUST be seperated from the value by a single `=`. Values MAY be quoted with a single
-leading and trailing `"`. If a values contains whitespaces, `=`, or `"` characters it MUST be
-quoted and `"` characters MUST be escaped.
+* `OC_RESOURCE_LABELS`: defines resource labels as a comma-seperated list of key/value pairs
+(`[ <key>="value" [ ,<key>="<value>" ... ] ]`). `"` characters in values MUST be escaped with `\`.
 
 For example:
 * `OC_RESOURCE_TYPE=k8s.io/container`
-* `OC_RESOURCE_LABELS=k8s.io/pod_name="pod-xyz-123",k8s.io/container_name="c1",k8s.io/namespace="default"`
+* `OC_RESOURCE_LABELS=k8s.io/pod/name="pod-xyz-123",k8s.io/container/name="c1",k8s.io/namespace/name="default"`
 
 Population from environment variables MUST be the first applied detection process unless
 the user explicitly overwrites this behavior.
@@ -84,13 +81,12 @@ func ChainedDetector(...Detector) Detector
 ```
 
 ### Updates
-Over the runtime of an application, resource information may change in some cases. To
-allow exporters to incorporate those changes, they SHOULD take a resource getter as a
-configuration parameter. The exporter SHOULD periodically rerun the getter and incorporate
-any changes into the data it exporters.
-If the getter returns an error, the exporter SHOULD log the error and proceed with the
-last known resource information. It SHOULD run the getter once on initialization and
-fail if it returns an error.
+Over the runtime of an application, attributes of a resource may change in some cases.
+OpenCensus's resource representation is focused on providing static, uniquely identifying
+information and thus those mutable attributes SHOULD NOT be included in the resource
+representation.
+Resource type and labels MUST NOT be mutated after initialization. Any changes MUST be
+effectively be treated as a different resource and any associated signal state MUST be reset.
 
 ## Exporter translation
 A resource object MUST NOT be mutated further once it is passed to a backend-specific exporter.
@@ -112,9 +108,9 @@ For example, from a resource object
 		"cloud.google.com/project_id": "project1",
 		"cloud.google.com/gce/attributes/cluster_name": "cluster1",
 		// Populated through OpenCensus resource environment variables.
-		"k8s.io/namespace": "ns1",
-		"k8s.io/pod_name": "pod1",
-		"k8s.io/container_name": "container1",
+		"k8s.io/namespace/name": "ns1",
+		"k8s.io/pod/name": "pod1",
+		"k8s.io/container/name": "container1",
 	},
 }
 ```
@@ -137,7 +133,7 @@ resource type with well-known identifiers specific to its API:
 ```
 
 For another, hyopthetical, backend a simple unique identifier might be constructed instead
-by its expoerter:
+by its exporter:
 
 ```
 cluster1/ns1/pod1/container1
