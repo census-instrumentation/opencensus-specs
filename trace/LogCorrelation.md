@@ -55,4 +55,4 @@ and format the sampling decision as "true" or "false".
 Some logging frameworks allow the insertion of arbitrary key-value pairs into log entries.  When
 a log correlation implementation inserts tracing data by that method, the key names should be
 "traceId", "spanId", and "traceSampled" by default.  The log correlation implementation may allow
-the user to override the tracing data key names.
+the user to override the key names.
