@@ -4,7 +4,7 @@ This document explains tracing of gRPC requests with OpenCensus.
 
 ## Spans
 
-Implementations MUST create a span, when the gRPC call starts, for the client and a span for the 
+Implementations MUST create a span, when the gRPC call starts, for the client and a span for the
 server.
 
 Span name is formatted as (also known as full gRPC method name):
@@ -25,13 +25,17 @@ For backends that does not support Span.Kind, the exported span names can be pre
 
 Propagation is how SpanContext is transmitted on the wire in an gRPC request.
 
-The propagation MUST inject a SpanContext (as a gRPC metadata `grpc-trace-bin`) and MUST extract 
+The propagation MUST inject a SpanContext (as a gRPC metadata `grpc-trace-bin`) and MUST extract
 a SpanContext from the gRPC metadata. The serialization format is defined
 [here](../encodings/BinaryEncoding.md).
 
+Implementations should provide a way to avoid propagating SpanContext altogether from both
+inbound requests and on outbound requests while still generating spans as usual
+around the inbound/outbound request.
+
 ## Status
 
-Implementations MUST set status which should be the same as the gRPC client/server status. The 
+Implementations MUST set status which should be the same as the gRPC client/server status. The
 mapping between gRPC canonical codes and OpenCensus status codes can be found
 [here](https://github.com/grpc/grpc-go/blob/master/codes/codes.go).
 
@@ -49,7 +53,7 @@ In the lifetime of a gRPC stream, the following message events SHOULD be created
 -> [time], MessageEventTypeRecv, MessageId, UncompressedByteSize, CompressedByteSize
 ```
 
-The `MessageId` must be calculated as two different counters starting from `1` one for sent 
-messages and one for received message. This way we guarantee that the values will be consistent 
-between different implementations. In case of unary calls only one sent and one received message 
+The `MessageId` must be calculated as two different counters starting from `1` one for sent
+messages and one for received message. This way we guarantee that the values will be consistent
+between different implementations. In case of unary calls only one sent and one received message
 will be recorded for both client and server spans.

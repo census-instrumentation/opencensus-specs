@@ -4,7 +4,7 @@ This document explains tracing of HTTP requests with OpenCensus.
 
 ## Spans
 
-Implementations MUST create a span for outgoing requests at the client and a span for incoming 
+Implementations MUST create a span for outgoing requests at the client and a span for incoming
 requests at the server.
 
 Span name is formatted as:
@@ -29,24 +29,28 @@ incoming requests should be a span kind of SERVER.
 
 Propagation is how SpanContext is transmitted on the wire in an HTTP request.
 
-Implementations MUST allow users to set their own propagation format and MUST provide an 
+Implementations MUST allow users to set their own propagation format and MUST provide an
 implementation for B3 at least.
+
+Implementations should provide a way to avoid propagating SpanContext altogether from both
+inbound requests and on outbound requests while still generating spans as usual
+around the inbound/outbound request.
 
 If user doesn't set any propagation methods explicitly, B3 is used.
 
-The propagation method SHOULD modify a request object to insert a SpanContext or SHOULD be able 
+The propagation method SHOULD modify a request object to insert a SpanContext or SHOULD be able
 to extract a SpanContext from a request object.
 
 ## Status
 
-Implementations MUST set status if HTTP request or response is not successful (e.g. not 2xx). In 
-redirection case, if the client doesn't have autoredirection support, request should be 
+Implementations MUST set status if HTTP request or response is not successful (e.g. not 2xx). In
+redirection case, if the client doesn't have autoredirection support, request should be
 considered successful.
 
-Set status code to UNKNOWN (2) if the reason cannot be inferred at the callsite or from the HTTP 
+Set status code to UNKNOWN (2) if the reason cannot be inferred at the callsite or from the HTTP
 status code.
 
-Don't set the status message if the reason can be inferred at the callsite of from the HTTP 
+Don't set the status message if the reason can be inferred at the callsite of from the HTTP
 status code.
 
 ### Mapping from HTTP status codes to Trace status codes
@@ -103,7 +107,7 @@ All attributes are optional.
 | "http.user_agent"         | Request user-agent          | "HTTPClient/1.2"                |
 | "http.status_code"        | Response status code        | 200                             |
 
-Exporters should always export the collected attributes. Exporters should map the collected 
+Exporters should always export the collected attributes. Exporters should map the collected
 attributes to backend's known attributes/labels.
 
 The following table summarizes how OpenCensus attributes maps to the
