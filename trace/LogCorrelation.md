@@ -1,7 +1,4 @@
-# Log Correlation (draft)
-
-This specification is not done until the key names below are finalized (issue
-[#195](https://github.com/census-instrumentation/opencensus-specs/issues/195)).
+# Log Correlation
 
 Log correlation is a feature that inserts information about the current span into log entries
 created by existing logging frameworks.  The feature can be used to add more context to log entries,
