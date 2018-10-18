@@ -3,99 +3,62 @@ A `Tag` is a key-value pair that can be used to label anything that is associate
 with a specific operation, such as an HTTP request. These `Tag`s are used to
 aggregate measurements in a [`View`](https://github.com/census-instrumentation/opencensus-specs/blob/master/stats/DataAggregation.md#view) 
 according to unique value of the `Tag`s. The `Tag`s can also be used to filter (include/exclude)
-measurements in a `View`.
+measurements in a `View`. `Tag`s can further be used for logging and tracing.
 
 # TagMap 
 `TagMap` is an abstract data type that represents collection of tags. 
 i.e., each key is associated with exactly one value, but multiple keys can be
 associated with the same value.  `TagMap` is serializable, and it represents
-all of the information that could be propagated across process boundaries.
+all of the information that could be propagated inside the process and across process boundaries.  
+`TagMap` is a recommended name but languages can have more language specific name.
 
 ## TagKey
 
-A string or string wrapper, that contains two parts, scope and key. The scope
-of a tag is used to determine if a tag should be propagated or not.
+`TagKey` consists of source, metadata and name.
+
+### Source
+
+Source of a tag is either remote or local.
+ 
+**Local Source**
+If a tag is created within an entity it is considered local tag for the entity.
+The entity here could be a process, a collection of process, a micro-service, or any arbitrary 
+definition. When a tag is created it's source is always designated as a local tag.
+
+**Remote Source**
+If a tag is received from another entity it is considered as remote tag for the receiving entity.
 
 
-**TagKey Syntax:**  
-Scope and key are separated by ':'.
-```
-<Scope>:<Key>
-```
+#### Source Transition 
+A receiver at the edge of an entity converts source of all incoming tags to remote tags. Once the
+source of a tag is designated as remote it stays as remote for the rest of the request processing.
+This is applicable to reentrant processes as well ie. A tag T is created in an entity E and goes
+through process P as local tag. It then leaves entity E and 
+returns back and goes through Process P again. Tag T is considered as remote tag by process P
+second time. (This only matters if Process P differentiates between remote and local tags. For e.g
+it ignores all remote tags and uses only local tags for aggregation. Note )
 
-**Scope**
-Scope of a `TagKey` defines a boundary within which the `TagKey` is relevant. For example 
-a `TagKey` http_route on frontend service could have a scope that spans across multiple services
-that contributes to fulfilling the http request. On the other hand if you are measuring latency
-of key individual functions in a ProductCatalog service then the scope of a `TagKey` func_name
-is most likely limited to a process in ProductCatalog service.
 
-The scope is used to determine whether a Tag should be propagated or not.
+A tag propagator should provide an option to declare that it is running on the edge of an entity.
 
-**Key**   
-Key is a string, with following restrictions:
+### Metadata
 
+Metadata of a `TagKey` is used to provide additional information about the `TagKey`. The 
+metadata can be used to filter tags. Tags are filtered on the edge of an entity. Metadata is 
+simply a collection of an arbitraty string.
+
+**Restrictions**
+TBD
+
+### TagKeyName
+`TagKeyName` is the name of the TagKey. TagKeyName along with `TagValue` is used to aggregate
+and group stats, annotate traces and logs.
+
+**Restrictions**
 - Must contain only printable ASCII (codes between 32 and 126 inclusive with below Exception)
 - - Exceptions ':', ','
-- Must have length greater than zero and less than 256 combined with the scope.
+- Must have length greater than zero and less than 256 combined with the source and metadata.
 - Must not be empty.
-
-### Scope
-
-#### Scope Syntax
-
-```
-<scope-type1-code>,<scope-value1>,<scope-type2-code>,<scope-value2>,...
-```
-- Scope MUST always be in a Type-Value pair.
-
-There are following scopes types.
-
-#### Scope Types
-Scope Type is represented using code to reduce the size.
-
-| Code | Type  |
-|------|-------|
-| 0    | Process |
-| 1    | Internal-Service|
-| 2    | External-Service|
-
-
-##### Process
-A `TagKey` with the scope type *Process* is relevant only to stats collected by the process.
-Hence it should not be propagated across different processes. This is the default scope. If no
-scope is present in the `Tagkey` then it is treated as of Process scope type.
-
-##### Internal-Service
-A `TagKey` with the scope type *Internal-Service* is relevant to stats collected within an
-internal service which could be a single process or collection of process fulfilling the service.
-An internal services is the one that is not accessible from the public domain.
-An Example of internal service is a distributed caching service.
-
-A `TagKey` with this scope is propagated between different processes that makes up the internal
-service.
-
-
-##### External-Service
-A `TagKey` with *External Service* scope is stats collected across multiple 
-internal services that fulfills the external service which is accessible from another
-administrative domain.
- 
-A `TagKey` with this scope is propagated between internal services.
-
-#### Example
-
-```
-TagKey1 = 2,RetailSvc:http_route
-TagValue1 = /cart/checkout
-
-TagKey2 = 1,CheckoutSvc:grpc_method
-TagValue2 = PlaceOrder
-
-TagKey3 = 0,ProductCatagalog:func_name
-TagValue3 = ParseCatalog
-
-```
 
 ## TagValue
 
@@ -108,20 +71,32 @@ Combined size of all `TagKey`s and `TagValue`s should not exceed 8192 bytes befo
 The size restriction applies to the deserialized tags so that the set of decoded
  `TagMap`s is independent of the encoding format.
 
+# Tag Creation
+When a `Tag` is created, it's `Source` is designated as local. If there already exists a Tag with 
+same `TagKeyName` then existing `Tag` is removed and new `Tag` is added.
 
-# Propagation
 
-`Tag`s are propagated based on their scope. By default implementation should neither receive
-incoming `Tag`s nor it should forward any `Tag`s unless explicitly configured by the user.
-It MUST not receive or forward any `Tag` without the scope.
+# Tag Propagation
+Tag propagation involves receiving and forwarding of `Tag`s. Forwarding is simple, a tag 
+propagator MUST forward all tags associated with the request. This includes locally created and 
+remote tags accepted at the Edge of an entity. Receiving is based on the location of receiver.
 
-## Recieving  
-**TBD**: how to sepcify receive criteria?
+## Receiving At The Edge of an Entity
 
-## Forwarding
-**TBD**: how to specify forward criteria?
+A propagator on the receiver at the edge of an entity determines if a tag should be accepted or 
+dropped. The decision is made based on any combination of source, metadata and the `TagKeyName` 
+of a `Tag`. A tag propagator should allow custom filter to process incoming `Tag`s. Default filter 
+should drop all tags.
 
-## Encoding
+## Receiving within an Entity
+A propagator should simply receive all tags.
+
+
+
+# Encoding
+
+## Wire Format
+TBD
 
 ### Over gRPC
 TagMap should be encoded using [BinaryEncoding](https://github.com/census-instrumentation/opencensus-specs/tree/master/encodings)
@@ -132,8 +107,8 @@ and propagated using gRPC metadata opencensus-tag-bin.
 **TBD**
                                                 
 ## Error handling
-
-- There are no partial failures.  The result of encoding or decoding
+- Call should continue irrespective of any error related to encoding/decoding.
+- There are no partial failures for encoding or decoding. The result of encoding or decoding
   should always be a complete `TagMap` or an error.  The type of error
   reporting depends on the language.
 - Serialization should result in an error if the `TagMap` does not meet the
