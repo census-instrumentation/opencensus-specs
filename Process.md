@@ -31,7 +31,8 @@ At this point, we allow a week for anyone to comment on the issue to share their
 
 ### Step 2: Approval
 
-New issues labelled with "proposal" that have been open at least three business days will be discussed at the regular community meeting.
+New issues labelled with "proposal" that have been open at least three business days will be discussed at the regular
+[community meeting](https://docs.google.com/document/d/1AZEJ-ve9Qj9SlL5xIFU7drNWPfx2CLDIRvUzZsV7AR0/edit?usp=sharing).
 If there is consensus, the issue can be approved directly. If more investigation is needed, a group of responsible
 individuals will be selected at the meeting to work on the issue.
 
