@@ -60,7 +60,7 @@
       }
     },
     {
-      "name": "Response code: 199. This test case is not possible to implement for some platforms as this considered an invalid status code. Fallback into 200 test case",
+      "name": "Response code: 199. This test case is not possible to implement on some platforms as they don't allow to return this status code. Keeping this test case for visibility, but it actually simply a fallback into 200 test case",
       "method": "GET",
       "url": "http://{host}:{port}/",
       "responseCode": 200,

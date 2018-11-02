@@ -71,8 +71,8 @@ response status line (if available).
 
 ### Client errors for client HTTP calls
 
-There are a number of client errors when trying to access http endpoint.
-Here are example of mapping those to the Open Census status codes.
+There are a number of client errors when trying to access http endpoint. Here
+are examples of mapping those to the Open Census status codes.
 
 | Client error                 | Trace status code     |
 |------------------------------|-----------------------|
@@ -105,8 +105,8 @@ Implementations SHOULD create message event when response size is determined.
 Implementations SHOULD set the following attributes on the client and server spans. For a server,
 request represents the incoming request. For a client, request represents the outgoing request.
 
-All attributes are optional, but collector should make the best effort
-to collect those.
+All attributes are optional, but collector should make the best effort to
+collect those.
 
 | Attribute name            | Description                 | Type   |Example value              |
 |---------------------------|-----------------------------|--------|---------------------------|
@@ -174,7 +174,7 @@ this:
 
 Where `name` is the name of the test case. Properties `method`, `url` and
 `headers` collection represents the outgoing call. The field `responseCode`
-describes the response code status code.
+describes the response status code.
 
 The rest of the properties describe the span details of the resulting span -
 it's name, kind, status and attributes.
