@@ -72,7 +72,7 @@ response status line (if available).
 ### Client errors for client HTTP calls
 
 There are a number of client errors when trying to access http endpoint. Here
-are examples of mapping those to the Open Census status codes.
+are examples of mapping those to the OpenCensus status codes.
 
 | Client error                 | Trace status code     |
 |------------------------------|-----------------------|
