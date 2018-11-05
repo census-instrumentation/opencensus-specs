@@ -78,7 +78,7 @@ are examples of mapping those to the OpenCensus status codes.
 |------------------------------|-----------------------|
 | DNS resolution failed        | 2 (UNKNOWN)           |
 | Request cancelled by caller  | 1 (CANCELLED)         |
-| Url cannot be parsed         | 3 (INVALID_ARGUMENT)  |
+| URL cannot be parsed         | 3 (INVALID_ARGUMENT)  |
 | Request timed out            | 1 (DEADLINE_EXCEEDED) |
 
 ## Message events
