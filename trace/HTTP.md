@@ -53,7 +53,7 @@ status code.
 
 | HTTP code             | Trace status code      |
 |-----------------------|------------------------|
-| 0...199               | 2 Unknown              |
+| 0...199               | 2 (UNKNOWN)            |
 | 200...399             | 0 (OK)                 |
 | 400 Bad Request       | 3 (INVALID_ARGUMENT)   |
 | 504 Gateway Timeout   | 4 (DEADLINE_EXCEEDED)  |
@@ -66,7 +66,20 @@ status code.
 
 Notes: 401 Unauthorized actually means unauthenticated according to RFC 7235, 3.1.
 
-The Status message should be the Reason-Phrase (RFC 2616 6.1.1) from the response status line (if available).
+The Status message should be the Reason-Phrase (RFC 2616 6.1.1) from the
+response status line (if available).
+
+### Client errors for client HTTP calls
+
+There are a number of client errors when trying to access http endpoint. Here
+are examples of mapping those to the OpenCensus status codes.
+
+| Client error                 | Trace status code     |
+|------------------------------|-----------------------|
+| DNS resolution failed        | 2 (UNKNOWN)           |
+| Request cancelled by caller  | 1 (CANCELLED)         |
+| URL cannot be parsed         | 3 (INVALID_ARGUMENT)  |
+| Request timed out            | 1 (DEADLINE_EXCEEDED) |
 
 ## Message events
 
@@ -90,20 +103,22 @@ Implementations SHOULD create message event when response size is determined.
 ## Attributes
 
 Implementations SHOULD set the following attributes on the client and server spans. For a server,
- request represents the incoming request. For a client, request represents the outgoing request.
+request represents the incoming request. For a client, request represents the outgoing request.
 
-All attributes are optional.
+All attributes are optional, but collector should make the best effort to
+collect those.
 
-| Attribute name            | Description                 | Example value                   |
-|---------------------------|-----------------------------|---------------------------------|
-| "http.host"               | Request URL host            | "example.com:779"               |
-| "http.method"             | Request URL method          | "GET"                           |
-| "http.path"               | Request URL path            | "/users/25f4c31d"               |
-| "http.route"              | Matched request URL route   | "/users/:userID"                |
-| "http.user_agent"         | Request user-agent          | "HTTPClient/1.2"                |
-| "http.status_code"        | Response status code        | 200                             |
+| Attribute name            | Description                 | Type   |Example value              |
+|---------------------------|-----------------------------|--------|---------------------------|
+| "http.host"               | Request URL host            | string | `example.com:779`         |
+| "http.method"             | Request URL method          | string | `GET`                     |
+| "http.path"               | Request URL path. If empty - set to `/` | `/users/25f4c31d`  |
+| "http.route"              | Matched request URL route   | string | `/users/:userID`          |
+| "http.user_agent"         | Request user-agent. Do not inject attribute if user-agent is empty. | string | `HTTPClient/1.2` |
+| "http.status_code"        | Response status code        | int64  | `200`                     |
+| "http.url"                | Absolute request URL        | string | `https://example.com:779/path/12314/?q=ddds#123` |
 
-Exporters should always export the collected attributes. Exporters should map the collected 
+Exporters should always export the collected attributes. Exporters should map the collected
 attributes to backend's known attributes/labels.
 
 The following table summarizes how OpenCensus attributes maps to the
@@ -117,6 +132,52 @@ known attributes/labels on supported tracing backends.
 | "http.route"              | "http.route"       | "http.route"       | "/http/route"             |
 | "http.user_agent"         | "http.user_agent"  | "http.user_agent"  | "/http/user_agent"        |
 | "http.status_code"        | "http.status_code" | "http.status_code" | "/http/status_code"       |
+| "http.url"                | "http.url"         | "http.url"         | "/http/url"               |
+
+References:
+
+- [Stackdriver Trace
+  label](https://cloud.google.com/trace/docs/reference/v1/rest/v1/projects.traces)
+- [Jaeger/Open Tracing](https://github.com/opentracing/specification/blob/master/semantic_conventions.md)
+- [Zipkin](https://github.com/openzipkin/zipkin-api/blob/master/thrift/zipkinCore.thrift)
+
+## Test Cases
+
+Test cases for outgoing http calls are in the file
+[http-out-test-cases.json](http-out-test-cases.json).
+
+File consists of a set of test cases. Each test case represents outgoing http
+call, response it receives and the resulting span properties. It looks like
+this:
+
+``` json
+{
+"name": "Name is populated as a path",
+"method": "GET",
+"url": "http://{host}:{port}/path/to/resource/",
+"headers": {
+    "User-Agent": "test-user-agent"
+},
+"responseCode": 200,
+"spanName": "/path/to/resource/",
+"spanStatus": "OK",
+"spanKind": "Client",
+"spanAttributes": {
+    "http.path": "/path/to/resource/",
+    "http.method": "GET",
+    "http.host": "{host}:{port}",
+    "http.status_code": "200",
+    "http.user_agent": "test-user-agent"
+}
+}
+```
+
+Where `name` is the name of the test case. Properties `method`, `url` and
+`headers` collection represents the outgoing call. The field `responseCode`
+describes the response status code.
+
+The rest of the properties describe the span details of the resulting span -
+it's name, kind, status and attributes.
 
 ## Sampling
 
