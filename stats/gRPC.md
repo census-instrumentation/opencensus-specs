@@ -38,8 +38,10 @@ Client stats are recorded at the end of each outbound RPC.
 | grpc.io/client/roundtrip_latency          | ms   | Time between first byte of request sent to last byte of response received, or terminal error. |
 | grpc.io/client/server_latency             | ms   | Propagated from the server and should have the same value as "grpc.io/server/latency".        |
 | grpc.io/client/started_rpcs               | 1    | The total number of client RPCs ever opened, including those that have not completed.         |
-| grpc.io/client/sent_bytes_per_message     | By   | Total bytes sent, recorded for each message in the RPC.                                       |
-| grpc.io/client/received_bytes_per_message | By   | Total bytes received, recorded for each message in the RPC.                                   |
+| grpc.io/client/sent_messages_per_method   | 1    | Total messages sent per method.                                    |
+| grpc.io/client/received_messages_per_method | 1  | Total messages received per method.                                |
+| grpc.io/client/sent_bytes_per_method      | By   | Total bytes sent per method, recorded for each message.           |
+| grpc.io/client/received_bytes_per_method  | By   | Total bytes received per method, recorded for each message.       |
 
 
 ### Tags
@@ -69,8 +71,10 @@ The following set of views are considered minimum required to monitor client-sid
 | grpc.io/client/roundtrip_latency          | grpc.io/client/roundtrip_latency          | distribution | grpc_client_method                     |
 | grpc.io/client/completed_rpcs             | grpc.io/client/roundtrip_latency          | count        | grpc_client_method, grpc_client_status |
 | grpc.io/client/started_rpcs               | grpc.io/client/started_rpcs               | count        | grpc_client_method                     |
-| grpc.io/client/sent_bytes_per_message     | grpc.io/client/sent_bytes_per_message     | distribution | grpc_client_method                     |
-| grpc.io/client/received_bytes_per_message | grpc.io/client/received_bytes_per_message | distribution | grpc_client_method                     |
+| grpc.io/client/sent_messages_per_method      | grpc.io/client/sent_messages_per_method      | count | grpc_client_method                     |
+| grpc.io/client/received_messages_per_method  | grpc.io/client/received_messages_per_method  | count | grpc_client_method                     |
+| grpc.io/client/sent_bytes_per_method      | grpc.io/client/sent_bytes_per_method      | sum | grpc_client_method                     |
+| grpc.io/client/received_bytes_per_method  | grpc.io/client/received_bytes_per_method  | sum | grpc_client_method                     |
 
 ### Extra views
 
@@ -94,8 +98,10 @@ Server stats are recorded at the end of processing each RPC.
 | grpc.io/server/sent_bytes_per_rpc         | By   | Total bytes sent in across all response messages per RPC.                                     |
 | grpc.io/server/server_latency             | ms   | Time between first byte of request received to last byte of response sent, or terminal error. |
 | grpc.io/server/started_rpcs               | 1    | The total number of server RPCs ever opened, including those that have not completed.         |
-| grpc.io/server/sent_bytes_per_message     | By   | Total bytes sent, recorded for each message in the RPC.                                       |
-| grpc.io/server/received_bytes_per_message | By   | Total bytes received, recorded for each message in the RPC.                                   |
+| grpc.io/server/sent_messages_per_method   | 1    | Total messages sent per method.                                    |
+| grpc.io/server/received_messages_per_method  | 1 | Total messages received per method.                                |
+| grpc.io/server/sent_bytes_per_method      | By   | Total bytes sent per method, recorded for each message.           |
+| grpc.io/server/received_bytes_per_method  | By   | Total bytes received per method, recorded for each message.       |
 
 
 ### Tags
@@ -128,6 +134,10 @@ The following set of views are considered minimum required to monitor server sid
 | grpc.io/server/started_rpcs               | grpc.io/server/started_rpcs           | count        | grpc_server_method                     |
 | grpc.io/server/sent_bytes_per_message     | grpc.io/server/sent_bytes_per_message | distribution | grpc_server_method                     |
 | grpc.io/server/received_bytes_per_message | grpc.io/server/received_message_bytes | distribution | grpc_server_method                     |
+| grpc.io/server/sent_messages_per_method      | grpc.io/server/sent_messages_per_method      | count | grpc_server_method                     |
+| grpc.io/server/received_messages_per_method  | grpc.io/server/received_messages_per_method  | count | grpc_server_method                     |
+| grpc.io/server/sent_bytes_per_method      | grpc.io/server/sent_bytes_per_method      | sum | grpc_server_method                     |
+| grpc.io/server/received_bytes_per_method  | grpc.io/server/received_bytes_per_method  | sum | grpc_server_method                     |
 
 ### Extra views
 
