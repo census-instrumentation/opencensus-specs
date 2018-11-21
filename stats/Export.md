@@ -30,7 +30,7 @@ parameter from the `View` and the aggregated data associated with those `columns
 The library SHOULD provide a means of retrieving the ViewData for any registered view in the system.
 
 ViewData is a language-specific data structure implementing the [Metrics data
-model](Metrics.md).
+model](../metrics/Metrics.md).
 
 ### Aggregation to Metric
 
