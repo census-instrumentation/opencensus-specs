@@ -26,7 +26,7 @@ and group stats, annotate traces and logs.
 ## TagScope
 
 `TagScope` is used to determine the scope of a `Tag`. The values for the `TagScope` are
-Local or Global. In future, additional values can be added to address specific situations.
+Local or Request. In future, additional values can be added to address specific situations.
 
 The tag creator determines the scope of the tag.
 
@@ -35,10 +35,11 @@ Tag with `Local` scope are used within the process it created. Such tags are not
 across process boundaries. Even if the process is reentrant the tag MUST be excluded from
 propagation when the call leaves the process.
 
-**Global Scope**
-If a tag is created with the `Global` scope then it is propagated across process boundaries subject 
-to outgoing and incoming (on remote side) filter criteria. See `TagFilter` in [Tag Propagation](#Tag Propagation).
-Typically 'Global' tags represents a transaction or request, processing of which spans multiple entities.
+**Request Scope**
+If a tag is created with the `Request` scope then it is propagated across process boundaries subject 
+to outgoing and incoming (on remote side) filter criteria. See `TagPropagationFilter` in 
+[Tag Propagation](#Tag Propagation). Typically 'Request' tags represents a request, processing
+ of which may span multiple entities.
 
 # TagMap 
 `TagMap` is an abstract data type that represents collection of tags. 
@@ -56,18 +57,18 @@ The size restriction applies to the deserialized tags so that the set of decoded
 reasons. For example, one may propagate 'project-id' Tag across all micro-services to break down metrics
 by 'project-id'. Not all `Tag`s in a `TagMap` should be propagated and not all `Tag`s in a `TagMap`
 should be accepted from a remote peer. Hence, `TagMap` propagator must allow specifying an optional
-list of ordered `TagFilter`s for receiving `Tag`s or for forwarding `Tag`s or for both. A `TagFilter` list 
-for receiving MAY be different then that for forwarding.
+list of ordered `TagPropagationFilter`s for receiving `Tag`s or for forwarding `Tag`s or for both. 
+A `TagPropagationFilter` list for receiving MAY be different then that for forwarding.
 
 If no filter is specified for receiving then all `Tag`s are received. 
 If no filter is specified for forwarding then all `Tag`s are forwarded except those that have `Local Scope`.
 
-### TagFilter
-Tag Filter consists of action (`TagFilterAction`) and condition (`TagFilterMatchOperator` and
+### TagPropagationFilter
+Tag Propagation Filter consists of action (`TagFilterAction`) and condition (`TagFilterMatchOperator` and
 `TagFilterMatchString`). A `TagKey` 
-is evaluated against condition of each `TagFilter` in order. If the condition is evaluated to true 
-then action is taken according to `TagFilterAction` and filter processing is stopped.
-If the condition is evaluated to false then the `TagKey` is processed against next `TagFilter`
+is evaluated against condition of each `TagPropagationFilter` in order. If the condition is evaluated
+to true then action is taken according to `TagFilterAction` and filter processing is stopped.
+If the condition is evaluated to false then the `TagKey` is processed against next `TagPropagationFilter`
 in the ordered list. If none of the condition is evaluated to true then the default
 action is **Exclude**.
 
@@ -89,7 +90,8 @@ MUST be included.
 | Operator | Description |
 |----------|-------------|
 | EQUAL | The condition is evaluated to true if `TagKey` is exactly same as `TagFilterMatchString` |
-| NOTEQUAL | The condition is evaluated to false if `TagKey` is NOT exactly same as `TagFilterMatchString` |
+| NOTEQUAL | The condition is evaluated to true if `TagKey` is NOT exactly same as `TagFilterMatchString` |
+| HAS_PREFIX | The condition is evaluated to true if `TagKey` begins with `TagFilterMatchString` |
 
 #### TagFilterMatchString
 It is a string to compare against TagKey using `TagFilterMatchOperator` in order to include or exclude a `Tag`.
