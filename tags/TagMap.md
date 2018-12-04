@@ -64,37 +64,38 @@ If no filter is specified for receiving then all `Tag`s are received.
 If no filter is specified for forwarding then all `Tag`s are forwarded except those that have `Local Scope`.
 
 ### TagPropagationFilter
-Tag Propagation Filter consists of action (`TagFilterAction`) and condition (`TagFilterMatchOperator` and
-`TagFilterMatchString`). A `TagKey` 
+Tag Propagation Filter consists of action (`TagPropagationFilterAction`) and condition 
+(`TagPropagationFilterMatchOperator` and `TagPropagationFilterMatchString`). A `TagKey` 
 is evaluated against condition of each `TagPropagationFilter` in order. If the condition is evaluated
-to true then action is taken according to `TagFilterAction` and filter processing is stopped.
+to true then action is taken according to `TagPropagationFilterAction` and filter processing is stopped.
 If the condition is evaluated to false then the `TagKey` is processed against next `TagPropagationFilter`
 in the ordered list. If none of the condition is evaluated to true then the default
 action is **Exclude**.
 
-#### TagFilterAction
+#### TagPropagationFilterAction
 There are two actions to apply to a Tag.
 
 **Exclude**
-If the `TagFilterAction` is Exclude then any `Tag` whose `TagKey` evaluates to true 
-with the condition (`TagFitlerMatchOperator` and `TagFilterMatchString`)
+If the `TagPropagationFilterAction` is Exclude then any `Tag` whose `TagKey` evaluates to true 
+with the condition (`TagPropagationFitlerMatchOperator` and `TagPropagationFilterMatchString`)
 MUST be excluded.
 
 **Include**
-If the `TagFilterAction` is Include then any `Tag` whose `TagKey` evaluates to true 
-with the condition (`TagFitlerMatchOperator` and `TagFilterMatchString`)
+If the `TagPropagationFilterAction` is Include then any `Tag` whose `TagKey` evaluates to true 
+with the condition (`TagPropagationFitlerMatchOperator  ` and `TagPropagationFilterMatchString`)
 MUST be included. 
   
-#### TagFilterMatchOperator
+#### TagPropagationFilterMatchOperator
 
 | Operator | Description |
 |----------|-------------|
-| EQUAL | The condition is evaluated to true if `TagKey` is exactly same as `TagFilterMatchString` |
-| NOTEQUAL | The condition is evaluated to true if `TagKey` is NOT exactly same as `TagFilterMatchString` |
-| HAS_PREFIX | The condition is evaluated to true if `TagKey` begins with `TagFilterMatchString` |
+| EQUAL | The condition is evaluated to true if `TagKey` is exactly same as `TagPropagationFilterMatchString` |
+| NOTEQUAL | The condition is evaluated to true if `TagKey` is NOT exactly same as `TagPropagationFilterMatchString` |
+| HAS_PREFIX | The condition is evaluated to true if `TagKey` begins with `TagPropagationFilterMatchString` |
 
-#### TagFilterMatchString
-It is a string to compare against TagKey using `TagFilterMatchOperator` in order to include or exclude a `Tag`.
+#### TagPropagationFilterMatchString
+It is a string to compare against TagKey using `TagPropagationFilterMatchOperator` in order to 
+include or exclude a `Tag`.
 
 ## Encoding
 
