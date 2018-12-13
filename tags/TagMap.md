@@ -73,7 +73,9 @@ in the ordered list. If none of the condition is evaluated to true then the defa
 action is **Exclude**.
 
 #### TagPropagationFilterAction
-There are two actions to apply to a Tag.
+This is an interface. Implementation of this interface takes appropriate action on the `Tag` if the 
+condition (`TagPropagationFitlerMatchOperator` and `TagPropagationFilterMatchString`) is evaluated to true.
+At a minimum, `Exclude` and `Include` actions MUST be implemented.
 
 **Exclude**
 If the `TagPropagationFilterAction` is Exclude then any `Tag` whose `TagKey` evaluates to true 
