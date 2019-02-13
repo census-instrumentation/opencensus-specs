@@ -6,7 +6,7 @@ according to unique value of the `Tag`s. The `Tag`s can also be used to filter (
 measurements in a `View`. `Tag`s can further be used for logging and tracing.
 
 # Tag
-A `Tag` consists of TagScope, TagKey, and TagValue.
+A `Tag` consists of TagMetadata, TagKey, and TagValue.
 
 ## TagKey
 
@@ -23,23 +23,35 @@ and group stats, annotate traces and logs.
 `TagValue` is a string. It MUST contain only printable ASCII (codes between
 32 and 126)
 
-## TagScope
+## TagMetadata
 
-`TagScope` is used to determine the scope of a `Tag`. The values for the `TagScope` are
-Local or Request. In future, additional values can be added to address specific situations.
+`TagMetadata` contains properties associated with a `Tag`. For now the only property `TagTTL`
+is defined. In future, additional properties may be added to address specific situations.
 
-The tag creator determines the scope of the tag.
+A tag creator determines metadata of a tag it creates.
 
-**Local Scope**
-Tag with `Local` scope are used within the process it created. Such tags are not propagated
-across process boundaries. Even if the process is reentrant the tag MUST be excluded from
-propagation when the call leaves the process.
+### TagTTL
 
-**Request Scope**
-If a tag is created with the `Request` scope then it is propagated across process boundaries subject 
-to outgoing and incoming (on remote side) filter criteria. See `TagPropagationFilter` in 
-[Tag Propagation](#Tag Propagation). Typically 'Request' tags represents a request, processing
- of which may span multiple entities.
+`TagTTL` is an integer that represents number of hops a tag can propagate. Anytime a tag is propagated
+over a carrier like http, grpc, etc it is considered to have traveled one hop. 
+
+- A receiver MUST decrement the value of `TagTTL` by one if it is greater than zero.
+- A receiver MUST discard the `Tag` if the `TagTTL` value is zero.
+- A receiver MUST not change the value of `TagTLL` if it is -1.
+- A sender MUST propagates a tag if its `TagTTL` value is not zero.
+ 
+For now, valid values of `TagTTL` are
+- **NO_PROPAGATION(0)**: Tag with `TagTTL` value of zero is considered to have local scope and
+ is used within the process it created. 
+- **UNLIMITED_PROPAGATION(-1)**: Tag with `TagTTL` value of -1 can propagate unlimited hops.
+ However, it is still subject to outgoing and incoming (on remote side) filter criteria. 
+ See `TagPropagationFilter` in [Tag Propagation](#Tag Propagation). Tag with `TagTTL` value of -1
+ is used to represent a request, processing of which may span multiple entities.
+
+## Tag Conflict Resolution
+If a received tag and locally generated tag have same `TagKey` then locally generated tag takes
+precedence. Entire `Tag` along with `TagValue` and `TagMetadata` is overwritten with a locally
+generated tag.
 
 # TagMap 
 `TagMap` is an abstract data type that represents collection of tags. 
@@ -61,7 +73,7 @@ list of ordered `TagPropagationFilter`s for receiving `Tag`s or for forwarding `
 A `TagPropagationFilter` list for receiving MAY be different then that for forwarding.
 
 If no filter is specified for receiving then all `Tag`s are received. 
-If no filter is specified for forwarding then all `Tag`s are forwarded except those that have `Local Scope`.
+If no filter is specified for forwarding then all `Tag`s are forwarded except those that have `TagTTL` of 0.
 
 ### TagPropagationFilter
 Tag Propagation Filter consists of action (`TagPropagationFilterAction`) and condition 
