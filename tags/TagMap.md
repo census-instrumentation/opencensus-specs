@@ -32,14 +32,22 @@ A tag creator determines metadata of a tag it creates.
 
 ### TagTTL
 
-`TagTTL` is an integer that represents number of hops a tag can propagate. Anytime a tag is propagated
-over a carrier like http, grpc, etc it is considered to have traveled one hop. 
+`TagTTL` is an integer that represents number of hops a tag can propagate. Anytime a sender serializes a tag
+, sends it over the wire and receiver unserializes the tag then the tag is considered to have travelled one hop. 
+There could be one or more proxy(ies) between sender and receiver. Proxies are treated as transparent
+entity and they do not create additional hops.
 
-- A receiver MUST decrement the value of `TagTTL` by one if it is greater than zero.
-- A receiver MUST discard the `Tag` if the `TagTTL` value is zero.
-- A receiver MUST not change the value of `TagTLL` if it is -1.
-- A sender MUST propagates a tag if its `TagTTL` value is not zero.
- 
+Upon receiving tag from remote entity a tag extractor
+
+- MUST decrement the value of `TagTTL` by one if it is greater than zero.
+- MUST discard the `Tag` if the `TagTTL` value is zero.
+- MUST not change the value of `TagTLL` if it is -1.
+
+Upon sending tag to remote entity a tag extractor
+- MUST send `TagTTL` ONLY if its value is greater than 0.
+
+Absence of TagTTL on the wire is treated as having TagTTL of -1. This is for backward compatibility.
+
 For now, valid values of `TagTTL` are
 - **NO_PROPAGATION(0)**: Tag with `TagTTL` value of zero is considered to have local scope and
  is used within the process it created. 
@@ -49,9 +57,9 @@ For now, valid values of `TagTTL` are
  is used to represent a request, processing of which may span multiple entities.
 
 ## Tag Conflict Resolution
-If a received tag and locally generated tag have same `TagKey` then locally generated tag takes
-precedence. Entire `Tag` along with `TagValue` and `TagMetadata` is overwritten with a locally
-generated tag.
+If a new tag conflicts with an existing tag then the new tag takes precedence. Entire `Tag` along 
+with `TagValue` and `TagMetadata` is overwritten with a most recent tag (either it is locally
+generated or received fromi a remote peer).
 
 # TagMap 
 `TagMap` is an abstract data type that represents collection of tags. 
