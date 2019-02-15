@@ -59,7 +59,7 @@ For now, valid values of `TagTTL` are
 
 ## Tag Conflict Resolution
 If a new tag conflicts with an existing tag then the new tag takes precedence. Entire `Tag` along 
-with `TagValue` and `TagMetadata` is replaced by the most recent tag (either it is locally
+with `TagValue` and `TagMetadata` is replaced by the most recent tag (regardless of it is locally
 generated or received from a remote peer). Replacement is limited to a scoped span in which the 
 conflict arises. When the scoped span is closed the orignal value prior to the conflict is restored.
 For example,
