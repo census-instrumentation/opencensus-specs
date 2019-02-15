@@ -25,7 +25,7 @@ and group stats, annotate traces and logs.
 
 ## TagMetadata
 
-`TagMetadata` contains properties associated with a `Tag`. For now the only property `TagTTL`
+`TagMetadata` contains properties associated with a `Tag`. For now only the property `TagTTL`
 is defined. In future, additional properties may be added to address specific situations.
 
 A tag creator determines metadata of a tag it creates.
@@ -35,18 +35,19 @@ A tag creator determines metadata of a tag it creates.
 `TagTTL` is an integer that represents number of hops a tag can propagate. Anytime a sender serializes a tag
 , sends it over the wire and receiver unserializes the tag then the tag is considered to have travelled one hop. 
 There could be one or more proxy(ies) between sender and receiver. Proxies are treated as transparent
-entity and they do not create additional hops.
+entities and they do not create additional hops.
 
 Upon receiving tag from remote entity a tag extractor
 
 - MUST decrement the value of `TagTTL` by one if it is greater than zero.
-- MUST discard the `Tag` if the `TagTTL` value is zero.
+- MUST discard the `Tag` if the `TagTTL` value is zero. It is an error condition.
 - MUST not change the value of `TagTLL` if it is -1.
 
 Upon sending tag to remote entity a tag extractor
 - MUST send `TagTTL` ONLY if its value is greater than 0.
 
-Absence of TagTTL on the wire is treated as having TagTTL of -1. This is for backward compatibility.
+Absence of TagTTL on the wire is treated as having TagTTL of -1. This is to optimize on-the-wire representation
+of common case.
 
 For now, valid values of `TagTTL` are
 - **NO_PROPAGATION(0)**: Tag with `TagTTL` value of zero is considered to have local scope and
@@ -58,8 +59,20 @@ For now, valid values of `TagTTL` are
 
 ## Tag Conflict Resolution
 If a new tag conflicts with an existing tag then the new tag takes precedence. Entire `Tag` along 
-with `TagValue` and `TagMetadata` is overwritten with a most recent tag (either it is locally
-generated or received fromi a remote peer).
+with `TagValue` and `TagMetadata` is replaced by the most recent tag (either it is locally
+generated or received from a remote peer). Replacement is limited to a scoped span in which the 
+conflict arises. When the scoped span is closed the orignal value prior to the conflict is restored.
+For example,
+```
+Enter Scoped Span 1
+   Current Tags T1=V1, T2=V2
+    Enter Scoped Span 2
+      Add Tags T3=V3, T2=v4
+      Current Tags T1=V1, T2=V4, T3=V3 <== Value of T2 is replaced by V4.
+    Close Scoped Span 2
+   Current Tags T1=V1, T2=V2  <== T2 is restored.
+Close Scoped Span 1
+``` 
 
 # TagMap 
 `TagMap` is an abstract data type that represents collection of tags. 
