@@ -40,14 +40,18 @@ entities and they do not create additional hops.
 Upon receiving tag from remote entity a tag extractor
 
 - MUST decrement the value of `TagTTL` by one if it is greater than zero.
-- MUST discard the `Tag` if the `TagTTL` value is zero. It is an error condition.
-- MUST not change the value of `TagTLL` if it is -1.
+- MUST not change the value of `TagTTL` if it is -1.
+- MUST treat the value of `TagTTL` as -1 if is not present.
+- MUST discard the `Tag` for any other value of `TagTTL`.
 
-Upon sending tag to remote entity a tag extractor
-- MUST send `TagTTL` ONLY if its value is greater than 0.
+Upon preparing to send a tag to a remote entity a tag injector
+- MUST send the tag AND include `TagTTL` if its value is greater than 0.
+- MUST send the tag without 'TagTTL' if its value is -1. Absence of TagTTL on the wire is treated as having TagTTL of -1.
+  This is to optimize on-the-wire representation of common case.
+- MUST not send the tag if the value of `TagTTL` is 0.
 
-Absence of TagTTL on the wire is treated as having TagTTL of -1. This is to optimize on-the-wire representation
-of common case.
+A tag accepted for sending/receiving based on `TagTTL` value could still be excluded from sending/receiving based on
+`TagPropagationFilter`.
 
 For now, valid values of `TagTTL` are
 - **NO_PROPAGATION(0)**: Tag with `TagTTL` value of zero is considered to have local scope and
