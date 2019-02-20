@@ -84,4 +84,4 @@ propagation.
 [goContext]: https://golang.org/pkg/context
 [javaContext]: https://github.com/grpc/grpc-java/blob/master/context/src/main/java/io/grpc/Context.java
 [SpanDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/src/opencensus/proto/trace/v1/trace.proto   
-[TracestateLink]: https://github.com/w3c/distributed-tracing/blob/master/trace_context/HTTP_HEADER_FORMAT.md#tracestate-field
+[TracestateLink]: https://w3c.github.io/trace-context/#tracestate-field
