@@ -26,7 +26,7 @@ type Resource {
 }
 ```
 
-TODO(fabxc): link protobuf definition.
+For the proto definition see [here][resource-proto-link]
 
 ## Populating resources
 Resource information MAY be populated at any point between startup of the instrumented
@@ -130,7 +130,7 @@ resource type with well-known identifiers specific to its API:
 }
 ```
 
-For another, hyopthetical, backend a simple unique identifier might be constructed instead
+For another, hypothetical, backend a simple unique identifier might be constructed instead
 by its exporter:
 
 ```
@@ -139,10 +139,11 @@ cluster1/ns1/pod1/container1
 
 Exporter libraries MAY provide a default translation for well-known input resource types and labels.
 Those would generally be based on community-supported detection integrations maintained in the
-[census-ecosystem][census-ecosystem] organisation.
+[census-ecosystem][census-ecosystem-link] organisation.
 
 Additionally, exporters SHOULD provide configuration hooks for users to provide their own
 translation unless the exporter's backend does not support resources at all. For such backends,
 exporters SHOULD allow attaching converting resource labels to metric tags.
 
-[census-ecosystem]: https://github.com/census-ecosystem
+[census-ecosystem-link]: https://github.com/census-ecosystem
+[resource-proto-link]: https://github.com/census-instrumentation/opencensus-proto/blob/master/src/opencensus/proto/resource/v1/resource.proto
