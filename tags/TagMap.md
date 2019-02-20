@@ -46,7 +46,7 @@ entities and they do not create additional hops.
  See `TagPropagationFilter` in [Tag Propagation](#Tag Propagation). `TagTTL` value of -1
  is typical used to represent a request, processing of which may span multiple entities.
 
-For now, only special values of `TagTTL` are used.
+For now, only special values of `TagTTL` are supported.
 
 ### Processing at Receiver and Sender
 For the sake of completeness, processing of `Tag` and `TagTTL` at sender and receiver includes
