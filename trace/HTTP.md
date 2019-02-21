@@ -30,7 +30,8 @@ incoming requests should be a span kind of SERVER.
 Propagation is how SpanContext is transmitted on the wire in an HTTP request.
 
 Implementations MUST allow users to set their own propagation format and MUST provide an
-implementation for B3 and TraceContext at least.
+implementation for [B3](https://github.com/openzipkin/b3-propagation/blob/master/README.md#http-encodings)
+and [TraceContext](https://w3c.github.io/trace-context/) at least.
 
 If user doesn't set any propagation methods explicitly, TraceContext is used.
 
