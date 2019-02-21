@@ -62,7 +62,7 @@ vendors, MUST be implemented outside of the core libraries in third party or
 As different mechanisms are run to gain information about a resource, their information
 has to be merged into a single resulting resource.
 Already set labels or type fields MUST NOT be overwritten unless they are empty string. Label key
-namespaceing SHOULD be used to prevent collisions across different resource detection steps.
+namespacing SHOULD be used to prevent collisions across different resource detection steps.
 
 ### Detectors
 To make auto-detection implementations easy to use, the core resource package SHOULD define
