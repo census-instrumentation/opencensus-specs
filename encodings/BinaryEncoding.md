@@ -139,7 +139,7 @@ https://developers.google.com/protocol-buffers/docs/encoding#varints.
 * Multiple tag fields can contain the same tag key. All but the last value for
   that key should be ignored.
 * The
-  [size limit for serialized Tag Contexts](https://github.com/census-instrumentation/opencensus-specs/blob/master/tags/TagContext.md#serialization)
+  [size limit for serialized Tag Contexts](https://github.com/census-instrumentation/opencensus-specs/blob/master/tags/TagMap.md#limits)
   should apply to all tag fields, even if some of them have duplicate keys. For
   example, a serialized tag context with 10,000 small tags that all have the
   same key should be considered too large.
