@@ -35,7 +35,10 @@ A tag creator determines metadata of a tag it creates.
 `TagTTL` is an integer that represents number of hops a tag can propagate. Anytime a sender serializes a tag,
 sends it over the wire and receiver unserializes the tag then the tag is considered to have travelled one hop. 
 There could be one or more proxy(ies) between sender and receiver. Proxies are treated as transparent
-entities and they do not create additional hops.
+entities and they do not create additional hops. Every propagation implementation shoud support option 
+`decrementTTL` (default set to true) that allows proxies to set it to false.
+
+**For now, ONLY special values (0 and -1) are supported.**
 
 #### Special Values
 - **NO_PROPAGATION (0)**: Tag with `TagTTL` value of zero is considered to have local scope and
@@ -46,8 +49,14 @@ entities and they do not create additional hops.
  See `TagPropagationFilter` in [Tag Propagation](#Tag Propagation). `TagTTL` value of -1
  is typical used to represent a request, processing of which may span multiple entities.
 
-For now, only special values of `TagTTL` are supported.
+#### Example for TagTTL > 0
+On a server side typically there is no information about the caller besides ip/port,
+but in every process there is a notion of "service_name" tag that is added as a "caller" tag before
+serialization when a RPC/HTTP call is made. For the "caller" tag, desirable `TagTTL` value is 1.
 
+Note that TagTTL value of 1 is not supported at this time. The example is listed here simply to
+show a possible use case for TagTTL > 0.
+ 
 ### Processing at Receiver and Sender
 For the sake of completeness, processing of `Tag` and `TagTTL` at sender and receiver includes
 the values other than the special values of `TagTTL`.
