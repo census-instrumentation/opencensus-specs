@@ -35,7 +35,7 @@ A tag creator determines metadata of a tag it creates.
 `TagTTL` is an integer that represents number of hops a tag can propagate. Anytime a sender serializes a tag,
 sends it over the wire and receiver unserializes the tag then the tag is considered to have travelled one hop. 
 There could be one or more proxy(ies) between sender and receiver. Proxies are treated as transparent
-entities and they do not create additional hops. Every propagation implementation shoud support option 
+entities and they may not create additional hops. Every propagation implementation should support an option 
 `decrementTTL` (default set to true) that allows proxies to set it to false.
 
 **For now, ONLY special values (0 and -1) are supported.**
@@ -58,20 +58,22 @@ Note that TagTTL value of 1 is not supported at this time. The example is listed
 show a possible use case for TagTTL > 0.
  
 ### Processing at Receiver and Sender
-For the sake of completeness, processing of `Tag` and `TagTTL` at sender and receiver includes
-the values other than the special values of `TagTTL`.
+For now, limited processing is required on Sender and Receiver. However, for the sake of
+completeness, future processing requirement is also listed here. These requirements are marked with 
+"**(future)**".
+
+This processing is done as part of tag propagator.
 
 #### At Receiver
 Upon receiving a tag from remote entity a tag extractor
 
-- MUST decrement the value of `TagTTL` by one if it is greater than zero.
-- MUST not change the value of `TagTTL` if it is -1.
-- MUST treat the value of `TagTTL` as -1 if is not present.
-- MUST discard the `Tag` for any other value of `TagTTL`.
+- MUST decrement the value of `TagTTL` by one if it is greater than zero. **(future)**
+- MUST treat the value of `TagTTL` as -1 if it is not present.
+- MUST discard the `Tag` for any other value of `TagTTL`. **(future)**
 
 #### At Sender
 Upon preparing to send a tag to a remote entity a tag injector
-- MUST send the tag AND include `TagTTL` if its value is greater than 0.
+- MUST send the tag AND include `TagTTL` if its value is greater than 0. **(future)**
 - MUST send the tag without 'TagTTL' if its value is -1. Absence of TagTTL on the wire is treated as having TagTTL of -1.
   This is to optimize on-the-wire representation of common case.
 - MUST not send the tag if the value of `TagTTL` is 0.
@@ -83,18 +85,23 @@ A tag accepted for sending/receiving based on `TagTTL` value could still be excl
 If a new tag conflicts with an existing tag then the new tag takes precedence. Entire `Tag` along 
 with `TagValue` and `TagMetadata` is replaced by the most recent tag (regardless of it is locally
 generated or received from a remote peer). Replacement is limited to a scope in which the 
-conflict arises. When the scope is closed the orignal value prior to the conflict is restored.
+conflict arises. When the scope is closed the orignal value and metadata prior to the conflict is restored.
 For example,
 ```
+T# - Tag keys
+V# - Tag Values
+M# - Tag Metadata
+
 Enter Scope 1
-   Current Tags T1=V1, T2=V2
+   Current Tags T1=V1/M1, T2=V2/M2
     Enter Scope 2
-      Add Tags T3=V3, T2=v4
-      Current Tags T1=V1, T2=V4, T3=V3 <== Value of T2 is replaced by V4.
+      Add Tags T3=V3/M3, T2=v4/M4
+      Current Tags T1=V1/M1, T2=V4/M4, T3=V3/M3 <== Value/Metadata of T2 is replaced by V4/M4.
     Close Scope 2
-   Current Tags T1=V1, T2=V2  <== T2 is restored.
+   Current Tags T1=V1/M1, T2=V2/M2  <== T2 is restored.
 Close Scope 1
 ``` 
+
 
 # TagMap 
 `TagMap` is an abstract data type that represents collection of tags. 
