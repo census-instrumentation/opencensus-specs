@@ -6,7 +6,7 @@ according to unique value of the `Tag`s. The `Tag`s can also be used to filter (
 measurements in a `View`. `Tag`s can further be used for logging and tracing.
 
 # Tag
-A `Tag` consists of TagScope, TagKey, and TagValue.
+A `Tag` consists of TagMetadata, TagKey, and TagValue.
 
 ## TagKey
 
@@ -23,23 +23,85 @@ and group stats, annotate traces and logs.
 `TagValue` is a string. It MUST contain only printable ASCII (codes between
 32 and 126)
 
-## TagScope
+## TagMetadata
 
-`TagScope` is used to determine the scope of a `Tag`. The values for the `TagScope` are
-Local or Request. In future, additional values can be added to address specific situations.
+`TagMetadata` contains properties associated with a `Tag`. For now only the property `TagTTL`
+is defined. In future, additional properties may be added to address specific situations.
 
-The tag creator determines the scope of the tag.
+A tag creator determines metadata of a tag it creates.
 
-**Local Scope**
-Tag with `Local` scope are used within the process it created. Such tags are not propagated
-across process boundaries. Even if the process is reentrant the tag MUST be excluded from
-propagation when the call leaves the process.
+### TagTTL
 
-**Request Scope**
-If a tag is created with the `Request` scope then it is propagated across process boundaries subject 
-to outgoing and incoming (on remote side) filter criteria. See `TagPropagationFilter` in 
-[Tag Propagation](#Tag Propagation). Typically 'Request' tags represents a request, processing
- of which may span multiple entities.
+`TagTTL` is an integer that represents number of hops a tag can propagate. Anytime a sender serializes a tag,
+sends it over the wire and receiver unserializes the tag then the tag is considered to have travelled one hop. 
+There could be one or more proxy(ies) between sender and receiver. Proxies are treated as transparent
+entities and they may not create additional hops. Every propagation implementation should support an option 
+`decrementTTL` (default set to true) that allows proxies to set it to false.
+
+**For now, ONLY special values (0 and -1) are supported.**
+
+#### Special Values
+- **NO_PROPAGATION (0)**: Tag with `TagTTL` value of zero is considered to have local scope and
+ is used within the process it created.
+ 
+- **UNLIMITED_PROPAGATION (-1)**: A Tag with `TagTTL` value of -1 can propagate unlimited hops.
+ However, it is still subject to outgoing and incoming (on remote side) filter criteria. 
+ See `TagPropagationFilter` in [Tag Propagation](#Tag Propagation). `TagTTL` value of -1
+ is typical used to represent a request, processing of which may span multiple entities.
+
+#### Example for TagTTL > 0
+On a server side typically there is no information about the caller besides ip/port,
+but in every process there is a notion of "service_name" tag that is added as a "caller" tag before
+serialization when a RPC/HTTP call is made. For the "caller" tag, desirable `TagTTL` value is 1.
+
+Note that TagTTL value of 1 is not supported at this time. The example is listed here simply to
+show a possible use case for TagTTL > 0.
+ 
+### Processing at Receiver and Sender
+For now, limited processing is required on Sender and Receiver. However, for the sake of
+completeness, future processing requirement is also listed here. These requirements are marked with 
+"**(future)**".
+
+This processing is done as part of tag propagator.
+
+#### At Receiver
+Upon receiving a tag from remote entity a tag extractor
+
+- MUST decrement the value of `TagTTL` by one if it is greater than zero. **(future)**
+- MUST treat the value of `TagTTL` as -1 if it is not present.
+- MUST discard the `Tag` for any other value of `TagTTL`. **(future)**
+
+#### At Sender
+Upon preparing to send a tag to a remote entity a tag injector
+- MUST send the tag AND include `TagTTL` if its value is greater than 0. **(future)**
+- MUST send the tag without 'TagTTL' if its value is -1. Absence of TagTTL on the wire is treated as having TagTTL of -1.
+  This is to optimize on-the-wire representation of common case.
+- MUST not send the tag if the value of `TagTTL` is 0.
+
+A tag accepted for sending/receiving based on `TagTTL` value could still be excluded from sending/receiving based on
+`TagPropagationFilter`.
+
+## Tag Conflict Resolution
+If a new tag conflicts with an existing tag then the new tag takes precedence. Entire `Tag` along 
+with `TagValue` and `TagMetadata` is replaced by the most recent tag (regardless of it is locally
+generated or received from a remote peer). Replacement is limited to a scope in which the 
+conflict arises. When the scope is closed the orignal value and metadata prior to the conflict is restored.
+For example,
+```
+T# - Tag keys
+V# - Tag Values
+M# - Tag Metadata
+
+Enter Scope 1
+   Current Tags T1=V1/M1, T2=V2/M2
+    Enter Scope 2
+      Add Tags T3=V3/M3, T2=v4/M4
+      Current Tags T1=V1/M1, T2=V4/M4, T3=V3/M3 <== Value/Metadata of T2 is replaced by V4/M4.
+    Close Scope 2
+   Current Tags T1=V1/M1, T2=V2/M2  <== T2 is restored.
+Close Scope 1
+``` 
+
 
 # TagMap 
 `TagMap` is an abstract data type that represents collection of tags. 
@@ -61,7 +123,7 @@ list of ordered `TagPropagationFilter`s for receiving `Tag`s or for forwarding `
 A `TagPropagationFilter` list for receiving MAY be different then that for forwarding.
 
 If no filter is specified for receiving then all `Tag`s are received. 
-If no filter is specified for forwarding then all `Tag`s are forwarded except those that have `Local Scope`.
+If no filter is specified for forwarding then all `Tag`s are forwarded except those that have `TagTTL` of 0.
 
 ### TagPropagationFilter
 Tag Propagation Filter consists of action (`TagPropagationFilterAction`) and condition 
