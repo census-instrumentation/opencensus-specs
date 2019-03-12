@@ -144,7 +144,3 @@ https://developers.google.com/protocol-buffers/docs/encoding#varints.
   example, a serialized tag context with 10,000 small tags that all have the
   same key should be considered too large.
 
-## Related Work
-* [TraceContext Project](https://github.com/TraceContext/tracecontext-spec)
-* [Stackdriver TraceContext Header](https://cloud.google.com/trace/docs/support)
-* [B3 TraceContext Header](https://github.com/openzipkin/b3-propagation)
