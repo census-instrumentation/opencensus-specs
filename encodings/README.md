@@ -8,7 +8,7 @@ OpenCensus. It describes the key types and the overall behavior.
   * [TagContext Binary Encoding](BinaryEncoding.md#tag-context)
   * [Census Server Stats Encoding](CensusServerStatsEncoding.md)
 
-* Text Encoding
+* HTTP Encoding
   * [W3C TraceContext](https://github.com/TraceContext/tracecontext-spec)
   * [W3C Correlation Context](https://github.com/w3c/correlation-context)
   * [Stackdriver TraceContext Header](https://cloud.google.com/trace/docs/support)
