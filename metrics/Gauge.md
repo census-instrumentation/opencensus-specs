@@ -1,0 +1,80 @@
+# Gauge API Overview
+A `Gauge` is used to record already aggregated metrics, or metrics that can go up and down. Typical examples of gauges would be the number of jobs/entries in a queue or number of threads in a running state.
+
+The `Gauge` values can be negative. This document describes the key types and the overall bahavior of API.
+
+## Gauge API
+
+The value that is published for gauges is an instantaneous measurement of an `int64` or `double` value. This API is useful when you want to manually increase and decrease values as per service requirements.
+
+The following general operations MUST be provided by the API:
+* Defining a `name`, `description`, `unit`, `labelKeys` and `constantLabels` which are fixed labels that always apply to a gauge. This should give back the gauge object to getOrcreate time series, remove time series and clear all time series.
+	* `name`: a string describing the name of the metric, e.g. "vm_cpu_cycles" or "queue_size". Names MUST be unique within the library. It is recommended to use names compatible with the intended end usage.
+	* `description`: a string describing the metric, e.g."Virtual cycles executed on VM".
+	* `unit`: a string describing the unit used for the metric. Follows the format described by
+[Unified Code for Units of Measure](http://unitsofmeasure.org/ucum.html).
+	* `labelKeys`: the list of the label keys to track different types of metric.
+	* `constantLabels`: the map of label keys and label values.
+* Add a new time series with label values, which returns a `Point` (which is part of the `TimeSeries`). Each point represents an instantaneous measurement of a varying gauge value. Each Gauge Metric has one or more time series for a single metric.
+	* `labelValues`: the list of label values. The number of label values must be the same to that of the label keys.
+* The `Point` class should provide functionalities to manually increment/decrement values. Example: `add(long amt)`, `set(long value)`.
+* Remove a single time series from the gauge metric, if it is present.
+	* `labelValues`: the list of label values.
+* Clear all time series from the gauge metric i.e. References to all previous point objects are invalid (not part of the metric).
+* Get a default time series for a gauge with all labels not set, or default labels.
+
+Example in Java:
+```java
+private static final MetricRegistry metricRegistry = Metrics.getMetricRegistry();
+
+List<LabelKey> labelKeys = Arrays.asList(LabelKey.create("key1", "description"));
+List<LabelValue> labelValues = Arrays.asList(LabelValue.create("queue1"));
+
+LongGauge gauge = metricRegistry.addLongGauge("queue_size", "The number of jobs", "1", labelKeys);
+LongPoint point = gauge.getOrCreateTimeSeries(labelValues);
+ 
+void doSomeWork() {
+   point.set(15);
+}
+```
+It is recommended to keep a reference of a point for manual operations instead of always calling `getOrCreateTimeSeries` method.
+
+## Derived Gauge API
+
+The value that is published for gauges is an instantaneous measurement of an `int64` or `double` value. This gauge is self sufficient once created, so users should never need to interact with it. The value of the gauge is observed from the `object` and a `callback function`. The callback function is invoked whenever metrics are collected, meaning the reported value is up-to-date. The implementation should keep a `WeakReference` to the object and it is the user's responsibility to manage the lifetime of the object.
+
+The following general operations MUST be provided by the API:
+* Defining a `name`, `description`, `unit`, `labelKeys` and `constantLabels` which are fixed labels that always apply to a gauge. This should give back gauge object to add new time series, remove time series and clear all time series.
+	* `name`: a string describing the name of the metric, e.g. "vm_cpu_cycles". Names MUST be unique within the library. It is recommended to use names compatible with the intended end usage.
+	* `description`: a string describing the metric, e.g."Virtual cycles executed on VM".
+	* `unit`: a string describing the unit used for the metric. Follows the format described by
+[Unified Code for Units of Measure](http://unitsofmeasure.org/ucum.html).
+	* `labelKeys`: the list of the label keys to track different types of metric.
+	* `constantLabels`: the map of label keys and label values.
+* Add a new time series with label values, an `object` and a `callback function`. The number of label values must be the same to that of the label keys.
+	* `labelValues`: the list of label values. The number of label values must be the same to that of the label keys.
+	* `obj`: the state object from which the function derives a measurement.
+	* `function`: the callback function to be called.
+* Remove a single time series from the gauge metric, if it is present.
+	* `labelValues`: the list of label values.
+* Clear all time series from the gauge metric i.e. References to all previous point objects are invalid (not part of the metric).
+
+Example in Java:
+```java
+private static final MetricRegistry metricRegistry = Metrics.getMetricRegistry();
+
+List<LabelKey> labelKeys = Arrays.asList(LabelKey.create("key1", "description"));
+List<LabelValue> labelValues = Arrays.asList(LabelValue.create("value1"));
+
+DerivedDoubleGauge gauge = metricRegistry.addDerivedDoubleGauge(
+    "vm_cpu_cycles", "Virtual cycles executed on VM", "1", labelKeys);
+CpuInfo cpuInfo = new CpuInfo();
+
+gauge.createTimeSeries(labelValues, cpuInfo,
+      new ToDoubleFunction<CpuInfo>() {
+        {@literal @}Override
+        public double applyAsDouble(CpuInfo cpuInfo) {
+          return cpuInfo.cycles();
+        }
+   });
+```
