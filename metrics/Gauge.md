@@ -1,5 +1,5 @@
-# Gauge API Overview
-A `Gauge` is used to record already aggregated metrics, or metrics that can go up and down. Typical examples of gauges would be the number of jobs/entries in a queue or number of threads in a running state.
+# Gauge Overview
+A `Gauge` is used to record aggregated metrics that can go up and down. Typical examples of gauges would be the number of jobs/entries in a queue,  number of threads in a running state or current memory usage etc.
 
 The `Gauge` values can be negative. This document describes the key types and the overall bahavior of API.
 
@@ -8,7 +8,7 @@ The `Gauge` values can be negative. This document describes the key types and th
 The value that is published for gauges is an instantaneous measurement of an `int64` or `double` value. This API is useful when you want to manually increase and decrease values as per service requirements.
 
 The following general operations MUST be provided by the API:
-* Defining a `name`, `description`, `unit`, `labelKeys` and `constantLabels` which are fixed labels that always apply to a gauge. This should give back the gauge object to getOrcreate time series, remove time series and clear all time series.
+* Defining a `name`, `description`, `unit`, `labelKeys` and `constantLabels` which are fixed labels that always apply to a gauge. This should give back the gauge object to get or create time series, remove time series and clear all time series.
 	* `name`: a string describing the name of the metric, e.g. "vm_cpu_cycles" or "queue_size". Names MUST be unique within the library. It is recommended to use names compatible with the intended end usage.
 	* `description`: a string describing the metric, e.g."Virtual cycles executed on VM".
 	* `unit`: a string describing the unit used for the metric. Follows the format described by
