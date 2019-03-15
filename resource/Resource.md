@@ -1,6 +1,6 @@
 # Resource API Overview
 The resource library primarily defines a type that captures information about the entity
-for which stats or traces are reported. It further provides a framework for detection of
+for which metrics or traces are reported. It further provides a framework for detection of
 resource information from the environment and progressive population as signals propagate
 from the core instrumentation library to a backend's exporter.
 
