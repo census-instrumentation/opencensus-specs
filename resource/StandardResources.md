@@ -1,11 +1,11 @@
 # Standard Resources
 
 This page lists the standard resource types in OpenCensus. For more details on how resources can 
-be combined see [this](Resource.md)
+be combined see [this](Resource.md).
 
 ECS defines these fields.
  * [Compute Unit](#compute-unit)
-   * [container](#container)
+   * [Container](#container)
  * [Deployment Service](#deployment-service)
    * [Kubernetes](#kubernetes)
  * [Compute Instance](#compute-instance)
@@ -18,6 +18,7 @@ ECS defines these fields.
 ## TODOs
 * Add logical compute units: Service, Task - instance running in a service.
 * Add more compute units: Process, Lambda Function, AppEngine unit, etc.
+* Decide if lower case strings only.
 
 ## Compute Unit
 Resources defining a compute unit (e.g. Container, Process, Lambda Function).
@@ -25,8 +26,8 @@ Resources defining a compute unit (e.g. Container, Process, Lambda Function).
 ### Container
 **type:** `container`
 
-**Description:** A container instance. This resource can be merged with a deployment service
-resource, a compute instance resource and an environment resource.
+**Description:** A container instance. This resource can be [merged](Resource.md#Merging) with a
+deployment service resource, a compute instance resource and an environment resource.
 
 | Label  | Description  | Example  |
 |---|---|---|
@@ -41,8 +42,8 @@ Resources defining a deployment service (e.g. Kubernetes).
 ### Kubernetes
 **type:** `k8s`
 
-**Description:** A Kubernetes pod resource. This resource can be merged with a compute instance
-resource and/or an environment resource.
+**Description:** A Kubernetes pod resource. This resource can be [merged](Resource.md#Merging) with
+a compute instance resource and/or an environment resource.
 
 | Label  | Description  | Example  |
 |---|---|---|
@@ -56,21 +57,21 @@ Resources defining a computing instance (e.g. host).
 ### Host
 **type:** `host`
 
-**Description:** A host is defined as a general computing instance.
+**Description:** A host is defined as a general computing instance. This resource should be
+[merged](Resource.md#Merging) with an environment resource.
+
 
 | Label  | Description  | Example  |
 |---|---|---|
-| host.hostname | Hostname of the host.<br/> |  |
+| host.hostname | Hostname of the host.<br/> It contains what the `hostname` command returns on the host machine. |  |
 | host.id | Unique host id.<br/> For Cloud this must be the instance_id assigned by the cloud provider | `i-1234567890abcdef0` |
-| host.name | Hostname of the host. |  |
+| host.name | Name of the host.<br/> It can contain the fully qualified or a name specified by the user. |  |
 | host.ip | Host ip address. |  |
 | host.type | Type of host.<br/> For Cloud this must be the machine type like `t2.medium`.|  |
 
-This resource should be merged with an environment resource.
-
 ## Environment
 
-Resources defining an running environment (e.g. Cloud, Data Center).
+Resources defining a running environment (e.g. Cloud, Data Center).
 
 ### Cloud
 **type:** `cloud`
