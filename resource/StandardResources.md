@@ -19,6 +19,7 @@ ECS defines these fields.
 * Add logical compute units: Service, Task - instance running in a service.
 * Add more compute units: Process, Lambda Function, AppEngine unit, etc.
 * Decide if lower case strings only.
+* Consider to add optional/required for each label.
 
 ## Compute Unit
 Resources defining a compute unit (e.g. Container, Process, Lambda Function).
