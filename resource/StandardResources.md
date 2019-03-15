@@ -44,7 +44,6 @@ Resources defining a deployment service (e.g. Kubernetes).
 **Description:** A Kubernetes pod resource. This resource can be merged with a compute instance
 resource and/or an environment resource.
 
-**Labels:**
 | Label  | Description  | Example  |
 |---|---|---|
 | k8s.cluster.name | The name of the cluster that the container is running in. |  |
