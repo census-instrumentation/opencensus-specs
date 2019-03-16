@@ -67,7 +67,6 @@ Resources defining a computing instance (e.g. host).
 | host.hostname | Hostname of the host.<br/> It contains what the `hostname` command returns on the host machine. |  |
 | host.id | Unique host id.<br/> For Cloud this must be the instance_id assigned by the cloud provider | `i-1234567890abcdef0` |
 | host.name | Name of the host.<br/> It can contain the fully qualified or a name specified by the user. |  |
-| host.ip | Host ip address. |  |
 | host.type | Type of host.<br/> For Cloud this must be the machine type like `t2.medium`.|  |
 
 ## Environment
