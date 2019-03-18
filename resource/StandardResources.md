@@ -80,8 +80,8 @@ Resources defining a running environment (e.g. Cloud, Data Center).
 |---|---|---|
 | cloud.provider | Name of the cloud provider.<br/> Example values are aws, azure, gcp. | `gcp` |
 | cloud.account.id | The cloud account id used to identify different entities. | `opencensus` |
-| cloud.availability_zone | Availability zone in which entities are running. | `us-central1` |
-| cloud.zone | Region in which entities are running. | `us-central1-a` |
+| cloud.region | A specific geographical location where different entities can run | `us-central1` |
+| cloud.zone | Zones are a sub set of the region connected through low-latency links.<br/> In aws it is called availability-zone. | `us-central1-a` |
 
 ### Cluster
 **type:** `cluster`
