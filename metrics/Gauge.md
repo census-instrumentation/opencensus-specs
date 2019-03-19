@@ -1,7 +1,7 @@
 # Gauge Overview
 A `Gauge` is used to record aggregated metrics that can go up and down. Typical examples of gauges would be the number of jobs/entries in a queue,  number of threads in a running state or current memory usage etc.
 
-The `Gauge` values can be negative. This document describes the key types and the overall bahavior of API.
+The `Gauge` values can be negative. This document describes the key types and the overall behavior of API.
 
 ## Gauge API
 
