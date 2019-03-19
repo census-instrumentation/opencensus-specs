@@ -52,7 +52,7 @@ It is recommended to keep a reference of a point for manual operations instead o
 
 ## Derived Gauge API
 
-The value that is published for gauges is an instantaneous measurement of an `int64` or `double` value. This gauge is self sufficient once created, so users should never need to interact with it. The value of the gauge is observed from the `object` and a `callback function`. The callback function is invoked whenever metrics are collected, meaning the reported value is up-to-date. The implementation should keep a `WeakReference` to the object and it is the user's responsibility to manage the lifetime of the object.
+The value that is published for gauges is an instantaneous measurement of an `int64` or `double` value. This gauge is self sufficient once created, so users should never need to interact with it. The value of the gauge is observed from the `object` and a `callback function`. The callback function is invoked whenever metrics are collected, meaning the reported value is up-to-date.
 
 The following general operations MUST be provided by the API:
 * Defining a `name`, `description`, `unit`, `labelKeys`, `resource` and `constantLabels` which are fixed labels that always apply to a gauge. This should give back gauge object to add new time series, remove time series and clear all time series.
