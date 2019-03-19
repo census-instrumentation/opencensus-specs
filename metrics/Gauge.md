@@ -35,9 +35,13 @@ LabelValue constantLabelValue = LabelValue.create("localhost");
 
 Map<LabelKey, LabelValue> constantLabels = Collections.singletonMap(constantLabelKey, constantLabelValue);
 
-LongGauge gauge = metricRegistry.addLongGauge().toBuilder()
-    .setName("queue_size").setDescription("The number of jobs")
-    .setLabelKeys(labelKeys).setConstantLabels(constantLabels).build();
+LongGauge gauge = metricRegistry.longGaugeBuilder()
+    .setName("queue_size")
+    .setDescription("The number of jobs")
+    .setLabelKeys(labelKeys)
+    .setConstantLabels(constantLabels)
+    .build();
+
 LongPoint point = gauge.getOrCreateTimeSeries(labelValues);
  
 void doSomeWork() {
@@ -78,9 +82,12 @@ LabelValue constantLabelValue = LabelValue.create("localhost");
 
 Map<LabelKey, LabelValue> constantLabels = Collections.singletonMap(constantLabelKey, constantLabelValue);
 
-DerivedDoubleGauge gauge = metricRegistry.addDerivedDoubleGauge().toBuilder()
-    .setName("vm_cpu_cycles").setDescription("Virtual cycles executed on VM")
-    .setLabelKeys(labelKeys).setConstantLabels(constantLabels).build();
+DerivedDoubleGauge gauge = metricRegistry.derivedDoubleGaugeBuilder()
+    .setName("vm_cpu_cycles")
+    .setDescription("Virtual cycles executed on VM")
+    .setLabelKeys(labelKeys)
+    .setConstantLabels(constantLabels)
+    .build();
 
 gauge.createTimeSeries(labelValues, cpuInfo,
       new ToDoubleFunction<CpuInfo>() {
