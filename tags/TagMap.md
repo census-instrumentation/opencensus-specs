@@ -168,7 +168,7 @@ TBD:
 
 #### Over gRPC
 TagMap should be encoded using [BinaryEncoding](https://github.com/census-instrumentation/opencensus-specs/tree/master/encodings)
-and propagated using gRPC metadata opencensus-tag-bin.
+and propagated using gRPC metadata `grpc-tags-bin`. The propagation MUST inject a TagMap and MUST extract a TagMap from the gRPC metadata.
 
 #### Over HTTP
 
