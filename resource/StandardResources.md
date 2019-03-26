@@ -17,8 +17,10 @@ OpenCensus defines these fields.
 ## TODOs
 * Add logical compute units: Service, Task - instance running in a service.
 * Add more compute units: Process, Lambda Function, AppEngine unit, etc.
+* Add Device (mobile) and Web Browser.
 * Decide if lower case strings only.
-* Consider to add optional/required for each label.
+* Consider to add optional/required for each label and combination of labels (e.g when supplying a 
+k8s resource all k8s may be required).
 
 ## Compute Unit
 Resources defining a compute unit (e.g. Container, Process, Lambda Function).
@@ -41,14 +43,14 @@ Resources defining a deployment service (e.g. Kubernetes).
 ### Kubernetes
 **type:** `k8s`
 
-**Description:** A Kubernetes pod resource. This resource can be [merged](Resource.md#Merging) with
+**Description:** A Kubernetes resource. This resource can be [merged](Resource.md#Merging) with
 a compute instance resource, and/or an environment resource.
 
 | Label  | Description  | Example  |
 |---|---|---|
-| k8s.cluster.name | The name of the cluster that the container is running in. | `opencensus-cluster` |
-| k8s.namespace.name | The name of the namespace that the container is running in. | `default` |
-| k8s.pod.name | The name of the pod that the container is running in. | `opencensus-pod-autoconf` |
+| k8s.cluster.name | The name of the cluster that the pod is running in. | `opencensus-cluster` |
+| k8s.namespace.name | The name of the namespace that the pod is running in. | `default` |
+| k8s.pod.name | The name of the pod. | `opencensus-pod-autoconf` |
 
 ## Compute Instance
 Resources defining a computing instance (e.g. host).
@@ -82,13 +84,3 @@ Resources defining a running environment (e.g. Cloud, Data Center).
 | cloud.account.id | The cloud account id used to identify different entities. | `opencensus` |
 | cloud.region | A specific geographical location where different entities can run | `us-central1` |
 | cloud.zone | Zones are a sub set of the region connected through low-latency links.<br/> In aws it is called availability-zone. | `us-central1-a` |
-
-### Cluster
-**type:** `cluster`
-
-**Description:** Dedicated (on premise) group of machines (computer systems).
-
-| Label  | Description  | Example  |
-|---|---|---|
-| cluster.name | Name of the cluster. | `my_opencensus_cluster` |
-| cluster.location | Location of the cluster. | `us-east` |

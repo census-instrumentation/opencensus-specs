@@ -12,8 +12,8 @@ about the entity.
 
 Type, label keys, and label values MUST contain only printable ASCII (codes between 32
 and 126, inclusive) and not exceed 256 characters.
-Type and label keys MUST have a length greater than zero. They SHOULD start with a domain
-name and separate hierarchies with `/` characters, e.g. `k8s.io/namespace/name`.
+Type and label keys MUST have a length greater than zero. Label keys SHOULD start with the type
+and separate hierarchies with `.` characters, e.g. `k8s.namespace.name`.
 
 Implementations MAY define a `Resource` data type, constructed from the parameters above.
 `Resource` MUST have getters for retrieving all the information used in `Resource` definition.
@@ -47,8 +47,8 @@ Two environment variables are used:
 (`[ <key>="value" [ ,<key>="<value>" ... ] ]`). `"` characters in values MUST be escaped with `\`.
 
 For example:
-* `OC_RESOURCE_TYPE=k8s.io/container`
-* `OC_RESOURCE_LABELS=k8s.io/pod/name="pod-xyz-123",k8s.io/container/name="c1",k8s.io/namespace/name="default"`
+* `OC_RESOURCE_TYPE=container`
+* `OC_RESOURCE_LABELS=container.name="c1",k8s.pod.name="pod-xyz-123",k8s.namespace.name="default"`
 
 Population from environment variables MUST be the first applied detection process unless
 the user explicitly overwrites this behavior.
@@ -98,17 +98,17 @@ For example, from a resource object
 
 ```javascript
 {
-	"type": "k8s.io/container",
+	"type": "container",
 	"labels": {
 		// Populated from VM environment through auto-detection library.
-		"cloud.google.com/gce/instance_id": "instance1",
-		"cloud.google.com/zone": "eu-west2-a",
-		"cloud.google.com/project_id": "project1",
-		"cloud.google.com/gce/attributes/cluster_name": "cluster1",
+		"host.id": "instance1",
+		"cloud.zone": "eu-west2-a",
+		"cloud.account.id": "project1",
 		// Populated through OpenCensus resource environment variables.
-		"k8s.io/namespace/name": "ns1",
-		"k8s.io/pod/name": "pod1",
-		"k8s.io/container/name": "container1",
+		"k8s.cluster_name": "cluster1",
+		"k8s.namespace.name": "ns1",
+		"k8s.pod.name": "pod1",
+		"container.name": "container1",
 	},
 }
 ```
