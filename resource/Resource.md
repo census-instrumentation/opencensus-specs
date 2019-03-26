@@ -1,6 +1,6 @@
 # Resource API Overview
 The resource library primarily defines a type that captures information about the entity
-for which stats or traces are reported. It further provides a framework for detection of
+for which metrics or traces are reported. It further provides a framework for detection of
 resource information from the environment and progressive population as signals propagate
 from the core instrumentation library to a backend's exporter.
 
@@ -12,8 +12,8 @@ about the entity.
 
 Type, label keys, and label values MUST contain only printable ASCII (codes between 32
 and 126, inclusive) and not exceed 256 characters.
-Type and label keys MUST have a length greater than zero. They SHOULD start with a domain
-name and separate hierarchies with `/` characters, e.g. `k8s.io/namespace/name`.
+Type and label keys MUST have a length greater than zero. Label keys SHOULD start with the type
+and separate hierarchies with `.` characters, e.g. `k8s.namespace.name`.
 
 Implementations MAY define a `Resource` data type, constructed from the parameters above.
 `Resource` MUST have getters for retrieving all the information used in `Resource` definition.
@@ -26,7 +26,7 @@ type Resource {
 }
 ```
 
-TODO(fabxc): link protobuf definition.
+For the proto definition see [here][resource-proto-link]
 
 ## Populating resources
 Resource information MAY be populated at any point between startup of the instrumented
@@ -47,8 +47,8 @@ Two environment variables are used:
 (`[ <key>="value" [ ,<key>="<value>" ... ] ]`). `"` characters in values MUST be escaped with `\`.
 
 For example:
-* `OC_RESOURCE_TYPE=k8s.io/container`
-* `OC_RESOURCE_LABELS=k8s.io/pod/name="pod-xyz-123",k8s.io/container/name="c1",k8s.io/namespace/name="default"`
+* `OC_RESOURCE_TYPE=container`
+* `OC_RESOURCE_LABELS=container.name="c1",k8s.pod.name="pod-xyz-123",k8s.namespace.name="default"`
 
 Population from environment variables MUST be the first applied detection process unless
 the user explicitly overwrites this behavior.
@@ -98,17 +98,17 @@ For example, from a resource object
 
 ```javascript
 {
-	"type": "k8s.io/container",
+	"type": "container",
 	"labels": {
 		// Populated from VM environment through auto-detection library.
-		"cloud.google.com/gce/instance_id": "instance1",
-		"cloud.google.com/zone": "eu-west2-a",
-		"cloud.google.com/project_id": "project1",
-		"cloud.google.com/gce/attributes/cluster_name": "cluster1",
+		"host.id": "instance1",
+		"cloud.zone": "eu-west2-a",
+		"cloud.account.id": "project1",
 		// Populated through OpenCensus resource environment variables.
-		"k8s.io/namespace/name": "ns1",
-		"k8s.io/pod/name": "pod1",
-		"k8s.io/container/name": "container1",
+		"k8s.cluster_name": "cluster1",
+		"k8s.namespace.name": "ns1",
+		"k8s.pod.name": "pod1",
+		"container.name": "container1",
 	},
 }
 ```
@@ -130,7 +130,7 @@ resource type with well-known identifiers specific to its API:
 }
 ```
 
-For another, hyopthetical, backend a simple unique identifier might be constructed instead
+For another, hypothetical, backend a simple unique identifier might be constructed instead
 by its exporter:
 
 ```
@@ -139,10 +139,11 @@ cluster1/ns1/pod1/container1
 
 Exporter libraries MAY provide a default translation for well-known input resource types and labels.
 Those would generally be based on community-supported detection integrations maintained in the
-[census-ecosystem][census-ecosystem] organisation.
+[census-ecosystem][census-ecosystem-link] organisation.
 
 Additionally, exporters SHOULD provide configuration hooks for users to provide their own
 translation unless the exporter's backend does not support resources at all. For such backends,
 exporters SHOULD allow attaching converting resource labels to metric tags.
 
-[census-ecosystem]: https://github.com/census-ecosystem
+[census-ecosystem-link]: https://github.com/census-ecosystem
+[resource-proto-link]: https://github.com/census-instrumentation/opencensus-proto/blob/master/src/opencensus/proto/resource/v1/resource.proto
