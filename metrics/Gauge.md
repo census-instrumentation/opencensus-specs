@@ -8,6 +8,7 @@ The `Gauge` values can be negative. This document describes the key types and th
 The value that is published for gauges is an instantaneous measurement of an `int64` or `double` value. This API is useful when you want to manually increase and decrease values as per service requirements.
 
 The following general operations MUST be provided by the API:
+
 * Defining a `name`, `description`, `unit`, `labelKeys`, `resource` and `constantLabels` which are fixed labels that always apply to a gauge. This should give back the gauge object to get or create time series, remove time series and clear all time series.
 	* `name`: a string describing the name of the metric, e.g. "vm_cpu_cycles" or "queue_size". Names MUST be unique within the library. It is recommended to use names compatible with the intended end usage.
 	* `description`: an optional string describing the metric, e.g."Virtual cycles executed on VM". The default is set to "".
@@ -43,7 +44,7 @@ LongGauge gauge = metricRegistry.longGaugeBuilder()
     .build();
 
 LongPoint point = gauge.getOrCreateTimeSeries(labelValues);
- 
+
 void doSomeWork() {
    point.set(15);
 }
@@ -55,14 +56,14 @@ It is recommended to keep a reference of a point for manual operations instead o
 The value that is published for gauges is an instantaneous measurement of an `int64` or `double` value. This gauge is self sufficient once created, so users should never need to interact with it. The value of the gauge is observed from the `object` and a `callback function`. The callback function is invoked whenever metrics are collected, meaning the reported value is up-to-date.
 
 The following general operations MUST be provided by the API:
+
 * Defining a `name`, `description`, `unit`, `labelKeys`, `resource` and `constantLabels` which are fixed labels that always apply to a gauge. This should give back gauge object to add new time series, remove time series and clear all time series.
-	* `name`: a string describing the name of the metric, e.g. "vm_cpu_cycles". Names MUST be unique within the library. It is recommended to use names compatible with the intended end usage.
-	* `description`: an optional string describing the metric, e.g."Virtual cycles executed on VM". The default is set to "".
-	* `unit`: an optional string describing the unit used for the metric. Follows the format described by
-[Unified Code for Units of Measure](http://unitsofmeasure.org/ucum.html). The default set to "1".
-	* `labelKeys`: an optional list of the label keys to track different types of metric. The default is set to empty list.
-	* `constantLabels`: an optional map of label keys and label values. The default is set to empty map.
-	* `resource`: an optional associated monitored resource information.
+	* `name`: same as above name.
+	* `description`: same as above description.
+	* `unit`: same as above unit.
+	* `labelKeys`: same as above labelKeys.
+	* `constantLabels`: same as above constantLabels.
+	* `resource`: same as above resource.
 * Add a new time series with label values, an `object` and a `callback function`. The number of label values must be the same to that of the label keys.
 	* `labelValues`: the list of label values. The number of label values must be the same to that of the label keys.
 	* `object`: the state object from which the function derives a measurement.
