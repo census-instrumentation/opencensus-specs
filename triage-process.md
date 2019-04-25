@@ -8,19 +8,20 @@
 ## Process Definition
 
 ### Issue Handling Process
-1. All incoming issues and PR’s should be as. These are items that a Triager would look at on a daily basis
+1. All incoming issues and PR’s should be assessed. These are items that a Triager would look at on a daily basis
 1. Every issue triaged should be assessed for its workability. If assessing the workability of the issue requires more information, the Triager would collaborate with the OP until workability is determined.
-    1. Workability Classification:
-        1. New Feature Request
-        1. Enhancement to Existing Feature
-        1. Bug
+    1. Workability Classification (also below are label names):
+        1. feature-request
+        1. enhancement
+        1. bug
+        1. wont-fix
 1. Workable Issues should be prioritized and Labeled as one of 3 priorities
-    * P0
-    * P1
-    * P2
+    * P0 = Critical (Drop everything and work on it.)
+    * P1 = Important (Work on it if no P0 are present. Use judgment to prioritize items within a list of P1s)
+    * P2 = Low (Work on it when no P1 are left or some one from community wants to contribute)
 1. Prioritized Issues (and unworked) issues should be labeled as ‘Ready for Work’. This should signal to any contributor willing to help that they can work on this issue.
 1. Once a contributor is working on this issue, the issue should be:
-    1. Assigned to him
+    1. Assigned to them
     1. Labeled as ‘In Progress’
 1. Once work is complete and issue has been resolved it should be labeled as ‘Completed’ and Issue should be closed. 
 
