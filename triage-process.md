@@ -35,7 +35,7 @@ In Progress | Ticket is actively being worked upon by a contributor. | Contribut
 In Review | Implementation work related to the ticket has been completed. Work related to a Review and/or any changes requested as part of the review  is in progress.  | Issues with a PR associated with it will be considered as in ‘In Review’
 Completed | Work for this issue has been completed and reasonably tested. | No label is needed. Issue is simply closed.
 Blocked | Issue is blocked for one reason or another. Typically where the delay or waiting period is more than 5 days. | Ticket should be labelled ‘Blocked’
-Won't Fix | Issue is not workable.  | Issue should have comment indicating why its not fixable. 
+Won't Fix | Issue is not workable.  | Issue should have comment indicating why it is not fixable. 
 
 
 ### Roles
@@ -46,7 +46,7 @@ Won't Fix | Issue is not workable.  | Issue should have comment indicating why i
     * Original Poster. This is the person who has opened or posted the issue.
 
 * __Contributor__:
-    * Person(s) that are actually doing the work related to the ticket. Once work is done they work with the Reviewer and the Contributing Reviewers to get feedback implemented and complete the work. They  are responsible for making sure issue status label is up to date (In Progress, In Review, Completed, Blocked, Cancelled)
+    * Person(s) that are actually doing the work related to the ticket. Once work is done, they work with the Reviewer and the Contributing Reviewers to get feedback implemented and complete the work. They  are responsible for making sure issue status label is up to date (In Progress, In Review, Completed, Blocked, Cancelled)
 
 * __Reviewer__: 
     * Person(s) whose Approval is needed to merge the PR
