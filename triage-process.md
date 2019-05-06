@@ -14,7 +14,8 @@
         1. feature-request
         1. enhancement
         1. bug
-        1. wont-fix
+        1. wontfix
+        1. docs
 1. Workable Issues should be prioritized and Labeled as one of 3 priorities
     * P0 = Critical (Drop everything and work on it.)
     * P1 = Important (Work on it if no P0 are present. Use judgment to prioritize items within a list of P1s)
@@ -27,15 +28,15 @@
 
 
 ### Issue Stages
-Stage | Meaning | Action/Label
-------|---------|-------------
-New | Ticket is ready for triage. | Issue should be labeled ‘New’ 
-Ready for Work | Ticket triaging has been completed and is up for grabs to be picked up to be worked on by a contributor. | Ticket is labeled ‘Ready for work’. Label ‘New’ should be removed when moving to this stage.
-In Progress | Ticket is actively being worked upon by a contributor. | Contributor who has picked up this ticket shall assign the ticket to themselves.
-In Review | Implementation work related to the ticket has been completed. Work related to a Review and/or any changes requested as part of the review  is in progress.  | Issues with a PR associated with it will be considered as in ‘In Review’
-Completed | Work for this issue has been completed and reasonably tested. | No label is needed. Issue is simply closed.
-Blocked | Issue is blocked for one reason or another. Typically where the delay or waiting period is more than 5 days. | Ticket should be labelled ‘Blocked’
-Won't Fix | Issue is not workable.  | Issue should have comment indicating why it is not fixable. 
+Stage | Meaning | Action | Label
+------|---------|--------|-------
+triage-me | Ticket is ready for triage. | No classification or priority labels | -
+ready-for-work | Ticket triaging has been completed and is up for grabs to be picked up to be worked on by a contributor. | Ticket is labeled based on the workablity classification and one of 3 priorities. |  See workablity classification and priorities section
+in-progress | Ticket is actively being worked upon by a contributor. | Contributor who has picked up this ticket shall assign the ticket to themselves. | -
+in-review | Implementation work related to the ticket has been completed. Work related to a Review and/or any changes requested as part of the review  is in progress.  | Issues with a PR associated with it will be considered as in ‘In Review’ | -
+completed | Work for this issue has been completed and reasonably tested. | No label is needed. Issue is simply closed. | -
+blocked | Issue is blocked for one reason or another. Typically where the delay or waiting period is more than 5 days. | Ticket should be labelled ‘Blocked’ | blocked
+will-not-fix | Issue is not workable.  | Issue should have comment indicating why it is not fixable. | wontfix
 
 
 ### Roles
