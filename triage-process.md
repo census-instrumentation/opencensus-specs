@@ -8,7 +8,7 @@
 ## Process Definition
 
 ### Issue Handling Process
-1. All incoming issues and PR’s should be assessed. These are items that a Triager would look at on a daily basis
+1. All incoming issues should be assessed. These are items that a Triager would look at on a daily basis
 1. Every issue triaged should be assessed for its workability. If assessing the workability of the issue requires more information, the Triager would collaborate with the OP until workability is determined.
     1. Workability Classification (also below are label names):
         1. feature-request
