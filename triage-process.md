@@ -22,7 +22,7 @@
     * P2 = Low (Work on it when no P1 are left or some one from community wants to contribute)
 1. Prioritized and workablity classified issues  issues should are considered as ready-for-work. This should signal to any contributor willing to help that they can work on this issue.
 1. Once a contributor is working on this issue, the issue should be assigned to them. (Assigned issues are considered to be in in-progress stage.)
-1. Once work is complete and issue has been resolved it should be labeled as ‘Completed’ and Issue should be closed. 
+1. Once work is complete and the issue has been resolved, simply close the Issue. A closed issue with associated merged PR is considered as completed. 
 
 
 ### Issue Stages
