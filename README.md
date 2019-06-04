@@ -162,5 +162,5 @@ The key elements the API MUST provide are:
 [RFC2119]: https://www.ietf.org/rfc/rfc2119.txt
 [StatsDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/src/opencensus/proto/stats/v1/stats.proto
 [DistributedTracingSpecs]: https://github.com/w3c/distributed-tracing
-[TraceDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/opencensus/proto/trace/v1/trace.proto
+[TraceDataModel]: https://github.com/census-instrumentation/opencensus-proto/blob/master/src/opencensus/proto/trace/v1/trace.proto
 [activity]: https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.DiagnosticSource/src/ActivityUserGuide.md
