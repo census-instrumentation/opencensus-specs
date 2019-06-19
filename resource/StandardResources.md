@@ -51,6 +51,7 @@ a compute instance resource, and/or an environment resource.
 | k8s.cluster.name | The name of the cluster that the pod is running in. | `opencensus-cluster` |
 | k8s.namespace.name | The name of the namespace that the pod is running in. | `default` |
 | k8s.pod.name | The name of the pod. | `opencensus-pod-autoconf` |
+| k8s.deployment.name | The name of the deployment. | `opencensus` |
 
 ## Compute Instance
 Resources defining a computing instance (e.g. host).
