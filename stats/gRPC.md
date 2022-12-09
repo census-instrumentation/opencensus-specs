@@ -35,7 +35,7 @@ Client stats are recorded at the end of each outbound RPC.
 | grpc.io/client/sent_bytes_per_rpc         | By   | Total bytes sent across all request messages per RPC.                                         |
 | grpc.io/client/received_messages_per_rpc  | 1    | Number of response messages received per RPC (always 1 for non-streaming RPCs).               |
 | grpc.io/client/received_bytes_per_rpc     | By   | Total bytes received across all response messages per RPC.                                    |
-| grpc.io/client/roundtrip_latency          | ms   | Time between first byte of request sent to last byte of response received, or terminal error. |
+| grpc.io/client/roundtrip_latency          | ms   | End-to-end time taken to complete an RPC attempt including the time it takes to pick a subchannel. |
 | grpc.io/client/server_latency             | ms   | Propagated from the server and should have the same value as "grpc.io/server/latency".        |
 | grpc.io/client/started_rpcs               | 1    | The total number of client RPCs ever opened, including those that have not completed.         |
 | grpc.io/client/sent_messages_per_method   | 1    | Total messages sent per method.                                    |
